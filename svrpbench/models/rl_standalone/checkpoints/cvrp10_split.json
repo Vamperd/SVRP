@@ -1,0 +1,3639 @@
+{
+  "num_customers": 10,
+  "embed_dim": 128,
+  "map_size": 1000.0,
+  "config": {
+    "data": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "epochs": 500,
+    "batch_size": 8,
+    "lr": 0.0001,
+    "capacity_penalty": 100.0,
+    "seed": 1234,
+    "use_split": true,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "split_seed": 1234
+  },
+  "split": {
+    "train": [
+      0,
+      2,
+      4,
+      5,
+      6,
+      8,
+      9
+    ],
+    "val": [
+      1,
+      7
+    ],
+    "test": [
+      3
+    ]
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "loss": -2.63134765625,
+      "reward": -3331.517578125,
+      "distance": 3331.517578125,
+      "capacity_violation": 0.0,
+      "val_distance": 2984.132568359375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 2,
+      "loss": -11.13427734375,
+      "reward": -3719.651611328125,
+      "distance": 3719.651611328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 3,
+      "loss": -1.2357177734375,
+      "reward": -3133.1806640625,
+      "distance": 3133.1806640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 4,
+      "loss": -3.825927734375,
+      "reward": -3710.08349609375,
+      "distance": 3710.08349609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 5,
+      "loss": 11.2041015625,
+      "reward": -3731.7236328125,
+      "distance": 3731.7236328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 6,
+      "loss": -10.402587890625,
+      "reward": -3780.660400390625,
+      "distance": 3780.660400390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 7,
+      "loss": 1.41748046875,
+      "reward": -3472.56689453125,
+      "distance": 3472.56689453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 8,
+      "loss": -2.3798828125,
+      "reward": -3514.22119140625,
+      "distance": 3514.22119140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 9,
+      "loss": 18.1046142578125,
+      "reward": -3104.010986328125,
+      "distance": 3104.010986328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 10,
+      "loss": -18.8802490234375,
+      "reward": -3543.00927734375,
+      "distance": 3543.00927734375,
+      "capacity_violation": 0.0,
+      "val_distance": 2939.837646484375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 11,
+      "loss": -9.7235107421875,
+      "reward": -3491.0009765625,
+      "distance": 3491.0009765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 12,
+      "loss": 9.01611328125,
+      "reward": -4257.97314453125,
+      "distance": 4257.97314453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 13,
+      "loss": 9.15911865234375,
+      "reward": -3312.66455078125,
+      "distance": 3312.66455078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 14,
+      "loss": -5.3643798828125,
+      "reward": -3637.07080078125,
+      "distance": 3637.07080078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 15,
+      "loss": -8.10986328125,
+      "reward": -3780.536376953125,
+      "distance": 3780.536376953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 16,
+      "loss": -4.8668212890625,
+      "reward": -3761.142822265625,
+      "distance": 3761.142822265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 17,
+      "loss": 4.623779296875,
+      "reward": -3468.851806640625,
+      "distance": 3468.851806640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 18,
+      "loss": -13.6341552734375,
+      "reward": -3297.68212890625,
+      "distance": 3297.68212890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 19,
+      "loss": -15.27197265625,
+      "reward": -3796.196533203125,
+      "distance": 3796.196533203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 20,
+      "loss": 21.419189453125,
+      "reward": -3566.85107421875,
+      "distance": 3566.85107421875,
+      "capacity_violation": 0.0,
+      "val_distance": 2984.132568359375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 21,
+      "loss": 36.907470703125,
+      "reward": -3918.362548828125,
+      "distance": 3918.362548828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 22,
+      "loss": 18.8154296875,
+      "reward": -3667.42236328125,
+      "distance": 3667.42236328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 23,
+      "loss": 5.6048583984375,
+      "reward": -3787.4833984375,
+      "distance": 3787.4833984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 24,
+      "loss": -14.0799560546875,
+      "reward": -3781.114013671875,
+      "distance": 3781.114013671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 25,
+      "loss": 34.719970703125,
+      "reward": -3812.708984375,
+      "distance": 3812.708984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 26,
+      "loss": -24.9564208984375,
+      "reward": -3671.5146484375,
+      "distance": 3671.5146484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 27,
+      "loss": -27.489013671875,
+      "reward": -3502.3984375,
+      "distance": 3502.3984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 28,
+      "loss": 25.3818359375,
+      "reward": -3872.6064453125,
+      "distance": 3872.6064453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 29,
+      "loss": -7.20257568359375,
+      "reward": -3427.167724609375,
+      "distance": 3427.167724609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 30,
+      "loss": -19.6466064453125,
+      "reward": -4177.40087890625,
+      "distance": 4177.40087890625,
+      "capacity_violation": 0.0,
+      "val_distance": 2987.5186767578125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 31,
+      "loss": 4.5849609375,
+      "reward": -3678.435546875,
+      "distance": 3678.435546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 32,
+      "loss": -10.1331787109375,
+      "reward": -3830.861328125,
+      "distance": 3830.861328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 33,
+      "loss": -15.83740234375,
+      "reward": -3833.236328125,
+      "distance": 3833.236328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 34,
+      "loss": 15.2828369140625,
+      "reward": -3845.96142578125,
+      "distance": 3845.96142578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 35,
+      "loss": 16.99298095703125,
+      "reward": -3558.79345703125,
+      "distance": 3558.79345703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 36,
+      "loss": -19.027099609375,
+      "reward": -3605.6298828125,
+      "distance": 3605.6298828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 37,
+      "loss": 9.83203125,
+      "reward": -3450.64453125,
+      "distance": 3450.64453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 38,
+      "loss": -1.66796875,
+      "reward": -3455.7958984375,
+      "distance": 3455.7958984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 39,
+      "loss": -4.1064453125,
+      "reward": -3563.520751953125,
+      "distance": 3563.520751953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 40,
+      "loss": 12.819580078125,
+      "reward": -4127.58984375,
+      "distance": 4127.58984375,
+      "capacity_violation": 0.0,
+      "val_distance": 3145.3099365234375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 41,
+      "loss": 23.0284423828125,
+      "reward": -3812.880859375,
+      "distance": 3812.880859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 42,
+      "loss": -31.4755859375,
+      "reward": -3561.597412109375,
+      "distance": 3561.597412109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 43,
+      "loss": 9.01214599609375,
+      "reward": -4019.72998046875,
+      "distance": 4019.72998046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 44,
+      "loss": -6.269805908203125,
+      "reward": -3708.775390625,
+      "distance": 3708.775390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 45,
+      "loss": -11.155517578125,
+      "reward": -3726.81689453125,
+      "distance": 3726.81689453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 46,
+      "loss": 11.505859375,
+      "reward": -3632.608642578125,
+      "distance": 3632.608642578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 47,
+      "loss": 13.81329345703125,
+      "reward": -3610.614990234375,
+      "distance": 3610.614990234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 48,
+      "loss": 15.0565185546875,
+      "reward": -3597.96240234375,
+      "distance": 3597.96240234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 49,
+      "loss": 12.367919921875,
+      "reward": -3300.0888671875,
+      "distance": 3300.0888671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 50,
+      "loss": 19.467529296875,
+      "reward": -3069.989013671875,
+      "distance": 3069.989013671875,
+      "capacity_violation": 0.0,
+      "val_distance": 3248.7598876953125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 51,
+      "loss": -12.7113037109375,
+      "reward": -3946.94189453125,
+      "distance": 3946.94189453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 52,
+      "loss": 12.98681640625,
+      "reward": -3558.09765625,
+      "distance": 3558.09765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 53,
+      "loss": -11.060546875,
+      "reward": -3519.107421875,
+      "distance": 3519.107421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 54,
+      "loss": -20.7608642578125,
+      "reward": -3561.77783203125,
+      "distance": 3561.77783203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 55,
+      "loss": -7.740234375,
+      "reward": -2747.26025390625,
+      "distance": 2747.26025390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 56,
+      "loss": 1.3441162109375,
+      "reward": -3551.06884765625,
+      "distance": 3551.06884765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 57,
+      "loss": 13.6417236328125,
+      "reward": -3849.4443359375,
+      "distance": 3849.4443359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 58,
+      "loss": -7.550048828125,
+      "reward": -4055.553466796875,
+      "distance": 4055.553466796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 59,
+      "loss": -7.5557861328125,
+      "reward": -4132.0224609375,
+      "distance": 4132.0224609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 60,
+      "loss": -6.358642578125,
+      "reward": -3557.598388671875,
+      "distance": 3557.598388671875,
+      "capacity_violation": 0.0,
+      "val_distance": 3105.17236328125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 61,
+      "loss": 8.4267578125,
+      "reward": -3609.6845703125,
+      "distance": 3609.6845703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 62,
+      "loss": 2.45306396484375,
+      "reward": -3673.914794921875,
+      "distance": 3673.914794921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 63,
+      "loss": -0.43121337890625,
+      "reward": -3772.36474609375,
+      "distance": 3772.36474609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 64,
+      "loss": 16.8062744140625,
+      "reward": -3528.63232421875,
+      "distance": 3528.63232421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 65,
+      "loss": 22.0965576171875,
+      "reward": -3394.8623046875,
+      "distance": 3394.8623046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 66,
+      "loss": -14.4945068359375,
+      "reward": -3254.609130859375,
+      "distance": 3254.609130859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 67,
+      "loss": -18.4801025390625,
+      "reward": -3458.450439453125,
+      "distance": 3458.450439453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 68,
+      "loss": 1.529693603515625,
+      "reward": -3914.765869140625,
+      "distance": 3914.765869140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 69,
+      "loss": -3.8233642578125,
+      "reward": -3818.7197265625,
+      "distance": 3818.7197265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 70,
+      "loss": 26.650146484375,
+      "reward": -3047.6162109375,
+      "distance": 3047.6162109375,
+      "capacity_violation": 0.0,
+      "val_distance": 3337.7332763671875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 71,
+      "loss": 5.49365234375,
+      "reward": -3580.188720703125,
+      "distance": 3580.188720703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 72,
+      "loss": 6.475067138671875,
+      "reward": -3658.7255859375,
+      "distance": 3658.7255859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 73,
+      "loss": 13.409912109375,
+      "reward": -3647.1396484375,
+      "distance": 3647.1396484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 74,
+      "loss": 8.38043212890625,
+      "reward": -4535.04296875,
+      "distance": 4535.04296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 75,
+      "loss": 6.0517578125,
+      "reward": -3538.32666015625,
+      "distance": 3538.32666015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 76,
+      "loss": 12.950408935546875,
+      "reward": -3556.889892578125,
+      "distance": 3556.889892578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 77,
+      "loss": -4.865234375,
+      "reward": -3513.079345703125,
+      "distance": 3513.079345703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 78,
+      "loss": -4.771484375,
+      "reward": -3261.4072265625,
+      "distance": 3261.4072265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 79,
+      "loss": 6.794921875,
+      "reward": -3704.24755859375,
+      "distance": 3704.24755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 80,
+      "loss": 14.359375,
+      "reward": -3394.858642578125,
+      "distance": 3394.858642578125,
+      "capacity_violation": 0.0,
+      "val_distance": 2880.3062744140625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 81,
+      "loss": 4.978424072265625,
+      "reward": -3756.56201171875,
+      "distance": 3756.56201171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 82,
+      "loss": -19.9267578125,
+      "reward": -3571.737548828125,
+      "distance": 3571.737548828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 83,
+      "loss": -24.626220703125,
+      "reward": -3594.9404296875,
+      "distance": 3594.9404296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 84,
+      "loss": -11.61773681640625,
+      "reward": -3635.48583984375,
+      "distance": 3635.48583984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 85,
+      "loss": -21.20068359375,
+      "reward": -3762.2138671875,
+      "distance": 3762.2138671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 86,
+      "loss": -2.870361328125,
+      "reward": -3442.246337890625,
+      "distance": 3442.246337890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 87,
+      "loss": -37.4169921875,
+      "reward": -3727.6796875,
+      "distance": 3727.6796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 88,
+      "loss": 34.160888671875,
+      "reward": -3045.009765625,
+      "distance": 3045.009765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 89,
+      "loss": 6.993896484375,
+      "reward": -3934.755859375,
+      "distance": 3934.755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 90,
+      "loss": -12.1690673828125,
+      "reward": -3445.427734375,
+      "distance": 3445.427734375,
+      "capacity_violation": 0.0,
+      "val_distance": 3024.8572998046875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 91,
+      "loss": -4.02490234375,
+      "reward": -3708.89501953125,
+      "distance": 3708.89501953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 92,
+      "loss": -10.95166015625,
+      "reward": -3651.965576171875,
+      "distance": 3651.965576171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 93,
+      "loss": -13.43994140625,
+      "reward": -3711.48876953125,
+      "distance": 3711.48876953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 94,
+      "loss": -17.1026611328125,
+      "reward": -3807.03857421875,
+      "distance": 3807.03857421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 95,
+      "loss": -17.36083984375,
+      "reward": -3308.69482421875,
+      "distance": 3308.69482421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 96,
+      "loss": -1.31500244140625,
+      "reward": -3848.6669921875,
+      "distance": 3848.6669921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 97,
+      "loss": -14.3848876953125,
+      "reward": -3436.07763671875,
+      "distance": 3436.07763671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 98,
+      "loss": -5.744140625,
+      "reward": -3724.1396484375,
+      "distance": 3724.1396484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 99,
+      "loss": -8.46142578125,
+      "reward": -3269.3408203125,
+      "distance": 3269.3408203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 100,
+      "loss": -4.3275146484375,
+      "reward": -3929.662109375,
+      "distance": 3929.662109375,
+      "capacity_violation": 0.0,
+      "val_distance": 3177.74072265625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 101,
+      "loss": 6.333740234375,
+      "reward": -4043.49169921875,
+      "distance": 4043.49169921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 102,
+      "loss": 1.11767578125,
+      "reward": -3842.765625,
+      "distance": 3842.765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 103,
+      "loss": 21.48590087890625,
+      "reward": -3635.744140625,
+      "distance": 3635.744140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 104,
+      "loss": 7.69384765625,
+      "reward": -3653.602294921875,
+      "distance": 3653.602294921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 105,
+      "loss": 21.52294921875,
+      "reward": -3371.426513671875,
+      "distance": 3371.426513671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 106,
+      "loss": 29.97412109375,
+      "reward": -2943.66015625,
+      "distance": 2943.66015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 107,
+      "loss": -3.885009765625,
+      "reward": -3900.456298828125,
+      "distance": 3900.456298828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 108,
+      "loss": -27.07958984375,
+      "reward": -3734.40771484375,
+      "distance": 3734.40771484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 109,
+      "loss": 0.021728515625,
+      "reward": -4292.412109375,
+      "distance": 4292.412109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 110,
+      "loss": 21.1290283203125,
+      "reward": -3987.121826171875,
+      "distance": 3987.121826171875,
+      "capacity_violation": 0.0,
+      "val_distance": 2880.3062744140625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 111,
+      "loss": -16.464599609375,
+      "reward": -3583.2578125,
+      "distance": 3583.2578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 112,
+      "loss": 43.21612548828125,
+      "reward": -3768.55078125,
+      "distance": 3768.55078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 113,
+      "loss": 28.247314453125,
+      "reward": -3593.72314453125,
+      "distance": 3593.72314453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 114,
+      "loss": 18.8348388671875,
+      "reward": -4114.6474609375,
+      "distance": 4114.6474609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 115,
+      "loss": -19.759765625,
+      "reward": -3895.856201171875,
+      "distance": 3895.856201171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 116,
+      "loss": -16.1895751953125,
+      "reward": -3565.1572265625,
+      "distance": 3565.1572265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 117,
+      "loss": 1.617431640625,
+      "reward": -3995.795654296875,
+      "distance": 3995.795654296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 118,
+      "loss": -7.183204650878906,
+      "reward": -3923.34130859375,
+      "distance": 3923.34130859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 119,
+      "loss": 25.7491455078125,
+      "reward": -3734.243896484375,
+      "distance": 3734.243896484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 120,
+      "loss": -20.8646240234375,
+      "reward": -3850.061767578125,
+      "distance": 3850.061767578125,
+      "capacity_violation": 0.0,
+      "val_distance": 2880.3062744140625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 121,
+      "loss": -4.655120849609375,
+      "reward": -4235.11181640625,
+      "distance": 4235.11181640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 122,
+      "loss": -12.805206298828125,
+      "reward": -3936.796875,
+      "distance": 3936.796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 123,
+      "loss": 4.754150390625,
+      "reward": -3367.439697265625,
+      "distance": 3367.439697265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 124,
+      "loss": 29.51739501953125,
+      "reward": -3141.2734375,
+      "distance": 3141.2734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 125,
+      "loss": -17.35986328125,
+      "reward": -3585.568359375,
+      "distance": 3585.568359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 126,
+      "loss": -8.18890380859375,
+      "reward": -3096.2919921875,
+      "distance": 3096.2919921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 127,
+      "loss": -13.30279541015625,
+      "reward": -3933.11572265625,
+      "distance": 3933.11572265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 128,
+      "loss": -17.4068603515625,
+      "reward": -3778.859130859375,
+      "distance": 3778.859130859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 129,
+      "loss": 7.84466552734375,
+      "reward": -3817.140625,
+      "distance": 3817.140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 130,
+      "loss": -7.8515625,
+      "reward": -3950.82177734375,
+      "distance": 3950.82177734375,
+      "capacity_violation": 0.0,
+      "val_distance": 3133.4456787109375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 131,
+      "loss": 9.7708740234375,
+      "reward": -3893.254150390625,
+      "distance": 3893.254150390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 132,
+      "loss": -20.3865966796875,
+      "reward": -3055.61962890625,
+      "distance": 3055.61962890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 133,
+      "loss": 4.72998046875,
+      "reward": -3259.656005859375,
+      "distance": 3259.656005859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 134,
+      "loss": -46.4776611328125,
+      "reward": -3988.18505859375,
+      "distance": 3988.18505859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 135,
+      "loss": -27.1673583984375,
+      "reward": -3742.25048828125,
+      "distance": 3742.25048828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 136,
+      "loss": 2.722625732421875,
+      "reward": -3746.89990234375,
+      "distance": 3746.89990234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 137,
+      "loss": 24.094970703125,
+      "reward": -3276.25634765625,
+      "distance": 3276.25634765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 138,
+      "loss": -0.055908203125,
+      "reward": -3450.137939453125,
+      "distance": 3450.137939453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 139,
+      "loss": 9.3687744140625,
+      "reward": -3413.49658203125,
+      "distance": 3413.49658203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 140,
+      "loss": -36.10760498046875,
+      "reward": -3397.51318359375,
+      "distance": 3397.51318359375,
+      "capacity_violation": 0.0,
+      "val_distance": 3414.1888427734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 141,
+      "loss": 41.09912109375,
+      "reward": -3709.576171875,
+      "distance": 3709.576171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 142,
+      "loss": -3.4454345703125,
+      "reward": -3848.583251953125,
+      "distance": 3848.583251953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 143,
+      "loss": -18.36181640625,
+      "reward": -3932.15185546875,
+      "distance": 3932.15185546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 144,
+      "loss": -12.8658447265625,
+      "reward": -3996.26025390625,
+      "distance": 3996.26025390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 145,
+      "loss": 28.4754638671875,
+      "reward": -3602.136474609375,
+      "distance": 3602.136474609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 146,
+      "loss": 13.92230224609375,
+      "reward": -3724.18798828125,
+      "distance": 3724.18798828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 147,
+      "loss": -45.125732421875,
+      "reward": -3605.21533203125,
+      "distance": 3605.21533203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 148,
+      "loss": 6.6029052734375,
+      "reward": -4263.677734375,
+      "distance": 4263.677734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 149,
+      "loss": 10.939453125,
+      "reward": -3476.452392578125,
+      "distance": 3476.452392578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 150,
+      "loss": 15.2806396484375,
+      "reward": -3593.390625,
+      "distance": 3593.390625,
+      "capacity_violation": 0.0,
+      "val_distance": 3111.415283203125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 151,
+      "loss": 6.2373046875,
+      "reward": -3554.4326171875,
+      "distance": 3554.4326171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 152,
+      "loss": -7.162353515625,
+      "reward": -3850.52294921875,
+      "distance": 3850.52294921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 153,
+      "loss": 5.513671875,
+      "reward": -3676.4033203125,
+      "distance": 3676.4033203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 154,
+      "loss": 45.31317138671875,
+      "reward": -3774.160400390625,
+      "distance": 3774.160400390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 155,
+      "loss": -0.4644775390625,
+      "reward": -4421.34375,
+      "distance": 4421.34375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 156,
+      "loss": 41.3060302734375,
+      "reward": -3258.38330078125,
+      "distance": 3258.38330078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 157,
+      "loss": -5.30322265625,
+      "reward": -4185.7841796875,
+      "distance": 4185.7841796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 158,
+      "loss": -0.369140625,
+      "reward": -3816.153564453125,
+      "distance": 3816.153564453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 159,
+      "loss": 25.020263671875,
+      "reward": -3625.48291015625,
+      "distance": 3625.48291015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 160,
+      "loss": -1.9356689453125,
+      "reward": -3741.96240234375,
+      "distance": 3741.96240234375,
+      "capacity_violation": 0.0,
+      "val_distance": 3011.8397216796875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 161,
+      "loss": -10.4178466796875,
+      "reward": -3947.814697265625,
+      "distance": 3947.814697265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 162,
+      "loss": -6.71484375,
+      "reward": -4028.0703125,
+      "distance": 4028.0703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 163,
+      "loss": -32.5379638671875,
+      "reward": -3207.90966796875,
+      "distance": 3207.90966796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 164,
+      "loss": -53.095703125,
+      "reward": -3680.777099609375,
+      "distance": 3680.777099609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 165,
+      "loss": 20.512451171875,
+      "reward": -3642.09765625,
+      "distance": 3642.09765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 166,
+      "loss": 15.7880859375,
+      "reward": -4001.4892578125,
+      "distance": 4001.4892578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 167,
+      "loss": 1.884033203125,
+      "reward": -3460.102294921875,
+      "distance": 3460.102294921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 168,
+      "loss": 4.87591552734375,
+      "reward": -3908.001953125,
+      "distance": 3908.001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 169,
+      "loss": -6.3011474609375,
+      "reward": -3690.1767578125,
+      "distance": 3690.1767578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 170,
+      "loss": 5.94287109375,
+      "reward": -3722.153076171875,
+      "distance": 3722.153076171875,
+      "capacity_violation": 0.0,
+      "val_distance": 2980.562255859375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 171,
+      "loss": 26.32861328125,
+      "reward": -3756.8759765625,
+      "distance": 3756.8759765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 172,
+      "loss": 14.8482666015625,
+      "reward": -3498.405517578125,
+      "distance": 3498.405517578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 173,
+      "loss": 1.5123291015625,
+      "reward": -3934.27783203125,
+      "distance": 3934.27783203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 174,
+      "loss": -37.681884765625,
+      "reward": -3848.25341796875,
+      "distance": 3848.25341796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 175,
+      "loss": 27.76171875,
+      "reward": -3631.943603515625,
+      "distance": 3631.943603515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 176,
+      "loss": -10.085205078125,
+      "reward": -3466.06884765625,
+      "distance": 3466.06884765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 177,
+      "loss": 0.775146484375,
+      "reward": -3594.0927734375,
+      "distance": 3594.0927734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 178,
+      "loss": 11.2530517578125,
+      "reward": -3296.1845703125,
+      "distance": 3296.1845703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 179,
+      "loss": -1.0975341796875,
+      "reward": -3548.198974609375,
+      "distance": 3548.198974609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 180,
+      "loss": -15.0653076171875,
+      "reward": -3485.3466796875,
+      "distance": 3485.3466796875,
+      "capacity_violation": 0.0,
+      "val_distance": 2980.562255859375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 181,
+      "loss": 7.66015625,
+      "reward": -3941.8876953125,
+      "distance": 3941.8876953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 182,
+      "loss": 12.859619140625,
+      "reward": -3815.677734375,
+      "distance": 3815.677734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 183,
+      "loss": 20.943359375,
+      "reward": -3504.5908203125,
+      "distance": 3504.5908203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 184,
+      "loss": 8.05126953125,
+      "reward": -3561.043701171875,
+      "distance": 3561.043701171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 185,
+      "loss": -10.3868408203125,
+      "reward": -3976.477294921875,
+      "distance": 3976.477294921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 186,
+      "loss": -1.5234375,
+      "reward": -3696.4404296875,
+      "distance": 3696.4404296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 187,
+      "loss": -2.92010498046875,
+      "reward": -3629.677734375,
+      "distance": 3629.677734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 188,
+      "loss": 16.5107421875,
+      "reward": -3559.6005859375,
+      "distance": 3559.6005859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 189,
+      "loss": -8.9293212890625,
+      "reward": -3841.27685546875,
+      "distance": 3841.27685546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 190,
+      "loss": 16.385986328125,
+      "reward": -3832.08203125,
+      "distance": 3832.08203125,
+      "capacity_violation": 0.0,
+      "val_distance": 3111.415283203125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 191,
+      "loss": -5.236572265625,
+      "reward": -3997.507080078125,
+      "distance": 3997.507080078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 192,
+      "loss": 29.02880859375,
+      "reward": -2920.3603515625,
+      "distance": 2920.3603515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 193,
+      "loss": -19.2415771484375,
+      "reward": -3414.91162109375,
+      "distance": 3414.91162109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 194,
+      "loss": 0.29443359375,
+      "reward": -3673.9052734375,
+      "distance": 3673.9052734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 195,
+      "loss": 8.2435302734375,
+      "reward": -3406.70849609375,
+      "distance": 3406.70849609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 196,
+      "loss": 6.6300048828125,
+      "reward": -3504.163818359375,
+      "distance": 3504.163818359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 197,
+      "loss": 5.10198974609375,
+      "reward": -3204.944091796875,
+      "distance": 3204.944091796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 198,
+      "loss": 27.8953857421875,
+      "reward": -3362.601806640625,
+      "distance": 3362.601806640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 199,
+      "loss": -0.38616943359375,
+      "reward": -3231.9228515625,
+      "distance": 3231.9228515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 200,
+      "loss": -4.74658203125,
+      "reward": -3545.41748046875,
+      "distance": 3545.41748046875,
+      "capacity_violation": 0.0,
+      "val_distance": 2964.321044921875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 201,
+      "loss": 0.578857421875,
+      "reward": -3457.71533203125,
+      "distance": 3457.71533203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 202,
+      "loss": 15.22998046875,
+      "reward": -3112.717041015625,
+      "distance": 3112.717041015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 203,
+      "loss": -5.47705078125,
+      "reward": -3948.474365234375,
+      "distance": 3948.474365234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 204,
+      "loss": -12.181396484375,
+      "reward": -3376.56884765625,
+      "distance": 3376.56884765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 205,
+      "loss": -17.85888671875,
+      "reward": -3247.12890625,
+      "distance": 3247.12890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 206,
+      "loss": 2.24664306640625,
+      "reward": -3839.983154296875,
+      "distance": 3839.983154296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 207,
+      "loss": 22.85498046875,
+      "reward": -3485.4521484375,
+      "distance": 3485.4521484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 208,
+      "loss": 22.5146484375,
+      "reward": -3578.310546875,
+      "distance": 3578.310546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 209,
+      "loss": 0.7205810546875,
+      "reward": -3854.3525390625,
+      "distance": 3854.3525390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 210,
+      "loss": 8.83978271484375,
+      "reward": -3869.805419921875,
+      "distance": 3869.805419921875,
+      "capacity_violation": 0.0,
+      "val_distance": 2688.8033447265625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 211,
+      "loss": -21.2044677734375,
+      "reward": -3585.84814453125,
+      "distance": 3585.84814453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 212,
+      "loss": 6.0426025390625,
+      "reward": -3777.654296875,
+      "distance": 3777.654296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 213,
+      "loss": 1.66448974609375,
+      "reward": -3878.41748046875,
+      "distance": 3878.41748046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 214,
+      "loss": 2.60260009765625,
+      "reward": -3941.830078125,
+      "distance": 3941.830078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 215,
+      "loss": -14.1982421875,
+      "reward": -3626.420654296875,
+      "distance": 3626.420654296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 216,
+      "loss": 0.9569091796875,
+      "reward": -3501.987060546875,
+      "distance": 3501.987060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 217,
+      "loss": 25.2589111328125,
+      "reward": -3747.0087890625,
+      "distance": 3747.0087890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 218,
+      "loss": 8.9346923828125,
+      "reward": -3130.228759765625,
+      "distance": 3130.228759765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 219,
+      "loss": -1.960205078125,
+      "reward": -3691.97509765625,
+      "distance": 3691.97509765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 220,
+      "loss": -15.2080078125,
+      "reward": -3568.121826171875,
+      "distance": 3568.121826171875,
+      "capacity_violation": 0.0,
+      "val_distance": 2688.8033447265625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 221,
+      "loss": 2.797119140625,
+      "reward": -3848.670166015625,
+      "distance": 3848.670166015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 222,
+      "loss": -2.070556640625,
+      "reward": -3954.0009765625,
+      "distance": 3954.0009765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 223,
+      "loss": -3.857666015625,
+      "reward": -4037.359130859375,
+      "distance": 4037.359130859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 224,
+      "loss": -20.371490478515625,
+      "reward": -3731.62646484375,
+      "distance": 3731.62646484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 225,
+      "loss": 3.515380859375,
+      "reward": -3465.291259765625,
+      "distance": 3465.291259765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 226,
+      "loss": -10.7025146484375,
+      "reward": -3800.87060546875,
+      "distance": 3800.87060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 227,
+      "loss": 9.236892700195312,
+      "reward": -3756.781005859375,
+      "distance": 3756.781005859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 228,
+      "loss": 6.598876953125,
+      "reward": -3794.80908203125,
+      "distance": 3794.80908203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 229,
+      "loss": 34.912109375,
+      "reward": -3788.580078125,
+      "distance": 3788.580078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 230,
+      "loss": -2.36474609375,
+      "reward": -3432.826171875,
+      "distance": 3432.826171875,
+      "capacity_violation": 0.0,
+      "val_distance": 2847.279296875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 231,
+      "loss": -4.9873046875,
+      "reward": -3495.92236328125,
+      "distance": 3495.92236328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 232,
+      "loss": 3.4659423828125,
+      "reward": -3927.38525390625,
+      "distance": 3927.38525390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 233,
+      "loss": 8.7236328125,
+      "reward": -3913.57763671875,
+      "distance": 3913.57763671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 234,
+      "loss": 6.9171142578125,
+      "reward": -3412.201904296875,
+      "distance": 3412.201904296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 235,
+      "loss": 9.424560546875,
+      "reward": -3845.931640625,
+      "distance": 3845.931640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 236,
+      "loss": -9.68212890625,
+      "reward": -3639.10595703125,
+      "distance": 3639.10595703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 237,
+      "loss": -2.14892578125,
+      "reward": -3199.499267578125,
+      "distance": 3199.499267578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 238,
+      "loss": 4.017578125,
+      "reward": -4221.12890625,
+      "distance": 4221.12890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 239,
+      "loss": -2.888427734375,
+      "reward": -2831.75927734375,
+      "distance": 2831.75927734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 240,
+      "loss": -5.508056640625,
+      "reward": -3909.626953125,
+      "distance": 3909.626953125,
+      "capacity_violation": 0.0,
+      "val_distance": 2714.1806640625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 241,
+      "loss": -11.00048828125,
+      "reward": -3925.3525390625,
+      "distance": 3925.3525390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 242,
+      "loss": 2.6494140625,
+      "reward": -3441.9755859375,
+      "distance": 3441.9755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 243,
+      "loss": -12.2657470703125,
+      "reward": -3811.3310546875,
+      "distance": 3811.3310546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 244,
+      "loss": -5.2724609375,
+      "reward": -3315.9580078125,
+      "distance": 3315.9580078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 245,
+      "loss": -9.82196044921875,
+      "reward": -3557.419189453125,
+      "distance": 3557.419189453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 246,
+      "loss": 0.458038330078125,
+      "reward": -3775.6865234375,
+      "distance": 3775.6865234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 247,
+      "loss": -19.5587158203125,
+      "reward": -4075.9755859375,
+      "distance": 4075.9755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 248,
+      "loss": -9.95166015625,
+      "reward": -3663.08935546875,
+      "distance": 3663.08935546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 249,
+      "loss": -3.729248046875,
+      "reward": -3557.380859375,
+      "distance": 3557.380859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 250,
+      "loss": -10.5389404296875,
+      "reward": -3495.055908203125,
+      "distance": 3495.055908203125,
+      "capacity_violation": 0.0,
+      "val_distance": 2790.810791015625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 251,
+      "loss": -9.86865234375,
+      "reward": -3708.423095703125,
+      "distance": 3708.423095703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 252,
+      "loss": 11.965576171875,
+      "reward": -3613.843017578125,
+      "distance": 3613.843017578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 253,
+      "loss": -6.676025390625,
+      "reward": -3817.10205078125,
+      "distance": 3817.10205078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 254,
+      "loss": -21.82763671875,
+      "reward": -3809.608154296875,
+      "distance": 3809.608154296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 255,
+      "loss": -6.201416015625,
+      "reward": -3406.45263671875,
+      "distance": 3406.45263671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 256,
+      "loss": 4.3790283203125,
+      "reward": -3558.157958984375,
+      "distance": 3558.157958984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 257,
+      "loss": 3.85479736328125,
+      "reward": -3823.43505859375,
+      "distance": 3823.43505859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 258,
+      "loss": 7.8388671875,
+      "reward": -3669.04150390625,
+      "distance": 3669.04150390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 259,
+      "loss": -3.4095458984375,
+      "reward": -3590.8232421875,
+      "distance": 3590.8232421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 260,
+      "loss": 3.086669921875,
+      "reward": -3548.629150390625,
+      "distance": 3548.629150390625,
+      "capacity_violation": 0.0,
+      "val_distance": 2879.7841796875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 261,
+      "loss": 5.508544921875,
+      "reward": -3322.1640625,
+      "distance": 3322.1640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 262,
+      "loss": 8.171875,
+      "reward": -3608.12060546875,
+      "distance": 3608.12060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 263,
+      "loss": -3.7724609375,
+      "reward": -3591.3115234375,
+      "distance": 3591.3115234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 264,
+      "loss": 10.36962890625,
+      "reward": -3559.982666015625,
+      "distance": 3559.982666015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 265,
+      "loss": 6.832275390625,
+      "reward": -3383.942138671875,
+      "distance": 3383.942138671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 266,
+      "loss": -5.376953125,
+      "reward": -3226.488525390625,
+      "distance": 3226.488525390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 267,
+      "loss": -13.6610107421875,
+      "reward": -3542.69677734375,
+      "distance": 3542.69677734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 268,
+      "loss": -7.208984375,
+      "reward": -4160.14453125,
+      "distance": 4160.14453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 269,
+      "loss": -22.11328125,
+      "reward": -3405.27880859375,
+      "distance": 3405.27880859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 270,
+      "loss": -6.7327880859375,
+      "reward": -3625.91943359375,
+      "distance": 3625.91943359375,
+      "capacity_violation": 0.0,
+      "val_distance": 2937.399169921875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 271,
+      "loss": 3.650238037109375,
+      "reward": -3754.60302734375,
+      "distance": 3754.60302734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 272,
+      "loss": 2.38232421875,
+      "reward": -3335.802734375,
+      "distance": 3335.802734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 273,
+      "loss": -4.9189453125,
+      "reward": -3895.6533203125,
+      "distance": 3895.6533203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 274,
+      "loss": 6.973388671875,
+      "reward": -3554.7216796875,
+      "distance": 3554.7216796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 275,
+      "loss": 2.928466796875,
+      "reward": -3490.677734375,
+      "distance": 3490.677734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 276,
+      "loss": -6.930419921875,
+      "reward": -3492.7958984375,
+      "distance": 3492.7958984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 277,
+      "loss": 2.8917236328125,
+      "reward": -3217.6875,
+      "distance": 3217.6875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 278,
+      "loss": -2.0579833984375,
+      "reward": -3264.762939453125,
+      "distance": 3264.762939453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 279,
+      "loss": 5.6593017578125,
+      "reward": -3899.57080078125,
+      "distance": 3899.57080078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 280,
+      "loss": 6.6568603515625,
+      "reward": -3932.9052734375,
+      "distance": 3932.9052734375,
+      "capacity_violation": 0.0,
+      "val_distance": 2843.012939453125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 281,
+      "loss": -14.7578125,
+      "reward": -3467.332275390625,
+      "distance": 3467.332275390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 282,
+      "loss": -18.3778076171875,
+      "reward": -4063.193115234375,
+      "distance": 4063.193115234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 283,
+      "loss": 6.827392578125,
+      "reward": -3544.55517578125,
+      "distance": 3544.55517578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 284,
+      "loss": -1.910400390625,
+      "reward": -3350.13916015625,
+      "distance": 3350.13916015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 285,
+      "loss": -18.351318359375,
+      "reward": -3800.95166015625,
+      "distance": 3800.95166015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 286,
+      "loss": -27.05731201171875,
+      "reward": -3901.9921875,
+      "distance": 3901.9921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 287,
+      "loss": -15.80712890625,
+      "reward": -3892.46826171875,
+      "distance": 3892.46826171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 288,
+      "loss": 6.69891357421875,
+      "reward": -3257.3076171875,
+      "distance": 3257.3076171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 289,
+      "loss": 7.61688232421875,
+      "reward": -3664.4658203125,
+      "distance": 3664.4658203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 290,
+      "loss": 40.055908203125,
+      "reward": -3944.83642578125,
+      "distance": 3944.83642578125,
+      "capacity_violation": 0.0,
+      "val_distance": 2934.776123046875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 291,
+      "loss": -1.287353515625,
+      "reward": -3755.47021484375,
+      "distance": 3755.47021484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 292,
+      "loss": 7.05859375,
+      "reward": -4039.532470703125,
+      "distance": 4039.532470703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 293,
+      "loss": -15.66162109375,
+      "reward": -3858.2001953125,
+      "distance": 3858.2001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 294,
+      "loss": 14.067626953125,
+      "reward": -4105.77001953125,
+      "distance": 4105.77001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 295,
+      "loss": 2.46270751953125,
+      "reward": -3911.289794921875,
+      "distance": 3911.289794921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 296,
+      "loss": 12.74560546875,
+      "reward": -4030.2724609375,
+      "distance": 4030.2724609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 297,
+      "loss": 21.005126953125,
+      "reward": -3884.438720703125,
+      "distance": 3884.438720703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 298,
+      "loss": -0.935546875,
+      "reward": -3988.728759765625,
+      "distance": 3988.728759765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 299,
+      "loss": -29.4769287109375,
+      "reward": -3274.46875,
+      "distance": 3274.46875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 300,
+      "loss": -3.8360595703125,
+      "reward": -3978.32177734375,
+      "distance": 3978.32177734375,
+      "capacity_violation": 0.0,
+      "val_distance": 2789.9014892578125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 301,
+      "loss": -4.114501953125,
+      "reward": -3575.84375,
+      "distance": 3575.84375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 302,
+      "loss": -5.274169921875,
+      "reward": -3546.786376953125,
+      "distance": 3546.786376953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 303,
+      "loss": -14.58544921875,
+      "reward": -3826.08544921875,
+      "distance": 3826.08544921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 304,
+      "loss": 13.09326171875,
+      "reward": -3427.0146484375,
+      "distance": 3427.0146484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 305,
+      "loss": 26.886474609375,
+      "reward": -3618.37060546875,
+      "distance": 3618.37060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 306,
+      "loss": -0.779541015625,
+      "reward": -4271.4296875,
+      "distance": 4271.4296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 307,
+      "loss": 3.8211669921875,
+      "reward": -3993.472900390625,
+      "distance": 3993.472900390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 308,
+      "loss": -5.42822265625,
+      "reward": -3778.214111328125,
+      "distance": 3778.214111328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 309,
+      "loss": -5.747314453125,
+      "reward": -3665.26220703125,
+      "distance": 3665.26220703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 310,
+      "loss": 19.0272216796875,
+      "reward": -3564.9375,
+      "distance": 3564.9375,
+      "capacity_violation": 0.0,
+      "val_distance": 2789.9014892578125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 311,
+      "loss": 2.27880859375,
+      "reward": -3756.82275390625,
+      "distance": 3756.82275390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 312,
+      "loss": -10.142333984375,
+      "reward": -3906.04443359375,
+      "distance": 3906.04443359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 313,
+      "loss": -9.445068359375,
+      "reward": -3468.24267578125,
+      "distance": 3468.24267578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 314,
+      "loss": -3.5032958984375,
+      "reward": -3231.030029296875,
+      "distance": 3231.030029296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 315,
+      "loss": 8.427154541015625,
+      "reward": -3850.56005859375,
+      "distance": 3850.56005859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 316,
+      "loss": 8.660888671875,
+      "reward": -3948.458740234375,
+      "distance": 3948.458740234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 317,
+      "loss": -10.15771484375,
+      "reward": -3259.3046875,
+      "distance": 3259.3046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 318,
+      "loss": -13.9429931640625,
+      "reward": -3577.16357421875,
+      "distance": 3577.16357421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 319,
+      "loss": -19.23291015625,
+      "reward": -3572.77490234375,
+      "distance": 3572.77490234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 320,
+      "loss": -11.55078125,
+      "reward": -3376.5732421875,
+      "distance": 3376.5732421875,
+      "capacity_violation": 0.0,
+      "val_distance": 2735.5068359375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 321,
+      "loss": 12.8917236328125,
+      "reward": -3513.802001953125,
+      "distance": 3513.802001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 322,
+      "loss": -10.2392578125,
+      "reward": -3433.45068359375,
+      "distance": 3433.45068359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 323,
+      "loss": 7.198211669921875,
+      "reward": -3287.50390625,
+      "distance": 3287.50390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 324,
+      "loss": 12.3798828125,
+      "reward": -3084.99658203125,
+      "distance": 3084.99658203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 325,
+      "loss": -6.784423828125,
+      "reward": -3468.139892578125,
+      "distance": 3468.139892578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 326,
+      "loss": -26.97552490234375,
+      "reward": -3463.45849609375,
+      "distance": 3463.45849609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 327,
+      "loss": -29.73388671875,
+      "reward": -3604.5595703125,
+      "distance": 3604.5595703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 328,
+      "loss": -22.96240234375,
+      "reward": -3415.078857421875,
+      "distance": 3415.078857421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 329,
+      "loss": 16.9617919921875,
+      "reward": -3230.454345703125,
+      "distance": 3230.454345703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 330,
+      "loss": 1.67236328125,
+      "reward": -3761.699951171875,
+      "distance": 3761.699951171875,
+      "capacity_violation": 0.0,
+      "val_distance": 2924.7239990234375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 331,
+      "loss": -11.090087890625,
+      "reward": -3912.32861328125,
+      "distance": 3912.32861328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 332,
+      "loss": 13.3505859375,
+      "reward": -3998.615234375,
+      "distance": 3998.615234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 333,
+      "loss": 7.179443359375,
+      "reward": -3814.62060546875,
+      "distance": 3814.62060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 334,
+      "loss": -19.0477294921875,
+      "reward": -3533.6708984375,
+      "distance": 3533.6708984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 335,
+      "loss": -26.0947265625,
+      "reward": -3486.888916015625,
+      "distance": 3486.888916015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 336,
+      "loss": -10.58984375,
+      "reward": -3631.69775390625,
+      "distance": 3631.69775390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 337,
+      "loss": -2.7174072265625,
+      "reward": -3711.606689453125,
+      "distance": 3711.606689453125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 338,
+      "loss": -12.68994140625,
+      "reward": -3683.73095703125,
+      "distance": 3683.73095703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 339,
+      "loss": -26.5284423828125,
+      "reward": -3924.07421875,
+      "distance": 3924.07421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 340,
+      "loss": -26.09423828125,
+      "reward": -3769.1865234375,
+      "distance": 3769.1865234375,
+      "capacity_violation": 0.0,
+      "val_distance": 2782.880126953125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 341,
+      "loss": -21.4254150390625,
+      "reward": -4098.6181640625,
+      "distance": 4098.6181640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 342,
+      "loss": -22.14398193359375,
+      "reward": -3333.409912109375,
+      "distance": 3333.409912109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 343,
+      "loss": -7.74102783203125,
+      "reward": -3864.6708984375,
+      "distance": 3864.6708984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 344,
+      "loss": 5.194580078125,
+      "reward": -3785.951904296875,
+      "distance": 3785.951904296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 345,
+      "loss": 6.3341064453125,
+      "reward": -3458.9951171875,
+      "distance": 3458.9951171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 346,
+      "loss": 4.774169921875,
+      "reward": -3923.72509765625,
+      "distance": 3923.72509765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 347,
+      "loss": -24.52099609375,
+      "reward": -3044.6865234375,
+      "distance": 3044.6865234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 348,
+      "loss": -15.41741943359375,
+      "reward": -4622.748046875,
+      "distance": 4622.748046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 349,
+      "loss": -17.359375,
+      "reward": -3569.50390625,
+      "distance": 3569.50390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 350,
+      "loss": -14.90966796875,
+      "reward": -3081.510009765625,
+      "distance": 3081.510009765625,
+      "capacity_violation": 0.0,
+      "val_distance": 2663.7357177734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 351,
+      "loss": -13.38720703125,
+      "reward": -3867.21142578125,
+      "distance": 3867.21142578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 352,
+      "loss": -39.25146484375,
+      "reward": -3835.76025390625,
+      "distance": 3835.76025390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 353,
+      "loss": 17.3717041015625,
+      "reward": -3742.04296875,
+      "distance": 3742.04296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 354,
+      "loss": 32.97991943359375,
+      "reward": -3259.7509765625,
+      "distance": 3259.7509765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 355,
+      "loss": -3.0458984375,
+      "reward": -3241.34423828125,
+      "distance": 3241.34423828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 356,
+      "loss": 4.1356201171875,
+      "reward": -3807.30322265625,
+      "distance": 3807.30322265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 357,
+      "loss": -0.2926025390625,
+      "reward": -3877.545654296875,
+      "distance": 3877.545654296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 358,
+      "loss": 3.17919921875,
+      "reward": -3594.608642578125,
+      "distance": 3594.608642578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 359,
+      "loss": 0.34185791015625,
+      "reward": -3708.783203125,
+      "distance": 3708.783203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 360,
+      "loss": 14.032958984375,
+      "reward": -3657.463623046875,
+      "distance": 3657.463623046875,
+      "capacity_violation": 0.0,
+      "val_distance": 2813.927734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 361,
+      "loss": -3.5966796875,
+      "reward": -4007.341552734375,
+      "distance": 4007.341552734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 362,
+      "loss": -12.5096435546875,
+      "reward": -3714.40771484375,
+      "distance": 3714.40771484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 363,
+      "loss": 40.09130859375,
+      "reward": -3924.8994140625,
+      "distance": 3924.8994140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 364,
+      "loss": -3.6954345703125,
+      "reward": -3644.255126953125,
+      "distance": 3644.255126953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 365,
+      "loss": -6.2122802734375,
+      "reward": -3647.423828125,
+      "distance": 3647.423828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 366,
+      "loss": -0.760498046875,
+      "reward": -3156.62353515625,
+      "distance": 3156.62353515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 367,
+      "loss": -9.1090087890625,
+      "reward": -3923.607666015625,
+      "distance": 3923.607666015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 368,
+      "loss": 14.088134765625,
+      "reward": -3490.908203125,
+      "distance": 3490.908203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 369,
+      "loss": 22.494110107421875,
+      "reward": -3660.912841796875,
+      "distance": 3660.912841796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 370,
+      "loss": 9.791015625,
+      "reward": -3713.271484375,
+      "distance": 3713.271484375,
+      "capacity_violation": 0.0,
+      "val_distance": 2714.1806640625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 371,
+      "loss": 0.146820068359375,
+      "reward": -3901.388916015625,
+      "distance": 3901.388916015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 372,
+      "loss": 3.134521484375,
+      "reward": -3777.052490234375,
+      "distance": 3777.052490234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 373,
+      "loss": -3.23828125,
+      "reward": -4256.0654296875,
+      "distance": 4256.0654296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 374,
+      "loss": -46.90553283691406,
+      "reward": -4018.99267578125,
+      "distance": 4018.99267578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 375,
+      "loss": -28.928558349609375,
+      "reward": -4238.60986328125,
+      "distance": 4238.60986328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 376,
+      "loss": 5.137451171875,
+      "reward": -3163.302734375,
+      "distance": 3163.302734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 377,
+      "loss": -3.109130859375,
+      "reward": -3784.615234375,
+      "distance": 3784.615234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 378,
+      "loss": -6.06793212890625,
+      "reward": -3589.063720703125,
+      "distance": 3589.063720703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 379,
+      "loss": 7.6068115234375,
+      "reward": -3770.02490234375,
+      "distance": 3770.02490234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 380,
+      "loss": -20.911865234375,
+      "reward": -3713.12841796875,
+      "distance": 3713.12841796875,
+      "capacity_violation": 0.0,
+      "val_distance": 2669.5927734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 381,
+      "loss": -4.16064453125,
+      "reward": -3276.40283203125,
+      "distance": 3276.40283203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 382,
+      "loss": -0.9827880859375,
+      "reward": -3578.2001953125,
+      "distance": 3578.2001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 383,
+      "loss": -23.67431640625,
+      "reward": -3780.56103515625,
+      "distance": 3780.56103515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 384,
+      "loss": -2.890625,
+      "reward": -3422.631103515625,
+      "distance": 3422.631103515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 385,
+      "loss": -20.0850830078125,
+      "reward": -3835.37451171875,
+      "distance": 3835.37451171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 386,
+      "loss": -0.84552001953125,
+      "reward": -3371.150634765625,
+      "distance": 3371.150634765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 387,
+      "loss": -27.6884765625,
+      "reward": -3861.181640625,
+      "distance": 3861.181640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 388,
+      "loss": -26.36376953125,
+      "reward": -3382.63330078125,
+      "distance": 3382.63330078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 389,
+      "loss": -8.913330078125,
+      "reward": -3853.923583984375,
+      "distance": 3853.923583984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 390,
+      "loss": 8.366455078125,
+      "reward": -3476.321533203125,
+      "distance": 3476.321533203125,
+      "capacity_violation": 0.0,
+      "val_distance": 2834.107177734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 391,
+      "loss": -1.618896484375,
+      "reward": -3627.636962890625,
+      "distance": 3627.636962890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 392,
+      "loss": 28.7275390625,
+      "reward": -3932.357421875,
+      "distance": 3932.357421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 393,
+      "loss": -5.604736328125,
+      "reward": -3780.54736328125,
+      "distance": 3780.54736328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 394,
+      "loss": 1.13916015625,
+      "reward": -3460.74755859375,
+      "distance": 3460.74755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 395,
+      "loss": 21.2962646484375,
+      "reward": -3053.29150390625,
+      "distance": 3053.29150390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 396,
+      "loss": 19.3358154296875,
+      "reward": -3213.4248046875,
+      "distance": 3213.4248046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 397,
+      "loss": 0.670166015625,
+      "reward": -3552.8505859375,
+      "distance": 3552.8505859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 398,
+      "loss": -15.0263671875,
+      "reward": -4035.986328125,
+      "distance": 4035.986328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 399,
+      "loss": 24.383056640625,
+      "reward": -3512.8193359375,
+      "distance": 3512.8193359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 400,
+      "loss": 2.3104248046875,
+      "reward": -3615.73876953125,
+      "distance": 3615.73876953125,
+      "capacity_violation": 0.0,
+      "val_distance": 2590.83740234375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 401,
+      "loss": 2.0369873046875,
+      "reward": -3402.90478515625,
+      "distance": 3402.90478515625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 402,
+      "loss": -10.114501953125,
+      "reward": -3941.69091796875,
+      "distance": 3941.69091796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 403,
+      "loss": 7.02130126953125,
+      "reward": -3951.4248046875,
+      "distance": 3951.4248046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 404,
+      "loss": -15.3323974609375,
+      "reward": -3464.24951171875,
+      "distance": 3464.24951171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 405,
+      "loss": -6.481201171875,
+      "reward": -3947.501953125,
+      "distance": 3947.501953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 406,
+      "loss": 3.20526123046875,
+      "reward": -3234.27734375,
+      "distance": 3234.27734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 407,
+      "loss": -0.832763671875,
+      "reward": -3595.6533203125,
+      "distance": 3595.6533203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 408,
+      "loss": 23.66455078125,
+      "reward": -3703.970703125,
+      "distance": 3703.970703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 409,
+      "loss": -8.24517822265625,
+      "reward": -3683.01171875,
+      "distance": 3683.01171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 410,
+      "loss": -4.2503662109375,
+      "reward": -3167.935302734375,
+      "distance": 3167.935302734375,
+      "capacity_violation": 0.0,
+      "val_distance": 2669.5927734375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 411,
+      "loss": -38.11669921875,
+      "reward": -3713.4501953125,
+      "distance": 3713.4501953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 412,
+      "loss": -6.86474609375,
+      "reward": -3693.46875,
+      "distance": 3693.46875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 413,
+      "loss": -21.7440185546875,
+      "reward": -3857.0517578125,
+      "distance": 3857.0517578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 414,
+      "loss": 3.356292724609375,
+      "reward": -3407.1474609375,
+      "distance": 3407.1474609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 415,
+      "loss": -28.230224609375,
+      "reward": -3701.16845703125,
+      "distance": 3701.16845703125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 416,
+      "loss": -19.69775390625,
+      "reward": -3497.154052734375,
+      "distance": 3497.154052734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 417,
+      "loss": 17.129241943359375,
+      "reward": -3673.17822265625,
+      "distance": 3673.17822265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 418,
+      "loss": -0.547119140625,
+      "reward": -3514.602783203125,
+      "distance": 3514.602783203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 419,
+      "loss": -6.813751220703125,
+      "reward": -3283.924560546875,
+      "distance": 3283.924560546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 420,
+      "loss": -10.177978515625,
+      "reward": -3670.8046875,
+      "distance": 3670.8046875,
+      "capacity_violation": 0.0,
+      "val_distance": 2768.69873046875,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 421,
+      "loss": -15.4283447265625,
+      "reward": -3798.9501953125,
+      "distance": 3798.9501953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 422,
+      "loss": -7.3204345703125,
+      "reward": -3939.78076171875,
+      "distance": 3939.78076171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 423,
+      "loss": 2.7261962890625,
+      "reward": -3437.8857421875,
+      "distance": 3437.8857421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 424,
+      "loss": -19.6346435546875,
+      "reward": -3362.47412109375,
+      "distance": 3362.47412109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 425,
+      "loss": 4.530029296875,
+      "reward": -3326.744140625,
+      "distance": 3326.744140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 426,
+      "loss": -11.79736328125,
+      "reward": -3741.28662109375,
+      "distance": 3741.28662109375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 427,
+      "loss": 7.6815185546875,
+      "reward": -4020.5400390625,
+      "distance": 4020.5400390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 428,
+      "loss": -9.967529296875,
+      "reward": -3714.62060546875,
+      "distance": 3714.62060546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 429,
+      "loss": -63.9710693359375,
+      "reward": -3747.7490234375,
+      "distance": 3747.7490234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 430,
+      "loss": -1.00048828125,
+      "reward": -3720.65185546875,
+      "distance": 3720.65185546875,
+      "capacity_violation": 0.0,
+      "val_distance": 2707.0140380859375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 431,
+      "loss": -5.38427734375,
+      "reward": -3539.125732421875,
+      "distance": 3539.125732421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 432,
+      "loss": -16.71875,
+      "reward": -3806.8408203125,
+      "distance": 3806.8408203125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 433,
+      "loss": -5.477783203125,
+      "reward": -3419.0390625,
+      "distance": 3419.0390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 434,
+      "loss": -0.59442138671875,
+      "reward": -3718.4052734375,
+      "distance": 3718.4052734375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 435,
+      "loss": -36.787841796875,
+      "reward": -3376.2119140625,
+      "distance": 3376.2119140625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 436,
+      "loss": -63.7138671875,
+      "reward": -3756.83056640625,
+      "distance": 3756.83056640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 437,
+      "loss": -21.517578125,
+      "reward": -3310.13330078125,
+      "distance": 3310.13330078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 438,
+      "loss": -9.3494873046875,
+      "reward": -3654.779541015625,
+      "distance": 3654.779541015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 439,
+      "loss": -16.41741943359375,
+      "reward": -4020.1357421875,
+      "distance": 4020.1357421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 440,
+      "loss": 31.015869140625,
+      "reward": -3464.200927734375,
+      "distance": 3464.200927734375,
+      "capacity_violation": 0.0,
+      "val_distance": 2707.0140380859375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 441,
+      "loss": -12.107452392578125,
+      "reward": -4289.599609375,
+      "distance": 4289.599609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 442,
+      "loss": -11.353515625,
+      "reward": -3797.46142578125,
+      "distance": 3797.46142578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 443,
+      "loss": 15.191162109375,
+      "reward": -3664.85498046875,
+      "distance": 3664.85498046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 444,
+      "loss": -8.3795166015625,
+      "reward": -3808.1142578125,
+      "distance": 3808.1142578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 445,
+      "loss": -2.1357421875,
+      "reward": -3857.893310546875,
+      "distance": 3857.893310546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 446,
+      "loss": 0.43017578125,
+      "reward": -2953.73583984375,
+      "distance": 2953.73583984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 447,
+      "loss": -13.7958984375,
+      "reward": -3437.420166015625,
+      "distance": 3437.420166015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 448,
+      "loss": -10.7490234375,
+      "reward": -3669.349609375,
+      "distance": 3669.349609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 449,
+      "loss": -12.1058349609375,
+      "reward": -3744.884765625,
+      "distance": 3744.884765625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 450,
+      "loss": 3.4794921875,
+      "reward": -4239.73974609375,
+      "distance": 4239.73974609375,
+      "capacity_violation": 0.0,
+      "val_distance": 2805.7542724609375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 451,
+      "loss": 0.8525390625,
+      "reward": -3242.55322265625,
+      "distance": 3242.55322265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 452,
+      "loss": -14.09173583984375,
+      "reward": -3802.2451171875,
+      "distance": 3802.2451171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 453,
+      "loss": 19.119140625,
+      "reward": -3714.2001953125,
+      "distance": 3714.2001953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 454,
+      "loss": -19.6121826171875,
+      "reward": -3090.2763671875,
+      "distance": 3090.2763671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 455,
+      "loss": -31.94696044921875,
+      "reward": -4186.6484375,
+      "distance": 4186.6484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 456,
+      "loss": 8.14691162109375,
+      "reward": -3647.42431640625,
+      "distance": 3647.42431640625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 457,
+      "loss": -2.3035125732421875,
+      "reward": -3776.986328125,
+      "distance": 3776.986328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 458,
+      "loss": -23.9041748046875,
+      "reward": -3246.74755859375,
+      "distance": 3246.74755859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 459,
+      "loss": -15.506103515625,
+      "reward": -3374.582275390625,
+      "distance": 3374.582275390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 460,
+      "loss": -8.501953125,
+      "reward": -3692.47900390625,
+      "distance": 3692.47900390625,
+      "capacity_violation": 0.0,
+      "val_distance": 2779.24462890625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 461,
+      "loss": -18.2265625,
+      "reward": -4267.5576171875,
+      "distance": 4267.5576171875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 462,
+      "loss": -12.022216796875,
+      "reward": -3596.39990234375,
+      "distance": 3596.39990234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 463,
+      "loss": -20.8165283203125,
+      "reward": -3727.95263671875,
+      "distance": 3727.95263671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 464,
+      "loss": -38.06890869140625,
+      "reward": -4088.308349609375,
+      "distance": 4088.308349609375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 465,
+      "loss": 16.18731689453125,
+      "reward": -3313.26953125,
+      "distance": 3313.26953125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 466,
+      "loss": -10.05615234375,
+      "reward": -3750.22021484375,
+      "distance": 3750.22021484375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 467,
+      "loss": 0.8265380859375,
+      "reward": -3712.62890625,
+      "distance": 3712.62890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 468,
+      "loss": -13.9649658203125,
+      "reward": -3504.568359375,
+      "distance": 3504.568359375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 469,
+      "loss": -19.310791015625,
+      "reward": -3494.93505859375,
+      "distance": 3494.93505859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 470,
+      "loss": -1.371337890625,
+      "reward": -3731.0625,
+      "distance": 3731.0625,
+      "capacity_violation": 0.0,
+      "val_distance": 3106.0394287109375,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 471,
+      "loss": -36.469482421875,
+      "reward": -3273.25341796875,
+      "distance": 3273.25341796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 472,
+      "loss": 20.419921875,
+      "reward": -3552.98828125,
+      "distance": 3552.98828125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 473,
+      "loss": -33.0953369140625,
+      "reward": -3469.8388671875,
+      "distance": 3469.8388671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 474,
+      "loss": -19.114013671875,
+      "reward": -3746.125,
+      "distance": 3746.125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 475,
+      "loss": 6.09912109375,
+      "reward": -3528.957275390625,
+      "distance": 3528.957275390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 476,
+      "loss": -38.52972412109375,
+      "reward": -3717.31591796875,
+      "distance": 3717.31591796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 477,
+      "loss": -45.52197265625,
+      "reward": -3409.8115234375,
+      "distance": 3409.8115234375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 478,
+      "loss": 8.9927978515625,
+      "reward": -3758.8466796875,
+      "distance": 3758.8466796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 479,
+      "loss": -5.7607421875,
+      "reward": -4018.46142578125,
+      "distance": 4018.46142578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 480,
+      "loss": -31.83740234375,
+      "reward": -3155.097900390625,
+      "distance": 3155.097900390625,
+      "capacity_violation": 0.0,
+      "val_distance": 3029.3004150390625,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 481,
+      "loss": 4.892822265625,
+      "reward": -3371.578125,
+      "distance": 3371.578125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 482,
+      "loss": -0.20721435546875,
+      "reward": -3979.2421875,
+      "distance": 3979.2421875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 483,
+      "loss": 8.08154296875,
+      "reward": -3415.282958984375,
+      "distance": 3415.282958984375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 484,
+      "loss": -84.9688720703125,
+      "reward": -3711.5166015625,
+      "distance": 3711.5166015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 485,
+      "loss": -102.0927734375,
+      "reward": -4013.8505859375,
+      "distance": 4013.8505859375,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 486,
+      "loss": -50.870361328125,
+      "reward": -3770.217529296875,
+      "distance": 3770.217529296875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 487,
+      "loss": 13.45068359375,
+      "reward": -3351.31591796875,
+      "distance": 3351.31591796875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 488,
+      "loss": -58.0987548828125,
+      "reward": -3601.77685546875,
+      "distance": 3601.77685546875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 489,
+      "loss": -23.660888671875,
+      "reward": -3729.632080078125,
+      "distance": 3729.632080078125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 490,
+      "loss": 18.7122802734375,
+      "reward": -3279.3896484375,
+      "distance": 3279.3896484375,
+      "capacity_violation": 0.0,
+      "val_distance": 2887.2403564453125,
+      "val_feasibility": 1.0
+    },
+    {
+      "epoch": 491,
+      "loss": -23.799346923828125,
+      "reward": -3553.7900390625,
+      "distance": 3553.7900390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 492,
+      "loss": -21.4375,
+      "reward": -3675.447265625,
+      "distance": 3675.447265625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 493,
+      "loss": -35.775634765625,
+      "reward": -3990.245361328125,
+      "distance": 3990.245361328125,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 494,
+      "loss": 1.00048828125,
+      "reward": -4013.76025390625,
+      "distance": 4013.76025390625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 495,
+      "loss": -49.0439453125,
+      "reward": -3680.838623046875,
+      "distance": 3680.838623046875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 496,
+      "loss": 13.35400390625,
+      "reward": -3286.071044921875,
+      "distance": 3286.071044921875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 497,
+      "loss": -52.3828125,
+      "reward": -3563.88671875,
+      "distance": 3563.88671875,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 498,
+      "loss": 0.8956298828125,
+      "reward": -3508.855712890625,
+      "distance": 3508.855712890625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 499,
+      "loss": -3.6190185546875,
+      "reward": -3747.70166015625,
+      "distance": 3747.70166015625,
+      "capacity_violation": 0.0
+    },
+    {
+      "epoch": 500,
+      "loss": -88.4390869140625,
+      "reward": -3619.57275390625,
+      "distance": 3619.57275390625,
+      "capacity_violation": 0.0,
+      "val_distance": 2887.2403564453125,
+      "val_feasibility": 1.0
+    }
+  ]
+}

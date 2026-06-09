@@ -1,0 +1,15 @@
+# Activate the conda environment first:
+#   conda activate svrp
+#
+# Install PyTorch manually before this file if you need a CUDA-specific wheel:
+#   https://pytorch.org/get-started/locally/
+# The generic torch package is intentionally not pinned here because CUDA/CPU
+# wheels depend on the local machine.
+
+rl4co==0.4.0
+lightning
+torchrl==0.6.0
+tensordict==0.6.0
+ortools==9.10.4067
+numpy
+matplotlib

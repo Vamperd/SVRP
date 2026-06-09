@@ -1,0 +1,86 @@
+[
+  {
+    "routes": [
+      [
+        0,
+        8,
+        6,
+        7,
+        3,
+        10,
+        9,
+        2,
+        5,
+        4,
+        1,
+        0
+      ]
+    ],
+    "total_distance": 2952.108154296875,
+    "feasible": true,
+    "capacity_used": [
+      466.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 466.0,
+    "num_vehicles": 1,
+    "instance": 1,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2952.108154296875
+  },
+  {
+    "routes": [
+      [
+        0,
+        3,
+        5,
+        10,
+        8,
+        1,
+        4,
+        2,
+        6,
+        9,
+        7,
+        0
+      ]
+    ],
+    "total_distance": 2229.566650390625,
+    "feasible": true,
+    "capacity_used": [
+      472.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 472.0,
+    "num_vehicles": 1,
+    "instance": 7,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2229.566650390625
+  }
+]

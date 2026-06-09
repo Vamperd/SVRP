@@ -1,0 +1,422 @@
+[
+  {
+    "routes": [
+      [
+        0,
+        7,
+        10,
+        2,
+        1,
+        4,
+        9,
+        5,
+        3,
+        8,
+        6,
+        0
+      ]
+    ],
+    "total_distance": 3380.393798828125,
+    "feasible": true,
+    "capacity_used": [
+      421.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 421.0,
+    "num_vehicles": 1,
+    "instance": 0,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 3380.3935546875
+  },
+  {
+    "routes": [
+      [
+        0,
+        8,
+        10,
+        6,
+        1,
+        4,
+        9,
+        2,
+        5,
+        3,
+        7,
+        0
+      ]
+    ],
+    "total_distance": 3282.54833984375,
+    "feasible": true,
+    "capacity_used": [
+      466.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 466.0,
+    "num_vehicles": 1,
+    "instance": 1,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 3282.54833984375
+  },
+  {
+    "routes": [
+      [
+        0,
+        6,
+        10,
+        9,
+        7,
+        4,
+        3,
+        8,
+        1,
+        2,
+        5,
+        0
+      ]
+    ],
+    "total_distance": 1768.21435546875,
+    "feasible": true,
+    "capacity_used": [
+      521.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 521.0,
+    "num_vehicles": 1,
+    "instance": 2,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 1768.21435546875
+  },
+  {
+    "routes": [
+      [
+        0,
+        10,
+        9,
+        3,
+        2,
+        4,
+        7,
+        8,
+        1,
+        6,
+        5,
+        0
+      ]
+    ],
+    "total_distance": 2392.18212890625,
+    "feasible": true,
+    "capacity_used": [
+      449.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 449.0,
+    "num_vehicles": 1,
+    "instance": 3,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2392.18212890625
+  },
+  {
+    "routes": [
+      [
+        0,
+        5,
+        2,
+        6,
+        7,
+        8,
+        10,
+        4,
+        3,
+        9,
+        1,
+        0
+      ]
+    ],
+    "total_distance": 3906.271484375,
+    "feasible": true,
+    "capacity_used": [
+      531.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 531.0,
+    "num_vehicles": 1,
+    "instance": 4,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 3906.271484375
+  },
+  {
+    "routes": [
+      [
+        0,
+        1,
+        7,
+        2,
+        5,
+        10,
+        4,
+        6,
+        8,
+        9,
+        3,
+        0
+      ]
+    ],
+    "total_distance": 3029.405029296875,
+    "feasible": true,
+    "capacity_used": [
+      332.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 332.0,
+    "num_vehicles": 1,
+    "instance": 5,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 3029.405029296875
+  },
+  {
+    "routes": [
+      [
+        0,
+        8,
+        9,
+        7,
+        2,
+        3,
+        6,
+        4,
+        10,
+        5,
+        1,
+        0
+      ]
+    ],
+    "total_distance": 2537.84130859375,
+    "feasible": true,
+    "capacity_used": [
+      489.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 489.0,
+    "num_vehicles": 1,
+    "instance": 6,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2537.84130859375
+  },
+  {
+    "routes": [
+      [
+        0,
+        8,
+        10,
+        2,
+        4,
+        1,
+        7,
+        5,
+        3,
+        9,
+        6,
+        0
+      ]
+    ],
+    "total_distance": 2884.86279296875,
+    "feasible": true,
+    "capacity_used": [
+      472.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 472.0,
+    "num_vehicles": 1,
+    "instance": 7,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2884.86279296875
+  },
+  {
+    "routes": [
+      [
+        0,
+        6,
+        2,
+        4,
+        8,
+        10,
+        1,
+        9,
+        3,
+        7,
+        5,
+        0
+      ]
+    ],
+    "total_distance": 2951.0908203125,
+    "feasible": true,
+    "capacity_used": [
+      584.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 584.0,
+    "num_vehicles": 1,
+    "instance": 8,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2951.0908203125
+  },
+  {
+    "routes": [
+      [
+        0,
+        5,
+        3,
+        8,
+        2,
+        10,
+        6,
+        4,
+        7,
+        1,
+        9,
+        0
+      ]
+    ],
+    "total_distance": 2267.009033203125,
+    "feasible": true,
+    "capacity_used": [
+      598.0
+    ],
+    "served_customers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "missing_customers": [],
+    "duplicate_visits": 0,
+    "vehicle_capacity": 598.0,
+    "num_vehicles": 1,
+    "instance": 9,
+    "source": "..\\..\\..\\vrp_benchmark\\real_cvrp\\cvrp_10_single_depot_single_vehicule_sumDemands.npz",
+    "model_distance": 2267.009033203125
+  }
+]
