@@ -430,6 +430,128 @@ imitation_epochs=3
 - universal 模型最终结果不应使用 stage1 quick checkpoint。
 - 报告中应把 universal 训练分为流程验证、阶段训练和正式评估三层，避免把快速实验误读为充分训练。
 
+### 24. 新增 PDF 同口径评估程序并对比 100 专用模型与 universal 模型
+
+用户要求新增依照 `metrics_formula.md` 的 PDF/OR-Tools 同口径评估程序，用于评估：
+
+```text
+checkpoints/static_100_v2_full_best.pt
+checkpoints/tw_universal_all_full_best.pt
+```
+
+阶段结论：
+- 新增 `benchmark_evaluate.py`，不改变训练 reward，不影响原 `evaluate.py`。
+- PDF 口径指标包括：
+  - `avg_cost = total_travel_time + waiting_time`
+  - `avg_cvr = 100 * (time_window_violations + capacity_violations) / num_customers`
+  - `feasibility_rate` 不统计车辆超限，只按漏访、重复、时间窗、容量判断。
+  - `avg_solver_runtime_s` 包含模型 forward、decoder、route evaluation。
+- 已生成三组静态评估结果：
+  - `results/benchmark_common_clean_100.csv/json`
+  - `results/benchmark_static100_default_test.csv/json`
+  - `results/benchmark_universal100_test.csv/json`
+- 在三组 100 规模静态评估中，两个模型均达到：
+  - `avg_cvr=0.0`
+  - `feasibility_rate=1.0`
+  - `avg_vehicles_excess=0.0`
+- 严格共同干净测试集 `c202/c203` 上：
+  - 100 专用模型 `avg_cost≈3904.50`
+  - universal 模型 `avg_cost≈4258.80`
+- 两个各自 9 实例测试集上，100 专用模型成本也略低；universal 模型推理时间略低但差距很小。
+
+报告启示：
+- 在 100 规模静态问题上，100 专用模型和 universal 模型都已达到可行性指标；区别主要体现在成本。
+- 当前结果支持如下表述：专用训练模型在 100 静态成本上略优，universal 模型牺牲少量 100 规模成本以换取跨规模适应能力。
+- 严格公平比较应优先引用 `common_clean_100`；各自 split 结果只能作为补充说明。
+
+### 25. 使用 100 专用模型和 universal 模型评估 200 规模测试集
+
+用户询问如何使用 `static_100_v2_full_best.pt` 和 `tw_universal_all_full_best.pt` 对 200 规模测试集合进行评估。
+
+阶段结论：
+- `static_100_v2_full_best.pt` 的 checkpoint 元数据只声明支持 `100`，用于 200 时属于跨规模泛化测试，需要显式添加 `--allow_unseen_size`。
+- `tw_universal_all_full_best.pt` 声明支持 `100/200/400/600/800/1000`，可直接评估 200。
+- 推荐使用 `benchmark_evaluate.py` 的 PDF 同口径评估，并优先使用 `data_splits/universal_v1/test/200` 作为 200 测试集。
+
+报告启示：
+- 200 规模对比应明确区分“100 专用模型的跨规模泛化表现”和“universal 模型的目标规模表现”。
+- 如果 100 专用模型在 200 上表现较差，这是合理现象，不应简单视为训练失败。
+
+### 26. `benchmark_200_test` PDF 同口径结果分析
+
+用户要求分析 `results/benchmark_200_test.csv` 中 200 规模静态测试结果。
+
+阶段结论：
+- 测试集为 `universal_v1_test`，规模 `200`，实例数 `9`，模式为 `static`。
+- 两个模型均达到：
+  - `avg_cvr=0.0`
+  - `feasibility_rate=1.0`
+  - `avg_vehicles_excess=0.0`
+  - `avg_route_count≈19.22`
+- 100 专用模型跨规模评估结果：
+  - `avg_cost≈8219.14`
+  - `single_customer_cost≈41.10`
+  - `avg_waiting≈3096.68`
+  - `avg_solver_runtime_s≈0.383`
+- universal 模型结果：
+  - `avg_cost≈8667.88`
+  - `single_customer_cost≈43.34`
+  - `avg_waiting≈3633.13`
+  - `avg_solver_runtime_s≈0.375`
+- 单实例上，100 专用模型在 `6/9` 个实例成本更低，universal 模型在 `3/9` 个实例成本更低；最大差异来自 `C2_2_1`，universal 成本明显更高。
+
+报告启示：
+- 200 静态场景下两个模型都能保持可行性，说明当前 `strict_insert` 可行性优先解码对跨规模有效。
+- 当前 universal 模型在 200 成本上没有优于 100 专用模型，说明它虽具备跨规模能力，但训练强度或多规模权衡仍需优化。
+- 不能简单宣称 universal 必然优于单规模模型；更合理的表述是 universal 提供跨规模统一求解能力，但在部分规模上可能牺牲单规模成本。
+
+### 27. 100-1000 全规模 PDF 同口径静态测试汇总
+
+用户完成 400/600/800/1000 规模评估后，要求按报告表格形式统计并说明结果。
+
+阶段结论：
+- 已汇总 `100/200/400/600/800/1000` 六个规模的 PDF 同口径静态 TWCVRP 测试结果。
+- 输出文件：
+  - `svrpbench/models/rl_solomon_tw/results/benchmark_all_sizes_summary.md`
+- 两个模型在所有规模上均达到：
+  - `CVR=0.0%`
+  - `feasibility_rate=100%`
+  - `avg_vehicles_excess=0.0`
+- `static100` 在所有规模上的 `avg_cost` 均低于 `universal`：
+  - 100: 低约 `6.2%`
+  - 200: 低约 `5.5%`
+  - 400: 低约 `3.6%`
+  - 600: 低约 `0.4%`
+  - 800: 低约 `0.5%`
+  - 1000: 低约 `2.7%`
+- 随规模增大，等待占比显著升高，600-1000 规模接近或超过 `48%`，表明大规模 TWCVRP 的主要成本压力来自时间窗等待。
+- 求解时间随规模上升，但仍保持秒级，1000 规模约 `2.09-2.11s`。
+
+报告启示：
+- 当前可行性优先解码器已经实现了跨规模静态 TWCVRP 可行性闭环。
+- universal 模型的价值应表述为“单 checkpoint 覆盖多规模”，而不是当前阶段成本优于单规模/专用模型。
+- 后续若要提升 universal，应重点降低等待时间和路线组织成本，而不是继续只追求可行率。
+
+### 28. 源 PDF/OR-Tools 成本计算与当前 RL 评估口径差异
+
+用户提供源 PDF 对应算法目录 `Solomon_partner/Solomon`，要求分辨其成本计算并对比两边算法优劣。
+
+阶段结论：
+- 源算法核心文件为 `svrp_ortools_twcvrp/src/evaluator.py`、`experiment_runner.py`、`ortools_twcvrp_solver.py`。
+- 源算法报告成本为：
+  - `total_cost = total_travel_time + waiting_time`
+  - `CVR = 100 * (tw_violations + capacity_violations) / num_customers`
+  - feasibility 额外检查漏访、重复访问、时间窗和容量。
+- 源算法静态时间矩阵来自欧氏距离并四舍五入为整数，且 evaluator 中不累计 service time。
+- 当前 `benchmark_evaluate.py` 的输出指标贴近源 PDF 公式，但底层路线时间推进仍使用当前 Solomon 评估器：
+  - 使用浮点欧氏距离。
+  - 读取并累计 Solomon service time，影响后续到达时间、等待和时间窗违约。
+- 因此目前只能称为“PDF-style 指标”，不能称为与源 PDF/OR-Tools 完全同口径。
+
+报告启示：
+- 报告中可比较 `CVR=0`、`可行率=100%` 等可行性结果，但成本数值不能直接宣称显著优于源 PDF 表格。
+- 若要完全公平比较，应新增 source-compatible evaluator：整数化 travel matrix、忽略 service time 或与源算法一致处理 service time，并在同一批实例上同时跑 OR-Tools 与 RL。
+
 ## 当前推荐报告叙事
 
 1. 首先说明原论文/RL4CO 链路因依赖兼容风险暂停。
@@ -439,3 +561,44 @@ imitation_epochs=3
 5. 说明当前 RL 对照组已经可输出同口径指标，但质量弱于 OR-Tools。
 6. 重点分析失败原因：车辆数超限、REINFORCE 训练不稳定、约束主要靠 decoder。
 7. 最后提出后续优化：可行性优先 checkpoint、增强车辆惩罚、改进 decoder、增加训练步数、多规模通用模型。
+
+### 29. 修正 PDF 同口径评估并澄清“平均客户成本”上升
+
+用户进一步明确：需要与原 PDF 进行直接对比，因此评估算法必须完全向 PDF/OR-Tools 代码看齐；同时此前讨论中的“平均服务时间上升”实际指的是 `single_customer_cost = avg_cost / num_customers`，即平均客户成本上升。
+
+阶段结论：
+- 已将 `benchmark_evaluate.py` 的报告评估路径改为 `pdf_compatible`：
+  - 静态矩阵使用欧氏距离并四舍五入为整数；
+  - 时间推进不再加入 Solomon `service_time`；
+  - `avg_cost = total_travel_time + waiting_time`；
+  - `CVR = 100 * (time_window_violations + capacity_violations) / num_customers`；
+  - 可行率按漏访、重复访问、时间窗、容量判断，车辆超限继续作为额外诊断字段输出。
+- 新 evaluator 中 `service_time` 固定为 `0.0`，另保留 `ignored_service_time` 方便报告说明：Solomon 原始服务时间存在，但不参与 PDF 同口径评分。
+- 已完成 `c202/c203` sanity check，验证 `benchmark_total_cost == total_travel_time + waiting_time`。
+
+报告启示：
+- 后续与 PDF 表格直接对比时，只能使用新的 `pdf_compatible` 结果。
+- 若新口径下平均客户成本仍随规模上升，应解释为大规模时间窗等待、跨规模泛化和可行性优先 decoder 的综合影响，而不是服务时间被直接计入成本。
+- 不建议覆盖 `static100`；它应保留为“100 规模训练、跨规模 zero-shot 泛化”基线。如需提升大规模平均客户成本，应另训多规模或单规模大模型。
+
+### 30. PDF 同口径 100-1000 全规模结果分析
+
+用户完成 `benchmark_pdf_100_test` 至 `benchmark_pdf_1000_test` 的新口径评估，要求像之前一样整理分析。
+
+阶段结论：
+- 已生成 `results/benchmark_pdf_all_sizes_summary.md`，使用完全 PDF 同口径结果。
+- 两个 RL 模型在 100/200/400/600/800/1000 全部达到：
+  - `CVR=0.0%`
+  - `feasibility_rate=100%`
+  - `avg_vehicles_excess=0.0`
+- 相对 PDF 表格：
+  - 100-800 规模下 RL 平均总成本低于 PDF 表格；
+  - 1000 规模下 RL 平均总成本略高于 PDF 表格；
+  - RL 求解时间为秒级，显著低于 PDF 表格中的 OR-Tools 求解时间，但该时间只代表训练后推理与 decoder，不包含训练成本。
+- `single_customer_cost` 随规模总体上升，主要原因是等待时间占比高；新口径下大规模等待占比约 `58%-62%`。
+- `static100` 在多数规模下成本略低于 universal，说明当前 universal 的优势主要是单 checkpoint 多规模覆盖，而不是每个规模成本最优。
+
+报告启示：
+- 当前结果可支持“可行性优先 decoder 使 RL 在多规模静态 TWCVRP 上稳定达到 100% 可行率”。
+- 成本层面应谨慎表述：100-800 规模具备明显优势，1000 规模略弱于 PDF 表格。
+- 后续若继续优化，应优先降低等待时间，而不是继续只优化可行率。

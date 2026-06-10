@@ -1,0 +1,3 @@
+eval_set,model_name,size,mode,instances,avg_cost,single_customer_cost,avg_waiting,avg_cvr,feasibility_rate,avg_solver_runtime_s,robustness_std,avg_route_count,avg_vehicles_excess
+common_clean_100,static100,100,static,2,3904.4957818984985,39.04495781898498,2367.545454144478,0.0,1.0,0.1960678000000371,0.0,5.0,0.0
+common_clean_100,universal,100,static,2,4258.803178548813,42.58803178548813,2800.0859138965607,0.0,1.0,0.2048854500003472,0.0,5.0,0.0
