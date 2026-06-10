@@ -1,0 +1,3099 @@
+{
+  "embed_dim": 128,
+  "feature_dim": 6,
+  "context_dim": 9,
+  "dynamic_feature_dim": 7,
+  "model_version": "tw_pointer_dynamic_v2",
+  "supported_sizes": [
+    "100",
+    "200",
+    "400",
+    "600",
+    "800",
+    "1000"
+  ],
+  "num_customers": null,
+  "mode": "static",
+  "config": {
+    "data_root": null,
+    "split_root": "data_splits\\universal_v1",
+    "input": null,
+    "size": null,
+    "sizes": [
+      "100",
+      "200",
+      "400",
+      "600",
+      "800",
+      "1000"
+    ],
+    "source": "auto",
+    "pattern": "*",
+    "limit": null,
+    "size_sampling": "balanced",
+    "steps_per_epoch": 12,
+    "mode": "static",
+    "decoder": "strict_insert",
+    "insert_top_k": 10,
+    "epochs": 200,
+    "batch_size": 1,
+    "lr": 0.0001,
+    "embed_dim": 128,
+    "checkpoint": "checkpoints\\tw_universal_all_full.pt",
+    "best_checkpoint": null,
+    "seed": 1234,
+    "traffic_seed": 42,
+    "traffic_sigma": 0.2,
+    "traffic_buffer": 0.5,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "device": "auto",
+    "print_every": 10,
+    "val_every": 5,
+    "val_limit": 6,
+    "grad_clip": 1.0,
+    "late_penalty": 10.0,
+    "time_window_penalty": 1000.0,
+    "capacity_penalty": 1000.0,
+    "missing_penalty": 500.0,
+    "duplicate_penalty": 500.0,
+    "vehicle_penalty": 10000.0,
+    "route_count_penalty": 200.0,
+    "feasible_bonus": 50000.0,
+    "infeasible_penalty": 50000.0,
+    "imitation_epochs": 8,
+    "imitation_weight": 1.0,
+    "smoke": false
+  },
+  "split": {
+    "train": [
+      "c101",
+      "c104",
+      "c105",
+      "c106",
+      "c108",
+      "c109",
+      "c204",
+      "c205",
+      "c206",
+      "c207",
+      "c208",
+      "r102",
+      "r103",
+      "r104",
+      "r105",
+      "r107",
+      "r109",
+      "r110",
+      "r112",
+      "r201",
+      "r202",
+      "r203",
+      "r205",
+      "r206",
+      "r209",
+      "r210",
+      "r211",
+      "rc101",
+      "rc104",
+      "rc105",
+      "rc106",
+      "rc107",
+      "rc108",
+      "rc201",
+      "rc202",
+      "rc204",
+      "rc205",
+      "rc206",
+      "rc208",
+      "C1_2_1",
+      "C1_2_5",
+      "C1_2_6",
+      "C1_2_7",
+      "C1_2_8",
+      "C1_2_9",
+      "C1_2_10",
+      "C2_2_2",
+      "C2_2_3",
+      "C2_2_4",
+      "C2_2_6",
+      "C2_2_7",
+      "C2_2_8",
+      "C2_2_9",
+      "R1_2_2",
+      "R1_2_5",
+      "R1_2_6",
+      "R1_2_7",
+      "R1_2_8",
+      "R1_2_9",
+      "R1_2_10",
+      "R2_2_2",
+      "R2_2_4",
+      "R2_2_6",
+      "R2_2_7",
+      "R2_2_8",
+      "R2_2_9",
+      "R2_2_10",
+      "RC1_2_1",
+      "RC1_2_3",
+      "RC1_2_4",
+      "RC1_2_5",
+      "RC1_2_6",
+      "RC1_2_9",
+      "RC1_2_10",
+      "RC2_2_2",
+      "RC2_2_3",
+      "RC2_2_4",
+      "RC2_2_5",
+      "RC2_2_8",
+      "RC2_2_9",
+      "RC2_2_10",
+      "C1_4_2",
+      "C1_4_4",
+      "C1_4_5",
+      "C1_4_6",
+      "C1_4_7",
+      "C1_4_8",
+      "C1_4_9",
+      "C2_4_2",
+      "C2_4_3",
+      "C2_4_4",
+      "C2_4_6",
+      "C2_4_7",
+      "C2_4_8",
+      "C2_4_9",
+      "R1_4_1",
+      "R1_4_2",
+      "R1_4_3",
+      "R1_4_4",
+      "R1_4_6",
+      "R1_4_7",
+      "R1_4_8",
+      "R2_4_2",
+      "R2_4_3",
+      "R2_4_4",
+      "R2_4_5",
+      "R2_4_7",
+      "R2_4_8",
+      "R2_4_10",
+      "RC1_4_1",
+      "RC1_4_2",
+      "RC1_4_6",
+      "RC1_4_7",
+      "RC1_4_8",
+      "RC1_4_9",
+      "RC1_4_10",
+      "RC2_4_2",
+      "RC2_4_3",
+      "RC2_4_4",
+      "RC2_4_5",
+      "RC2_4_7",
+      "RC2_4_8",
+      "RC2_4_9",
+      "C1_6_2",
+      "C1_6_5",
+      "C2_6_2",
+      "C2_6_4",
+      "R1_6_7",
+      "R1_6_9",
+      "R2_6_3",
+      "R2_6_5",
+      "RC1_6_1",
+      "RC1_6_6",
+      "RC2_6_3",
+      "RC2_6_8",
+      "C1_8_2",
+      "C1_8_10",
+      "C2_8_6",
+      "C2_8_7",
+      "R1_8_4",
+      "R1_8_6",
+      "R2_8_1",
+      "R2_8_6",
+      "RC1_8_3",
+      "RC1_8_8",
+      "RC2_8_6",
+      "RC2_8_10",
+      "C1_10_1",
+      "C1_10_8",
+      "C2_10_3",
+      "C2_10_9",
+      "R1_10_4",
+      "R1_10_5",
+      "R2_10_3",
+      "R2_10_6",
+      "RC1_10_3",
+      "RC1_10_6",
+      "RC2_10_1",
+      "RC2_10_6"
+    ],
+    "val": [
+      "c102",
+      "c201",
+      "r101",
+      "r106",
+      "r204",
+      "r208",
+      "rc103",
+      "rc207",
+      "C1_2_4",
+      "C2_2_10",
+      "R1_2_1",
+      "R2_2_3",
+      "R2_2_5",
+      "RC1_2_7",
+      "RC1_2_8",
+      "RC2_2_1",
+      "RC2_2_7",
+      "C1_4_1",
+      "C2_4_5",
+      "R1_4_10",
+      "R2_4_6",
+      "R2_4_9",
+      "RC1_4_3",
+      "RC1_4_5",
+      "RC2_4_1",
+      "RC2_4_6",
+      "C1_6_7",
+      "C2_6_6",
+      "R1_6_4",
+      "R2_6_1",
+      "R2_6_10",
+      "RC1_6_2",
+      "RC1_6_9",
+      "RC2_6_7",
+      "RC2_6_10",
+      "C1_8_6",
+      "C2_8_8",
+      "R1_8_3",
+      "R2_8_3",
+      "R2_8_10",
+      "RC1_8_4",
+      "RC1_8_9",
+      "RC2_8_3",
+      "RC2_8_8",
+      "C1_10_4",
+      "C2_10_5",
+      "R1_10_3",
+      "R2_10_4",
+      "R2_10_7",
+      "RC1_10_4",
+      "RC1_10_8",
+      "RC2_10_2",
+      "RC2_10_9"
+    ],
+    "test": []
+  },
+  "split_manifest": {
+    "name": "universal_v1",
+    "source_root": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon",
+    "output_root": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\svrpbench\\models\\rl_solomon_tw\\data_splits\\universal_v1",
+    "seed": 1234,
+    "sizes": [
+      "100",
+      "200",
+      "400",
+      "600",
+      "800",
+      "1000"
+    ],
+    "rules": {
+      "primary_sizes": [
+        "100",
+        "200",
+        "400"
+      ],
+      "adaptation_sizes": [
+        "1000",
+        "600",
+        "800"
+      ],
+      "primary_train_ratio": 0.7,
+      "primary_val_ratio": 0.15,
+      "large_train_per_group": 2,
+      "large_val_total": 9
+    },
+    "splits": {
+      "100": {
+        "train": [
+          {
+            "name": "c101",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c101.txt",
+            "path": "train\\100\\c101.txt"
+          },
+          {
+            "name": "c104",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c104.txt",
+            "path": "train\\100\\c104.txt"
+          },
+          {
+            "name": "c105",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c105.txt",
+            "path": "train\\100\\c105.txt"
+          },
+          {
+            "name": "c106",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c106.txt",
+            "path": "train\\100\\c106.txt"
+          },
+          {
+            "name": "c108",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c108.txt",
+            "path": "train\\100\\c108.txt"
+          },
+          {
+            "name": "c109",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c109.txt",
+            "path": "train\\100\\c109.txt"
+          },
+          {
+            "name": "c204",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c204.txt",
+            "path": "train\\100\\c204.txt"
+          },
+          {
+            "name": "c205",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c205.txt",
+            "path": "train\\100\\c205.txt"
+          },
+          {
+            "name": "c206",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c206.txt",
+            "path": "train\\100\\c206.txt"
+          },
+          {
+            "name": "c207",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c207.txt",
+            "path": "train\\100\\c207.txt"
+          },
+          {
+            "name": "c208",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c208.txt",
+            "path": "train\\100\\c208.txt"
+          },
+          {
+            "name": "r102",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r102.txt",
+            "path": "train\\100\\r102.txt"
+          },
+          {
+            "name": "r103",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r103.txt",
+            "path": "train\\100\\r103.txt"
+          },
+          {
+            "name": "r104",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r104.txt",
+            "path": "train\\100\\r104.txt"
+          },
+          {
+            "name": "r105",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r105.txt",
+            "path": "train\\100\\r105.txt"
+          },
+          {
+            "name": "r107",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r107.txt",
+            "path": "train\\100\\r107.txt"
+          },
+          {
+            "name": "r109",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r109.txt",
+            "path": "train\\100\\r109.txt"
+          },
+          {
+            "name": "r110",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r110.txt",
+            "path": "train\\100\\r110.txt"
+          },
+          {
+            "name": "r112",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r112.txt",
+            "path": "train\\100\\r112.txt"
+          },
+          {
+            "name": "r201",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r201.txt",
+            "path": "train\\100\\r201.txt"
+          },
+          {
+            "name": "r202",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r202.txt",
+            "path": "train\\100\\r202.txt"
+          },
+          {
+            "name": "r203",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r203.txt",
+            "path": "train\\100\\r203.txt"
+          },
+          {
+            "name": "r205",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r205.txt",
+            "path": "train\\100\\r205.txt"
+          },
+          {
+            "name": "r206",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r206.txt",
+            "path": "train\\100\\r206.txt"
+          },
+          {
+            "name": "r209",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r209.txt",
+            "path": "train\\100\\r209.txt"
+          },
+          {
+            "name": "r210",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r210.txt",
+            "path": "train\\100\\r210.txt"
+          },
+          {
+            "name": "r211",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r211.txt",
+            "path": "train\\100\\r211.txt"
+          },
+          {
+            "name": "rc101",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc101.txt",
+            "path": "train\\100\\rc101.txt"
+          },
+          {
+            "name": "rc104",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc104.txt",
+            "path": "train\\100\\rc104.txt"
+          },
+          {
+            "name": "rc105",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc105.txt",
+            "path": "train\\100\\rc105.txt"
+          },
+          {
+            "name": "rc106",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc106.txt",
+            "path": "train\\100\\rc106.txt"
+          },
+          {
+            "name": "rc107",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc107.txt",
+            "path": "train\\100\\rc107.txt"
+          },
+          {
+            "name": "rc108",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc108.txt",
+            "path": "train\\100\\rc108.txt"
+          },
+          {
+            "name": "rc201",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc201.txt",
+            "path": "train\\100\\rc201.txt"
+          },
+          {
+            "name": "rc202",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc202.txt",
+            "path": "train\\100\\rc202.txt"
+          },
+          {
+            "name": "rc204",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc204.txt",
+            "path": "train\\100\\rc204.txt"
+          },
+          {
+            "name": "rc205",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc205.txt",
+            "path": "train\\100\\rc205.txt"
+          },
+          {
+            "name": "rc206",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc206.txt",
+            "path": "train\\100\\rc206.txt"
+          },
+          {
+            "name": "rc208",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc208.txt",
+            "path": "train\\100\\rc208.txt"
+          }
+        ],
+        "val": [
+          {
+            "name": "c102",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c102.txt",
+            "path": "val\\100\\c102.txt"
+          },
+          {
+            "name": "c201",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c201.txt",
+            "path": "val\\100\\c201.txt"
+          },
+          {
+            "name": "r101",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r101.txt",
+            "path": "val\\100\\r101.txt"
+          },
+          {
+            "name": "r106",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r106.txt",
+            "path": "val\\100\\r106.txt"
+          },
+          {
+            "name": "r204",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r204.txt",
+            "path": "val\\100\\r204.txt"
+          },
+          {
+            "name": "r208",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r208.txt",
+            "path": "val\\100\\r208.txt"
+          },
+          {
+            "name": "rc103",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc103.txt",
+            "path": "val\\100\\rc103.txt"
+          },
+          {
+            "name": "rc207",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc207.txt",
+            "path": "val\\100\\rc207.txt"
+          }
+        ],
+        "test": [
+          {
+            "name": "c103",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c103.txt",
+            "path": "test\\100\\c103.txt"
+          },
+          {
+            "name": "c107",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c107.txt",
+            "path": "test\\100\\c107.txt"
+          },
+          {
+            "name": "c202",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c202.txt",
+            "path": "test\\100\\c202.txt"
+          },
+          {
+            "name": "c203",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c203.txt",
+            "path": "test\\100\\c203.txt"
+          },
+          {
+            "name": "r108",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r108.txt",
+            "path": "test\\100\\r108.txt"
+          },
+          {
+            "name": "r111",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r111.txt",
+            "path": "test\\100\\r111.txt"
+          },
+          {
+            "name": "r207",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r207.txt",
+            "path": "test\\100\\r207.txt"
+          },
+          {
+            "name": "rc102",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc102.txt",
+            "path": "test\\100\\rc102.txt"
+          },
+          {
+            "name": "rc203",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc203.txt",
+            "path": "test\\100\\rc203.txt"
+          }
+        ]
+      },
+      "200": {
+        "train": [
+          {
+            "name": "C1_2_1",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_1.TXT",
+            "path": "train\\200\\C1_2_1.TXT"
+          },
+          {
+            "name": "C1_2_10",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_10.TXT",
+            "path": "train\\200\\C1_2_10.TXT"
+          },
+          {
+            "name": "C1_2_5",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_5.TXT",
+            "path": "train\\200\\C1_2_5.TXT"
+          },
+          {
+            "name": "C1_2_6",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_6.TXT",
+            "path": "train\\200\\C1_2_6.TXT"
+          },
+          {
+            "name": "C1_2_7",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_7.TXT",
+            "path": "train\\200\\C1_2_7.TXT"
+          },
+          {
+            "name": "C1_2_8",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_8.TXT",
+            "path": "train\\200\\C1_2_8.TXT"
+          },
+          {
+            "name": "C1_2_9",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_9.TXT",
+            "path": "train\\200\\C1_2_9.TXT"
+          },
+          {
+            "name": "C2_2_2",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_2.TXT",
+            "path": "train\\200\\C2_2_2.TXT"
+          },
+          {
+            "name": "C2_2_3",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_3.TXT",
+            "path": "train\\200\\C2_2_3.TXT"
+          },
+          {
+            "name": "C2_2_4",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_4.TXT",
+            "path": "train\\200\\C2_2_4.TXT"
+          },
+          {
+            "name": "C2_2_6",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_6.TXT",
+            "path": "train\\200\\C2_2_6.TXT"
+          },
+          {
+            "name": "C2_2_7",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_7.TXT",
+            "path": "train\\200\\C2_2_7.TXT"
+          },
+          {
+            "name": "C2_2_8",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_8.TXT",
+            "path": "train\\200\\C2_2_8.TXT"
+          },
+          {
+            "name": "C2_2_9",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_9.TXT",
+            "path": "train\\200\\C2_2_9.TXT"
+          },
+          {
+            "name": "R1_2_10",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_10.TXT",
+            "path": "train\\200\\R1_2_10.TXT"
+          },
+          {
+            "name": "R1_2_2",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_2.TXT",
+            "path": "train\\200\\R1_2_2.TXT"
+          },
+          {
+            "name": "R1_2_5",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_5.TXT",
+            "path": "train\\200\\R1_2_5.TXT"
+          },
+          {
+            "name": "R1_2_6",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_6.TXT",
+            "path": "train\\200\\R1_2_6.TXT"
+          },
+          {
+            "name": "R1_2_7",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_7.TXT",
+            "path": "train\\200\\R1_2_7.TXT"
+          },
+          {
+            "name": "R1_2_8",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_8.TXT",
+            "path": "train\\200\\R1_2_8.TXT"
+          },
+          {
+            "name": "R1_2_9",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_9.TXT",
+            "path": "train\\200\\R1_2_9.TXT"
+          },
+          {
+            "name": "R2_2_10",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_10.TXT",
+            "path": "train\\200\\R2_2_10.TXT"
+          },
+          {
+            "name": "R2_2_2",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_2.TXT",
+            "path": "train\\200\\R2_2_2.TXT"
+          },
+          {
+            "name": "R2_2_4",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_4.TXT",
+            "path": "train\\200\\R2_2_4.TXT"
+          },
+          {
+            "name": "R2_2_6",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_6.TXT",
+            "path": "train\\200\\R2_2_6.TXT"
+          },
+          {
+            "name": "R2_2_7",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_7.TXT",
+            "path": "train\\200\\R2_2_7.TXT"
+          },
+          {
+            "name": "R2_2_8",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_8.TXT",
+            "path": "train\\200\\R2_2_8.TXT"
+          },
+          {
+            "name": "R2_2_9",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_9.TXT",
+            "path": "train\\200\\R2_2_9.TXT"
+          },
+          {
+            "name": "RC1_2_1",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_1.TXT",
+            "path": "train\\200\\RC1_2_1.TXT"
+          },
+          {
+            "name": "RC1_2_10",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_10.TXT",
+            "path": "train\\200\\RC1_2_10.TXT"
+          },
+          {
+            "name": "RC1_2_3",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_3.TXT",
+            "path": "train\\200\\RC1_2_3.TXT"
+          },
+          {
+            "name": "RC1_2_4",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_4.TXT",
+            "path": "train\\200\\RC1_2_4.TXT"
+          },
+          {
+            "name": "RC1_2_5",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_5.TXT",
+            "path": "train\\200\\RC1_2_5.TXT"
+          },
+          {
+            "name": "RC1_2_6",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_6.TXT",
+            "path": "train\\200\\RC1_2_6.TXT"
+          },
+          {
+            "name": "RC1_2_9",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_9.TXT",
+            "path": "train\\200\\RC1_2_9.TXT"
+          },
+          {
+            "name": "RC2_2_10",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_10.TXT",
+            "path": "train\\200\\RC2_2_10.TXT"
+          },
+          {
+            "name": "RC2_2_2",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_2.TXT",
+            "path": "train\\200\\RC2_2_2.TXT"
+          },
+          {
+            "name": "RC2_2_3",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_3.TXT",
+            "path": "train\\200\\RC2_2_3.TXT"
+          },
+          {
+            "name": "RC2_2_4",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_4.TXT",
+            "path": "train\\200\\RC2_2_4.TXT"
+          },
+          {
+            "name": "RC2_2_5",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_5.TXT",
+            "path": "train\\200\\RC2_2_5.TXT"
+          },
+          {
+            "name": "RC2_2_8",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_8.TXT",
+            "path": "train\\200\\RC2_2_8.TXT"
+          },
+          {
+            "name": "RC2_2_9",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_9.TXT",
+            "path": "train\\200\\RC2_2_9.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_2_4",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_4.TXT",
+            "path": "val\\200\\C1_2_4.TXT"
+          },
+          {
+            "name": "C2_2_10",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_10.TXT",
+            "path": "val\\200\\C2_2_10.TXT"
+          },
+          {
+            "name": "R1_2_1",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_1.TXT",
+            "path": "val\\200\\R1_2_1.TXT"
+          },
+          {
+            "name": "R2_2_3",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_3.TXT",
+            "path": "val\\200\\R2_2_3.TXT"
+          },
+          {
+            "name": "R2_2_5",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_5.TXT",
+            "path": "val\\200\\R2_2_5.TXT"
+          },
+          {
+            "name": "RC1_2_7",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_7.TXT",
+            "path": "val\\200\\RC1_2_7.TXT"
+          },
+          {
+            "name": "RC1_2_8",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_8.TXT",
+            "path": "val\\200\\RC1_2_8.TXT"
+          },
+          {
+            "name": "RC2_2_1",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_1.TXT",
+            "path": "val\\200\\RC2_2_1.TXT"
+          },
+          {
+            "name": "RC2_2_7",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_7.TXT",
+            "path": "val\\200\\RC2_2_7.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_2_2",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_2.TXT",
+            "path": "test\\200\\C1_2_2.TXT"
+          },
+          {
+            "name": "C1_2_3",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_3.TXT",
+            "path": "test\\200\\C1_2_3.TXT"
+          },
+          {
+            "name": "C2_2_1",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_1.TXT",
+            "path": "test\\200\\C2_2_1.TXT"
+          },
+          {
+            "name": "C2_2_5",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_5.TXT",
+            "path": "test\\200\\C2_2_5.TXT"
+          },
+          {
+            "name": "R1_2_3",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_3.TXT",
+            "path": "test\\200\\R1_2_3.TXT"
+          },
+          {
+            "name": "R1_2_4",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_4.TXT",
+            "path": "test\\200\\R1_2_4.TXT"
+          },
+          {
+            "name": "R2_2_1",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_1.TXT",
+            "path": "test\\200\\R2_2_1.TXT"
+          },
+          {
+            "name": "RC1_2_2",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_2.TXT",
+            "path": "test\\200\\RC1_2_2.TXT"
+          },
+          {
+            "name": "RC2_2_6",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_6.TXT",
+            "path": "test\\200\\RC2_2_6.TXT"
+          }
+        ]
+      },
+      "400": {
+        "train": [
+          {
+            "name": "C1_4_2",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_2.TXT",
+            "path": "train\\400\\C1_4_2.TXT"
+          },
+          {
+            "name": "C1_4_4",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_4.TXT",
+            "path": "train\\400\\C1_4_4.TXT"
+          },
+          {
+            "name": "C1_4_5",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_5.TXT",
+            "path": "train\\400\\C1_4_5.TXT"
+          },
+          {
+            "name": "C1_4_6",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_6.TXT",
+            "path": "train\\400\\C1_4_6.TXT"
+          },
+          {
+            "name": "C1_4_7",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_7.TXT",
+            "path": "train\\400\\C1_4_7.TXT"
+          },
+          {
+            "name": "C1_4_8",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_8.TXT",
+            "path": "train\\400\\C1_4_8.TXT"
+          },
+          {
+            "name": "C1_4_9",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_9.TXT",
+            "path": "train\\400\\C1_4_9.TXT"
+          },
+          {
+            "name": "C2_4_2",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_2.TXT",
+            "path": "train\\400\\C2_4_2.TXT"
+          },
+          {
+            "name": "C2_4_3",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_3.TXT",
+            "path": "train\\400\\C2_4_3.TXT"
+          },
+          {
+            "name": "C2_4_4",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_4.TXT",
+            "path": "train\\400\\C2_4_4.TXT"
+          },
+          {
+            "name": "C2_4_6",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_6.TXT",
+            "path": "train\\400\\C2_4_6.TXT"
+          },
+          {
+            "name": "C2_4_7",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_7.TXT",
+            "path": "train\\400\\C2_4_7.TXT"
+          },
+          {
+            "name": "C2_4_8",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_8.TXT",
+            "path": "train\\400\\C2_4_8.TXT"
+          },
+          {
+            "name": "C2_4_9",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_9.TXT",
+            "path": "train\\400\\C2_4_9.TXT"
+          },
+          {
+            "name": "R1_4_1",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_1.TXT",
+            "path": "train\\400\\R1_4_1.TXT"
+          },
+          {
+            "name": "R1_4_2",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_2.TXT",
+            "path": "train\\400\\R1_4_2.TXT"
+          },
+          {
+            "name": "R1_4_3",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_3.TXT",
+            "path": "train\\400\\R1_4_3.TXT"
+          },
+          {
+            "name": "R1_4_4",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_4.TXT",
+            "path": "train\\400\\R1_4_4.TXT"
+          },
+          {
+            "name": "R1_4_6",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_6.TXT",
+            "path": "train\\400\\R1_4_6.TXT"
+          },
+          {
+            "name": "R1_4_7",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_7.TXT",
+            "path": "train\\400\\R1_4_7.TXT"
+          },
+          {
+            "name": "R1_4_8",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_8.TXT",
+            "path": "train\\400\\R1_4_8.TXT"
+          },
+          {
+            "name": "R2_4_10",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_10.TXT",
+            "path": "train\\400\\R2_4_10.TXT"
+          },
+          {
+            "name": "R2_4_2",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_2.TXT",
+            "path": "train\\400\\R2_4_2.TXT"
+          },
+          {
+            "name": "R2_4_3",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_3.TXT",
+            "path": "train\\400\\R2_4_3.TXT"
+          },
+          {
+            "name": "R2_4_4",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_4.TXT",
+            "path": "train\\400\\R2_4_4.TXT"
+          },
+          {
+            "name": "R2_4_5",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_5.TXT",
+            "path": "train\\400\\R2_4_5.TXT"
+          },
+          {
+            "name": "R2_4_7",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_7.TXT",
+            "path": "train\\400\\R2_4_7.TXT"
+          },
+          {
+            "name": "R2_4_8",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_8.TXT",
+            "path": "train\\400\\R2_4_8.TXT"
+          },
+          {
+            "name": "RC1_4_1",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_1.TXT",
+            "path": "train\\400\\RC1_4_1.TXT"
+          },
+          {
+            "name": "RC1_4_10",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_10.TXT",
+            "path": "train\\400\\RC1_4_10.TXT"
+          },
+          {
+            "name": "RC1_4_2",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_2.TXT",
+            "path": "train\\400\\RC1_4_2.TXT"
+          },
+          {
+            "name": "RC1_4_6",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_6.TXT",
+            "path": "train\\400\\RC1_4_6.TXT"
+          },
+          {
+            "name": "RC1_4_7",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_7.TXT",
+            "path": "train\\400\\RC1_4_7.TXT"
+          },
+          {
+            "name": "RC1_4_8",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_8.TXT",
+            "path": "train\\400\\RC1_4_8.TXT"
+          },
+          {
+            "name": "RC1_4_9",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_9.TXT",
+            "path": "train\\400\\RC1_4_9.TXT"
+          },
+          {
+            "name": "RC2_4_2",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_2.TXT",
+            "path": "train\\400\\RC2_4_2.TXT"
+          },
+          {
+            "name": "RC2_4_3",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_3.TXT",
+            "path": "train\\400\\RC2_4_3.TXT"
+          },
+          {
+            "name": "RC2_4_4",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_4.TXT",
+            "path": "train\\400\\RC2_4_4.TXT"
+          },
+          {
+            "name": "RC2_4_5",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_5.TXT",
+            "path": "train\\400\\RC2_4_5.TXT"
+          },
+          {
+            "name": "RC2_4_7",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_7.TXT",
+            "path": "train\\400\\RC2_4_7.TXT"
+          },
+          {
+            "name": "RC2_4_8",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_8.TXT",
+            "path": "train\\400\\RC2_4_8.TXT"
+          },
+          {
+            "name": "RC2_4_9",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_9.TXT",
+            "path": "train\\400\\RC2_4_9.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_4_1",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_1.TXT",
+            "path": "val\\400\\C1_4_1.TXT"
+          },
+          {
+            "name": "C2_4_5",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_5.TXT",
+            "path": "val\\400\\C2_4_5.TXT"
+          },
+          {
+            "name": "R1_4_10",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_10.TXT",
+            "path": "val\\400\\R1_4_10.TXT"
+          },
+          {
+            "name": "R2_4_6",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_6.TXT",
+            "path": "val\\400\\R2_4_6.TXT"
+          },
+          {
+            "name": "R2_4_9",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_9.TXT",
+            "path": "val\\400\\R2_4_9.TXT"
+          },
+          {
+            "name": "RC1_4_3",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_3.TXT",
+            "path": "val\\400\\RC1_4_3.TXT"
+          },
+          {
+            "name": "RC1_4_5",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_5.TXT",
+            "path": "val\\400\\RC1_4_5.TXT"
+          },
+          {
+            "name": "RC2_4_1",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_1.TXT",
+            "path": "val\\400\\RC2_4_1.TXT"
+          },
+          {
+            "name": "RC2_4_6",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_6.TXT",
+            "path": "val\\400\\RC2_4_6.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_4_10",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_10.TXT",
+            "path": "test\\400\\C1_4_10.TXT"
+          },
+          {
+            "name": "C1_4_3",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_3.TXT",
+            "path": "test\\400\\C1_4_3.TXT"
+          },
+          {
+            "name": "C2_4_1",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_1.TXT",
+            "path": "test\\400\\C2_4_1.TXT"
+          },
+          {
+            "name": "C2_4_10",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_10.TXT",
+            "path": "test\\400\\C2_4_10.TXT"
+          },
+          {
+            "name": "R1_4_5",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_5.TXT",
+            "path": "test\\400\\R1_4_5.TXT"
+          },
+          {
+            "name": "R1_4_9",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_9.TXT",
+            "path": "test\\400\\R1_4_9.TXT"
+          },
+          {
+            "name": "R2_4_1",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_1.TXT",
+            "path": "test\\400\\R2_4_1.TXT"
+          },
+          {
+            "name": "RC1_4_4",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_4.TXT",
+            "path": "test\\400\\RC1_4_4.TXT"
+          },
+          {
+            "name": "RC2_4_10",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_10.TXT",
+            "path": "test\\400\\RC2_4_10.TXT"
+          }
+        ]
+      },
+      "600": {
+        "train": [
+          {
+            "name": "C1_6_2",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_2.TXT",
+            "path": "train\\600\\C1_6_2.TXT"
+          },
+          {
+            "name": "C1_6_5",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_5.TXT",
+            "path": "train\\600\\C1_6_5.TXT"
+          },
+          {
+            "name": "C2_6_2",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_2.TXT",
+            "path": "train\\600\\C2_6_2.TXT"
+          },
+          {
+            "name": "C2_6_4",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_4.TXT",
+            "path": "train\\600\\C2_6_4.TXT"
+          },
+          {
+            "name": "R1_6_7",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_7.TXT",
+            "path": "train\\600\\R1_6_7.TXT"
+          },
+          {
+            "name": "R1_6_9",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_9.TXT",
+            "path": "train\\600\\R1_6_9.TXT"
+          },
+          {
+            "name": "R2_6_3",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_3.TXT",
+            "path": "train\\600\\R2_6_3.TXT"
+          },
+          {
+            "name": "R2_6_5",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_5.TXT",
+            "path": "train\\600\\R2_6_5.TXT"
+          },
+          {
+            "name": "RC1_6_1",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_1.TXT",
+            "path": "train\\600\\RC1_6_1.TXT"
+          },
+          {
+            "name": "RC1_6_6",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_6.TXT",
+            "path": "train\\600\\RC1_6_6.TXT"
+          },
+          {
+            "name": "RC2_6_3",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_3.TXT",
+            "path": "train\\600\\RC2_6_3.TXT"
+          },
+          {
+            "name": "RC2_6_8",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_8.TXT",
+            "path": "train\\600\\RC2_6_8.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_6_7",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_7.TXT",
+            "path": "val\\600\\C1_6_7.TXT"
+          },
+          {
+            "name": "C2_6_6",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_6.TXT",
+            "path": "val\\600\\C2_6_6.TXT"
+          },
+          {
+            "name": "R1_6_4",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_4.TXT",
+            "path": "val\\600\\R1_6_4.TXT"
+          },
+          {
+            "name": "R2_6_1",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_1.TXT",
+            "path": "val\\600\\R2_6_1.TXT"
+          },
+          {
+            "name": "R2_6_10",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_10.TXT",
+            "path": "val\\600\\R2_6_10.TXT"
+          },
+          {
+            "name": "RC1_6_2",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_2.TXT",
+            "path": "val\\600\\RC1_6_2.TXT"
+          },
+          {
+            "name": "RC1_6_9",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_9.TXT",
+            "path": "val\\600\\RC1_6_9.TXT"
+          },
+          {
+            "name": "RC2_6_10",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_10.TXT",
+            "path": "val\\600\\RC2_6_10.TXT"
+          },
+          {
+            "name": "RC2_6_7",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_7.TXT",
+            "path": "val\\600\\RC2_6_7.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_6_1",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_1.TXT",
+            "path": "test\\600\\C1_6_1.TXT"
+          },
+          {
+            "name": "C1_6_10",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_10.TXT",
+            "path": "test\\600\\C1_6_10.TXT"
+          },
+          {
+            "name": "C1_6_3",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_3.TXT",
+            "path": "test\\600\\C1_6_3.TXT"
+          },
+          {
+            "name": "C1_6_4",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_4.TXT",
+            "path": "test\\600\\C1_6_4.TXT"
+          },
+          {
+            "name": "C1_6_6",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_6.TXT",
+            "path": "test\\600\\C1_6_6.TXT"
+          },
+          {
+            "name": "C1_6_8",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_8.TXT",
+            "path": "test\\600\\C1_6_8.TXT"
+          },
+          {
+            "name": "C1_6_9",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_9.TXT",
+            "path": "test\\600\\C1_6_9.TXT"
+          },
+          {
+            "name": "C2_6_1",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_1.TXT",
+            "path": "test\\600\\C2_6_1.TXT"
+          },
+          {
+            "name": "C2_6_10",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_10.TXT",
+            "path": "test\\600\\C2_6_10.TXT"
+          },
+          {
+            "name": "C2_6_3",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_3.TXT",
+            "path": "test\\600\\C2_6_3.TXT"
+          },
+          {
+            "name": "C2_6_5",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_5.TXT",
+            "path": "test\\600\\C2_6_5.TXT"
+          },
+          {
+            "name": "C2_6_7",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_7.TXT",
+            "path": "test\\600\\C2_6_7.TXT"
+          },
+          {
+            "name": "C2_6_8",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_8.TXT",
+            "path": "test\\600\\C2_6_8.TXT"
+          },
+          {
+            "name": "C2_6_9",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_9.TXT",
+            "path": "test\\600\\C2_6_9.TXT"
+          },
+          {
+            "name": "R1_6_1",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_1.TXT",
+            "path": "test\\600\\R1_6_1.TXT"
+          },
+          {
+            "name": "R1_6_10",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_10.TXT",
+            "path": "test\\600\\R1_6_10.TXT"
+          },
+          {
+            "name": "R1_6_2",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_2.TXT",
+            "path": "test\\600\\R1_6_2.TXT"
+          },
+          {
+            "name": "R1_6_3",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_3.TXT",
+            "path": "test\\600\\R1_6_3.TXT"
+          },
+          {
+            "name": "R1_6_5",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_5.TXT",
+            "path": "test\\600\\R1_6_5.TXT"
+          },
+          {
+            "name": "R1_6_6",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_6.TXT",
+            "path": "test\\600\\R1_6_6.TXT"
+          },
+          {
+            "name": "R1_6_8",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_8.TXT",
+            "path": "test\\600\\R1_6_8.TXT"
+          },
+          {
+            "name": "R2_6_2",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_2.TXT",
+            "path": "test\\600\\R2_6_2.TXT"
+          },
+          {
+            "name": "R2_6_4",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_4.TXT",
+            "path": "test\\600\\R2_6_4.TXT"
+          },
+          {
+            "name": "R2_6_6",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_6.TXT",
+            "path": "test\\600\\R2_6_6.TXT"
+          },
+          {
+            "name": "R2_6_7",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_7.TXT",
+            "path": "test\\600\\R2_6_7.TXT"
+          },
+          {
+            "name": "R2_6_8",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_8.TXT",
+            "path": "test\\600\\R2_6_8.TXT"
+          },
+          {
+            "name": "R2_6_9",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_9.TXT",
+            "path": "test\\600\\R2_6_9.TXT"
+          },
+          {
+            "name": "RC1_6_10",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_10.TXT",
+            "path": "test\\600\\RC1_6_10.TXT"
+          },
+          {
+            "name": "RC1_6_3",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_3.TXT",
+            "path": "test\\600\\RC1_6_3.TXT"
+          },
+          {
+            "name": "RC1_6_4",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_4.TXT",
+            "path": "test\\600\\RC1_6_4.TXT"
+          },
+          {
+            "name": "RC1_6_5",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_5.TXT",
+            "path": "test\\600\\RC1_6_5.TXT"
+          },
+          {
+            "name": "RC1_6_7",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_7.TXT",
+            "path": "test\\600\\RC1_6_7.TXT"
+          },
+          {
+            "name": "RC1_6_8",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_8.TXT",
+            "path": "test\\600\\RC1_6_8.TXT"
+          },
+          {
+            "name": "RC2_6_1",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_1.TXT",
+            "path": "test\\600\\RC2_6_1.TXT"
+          },
+          {
+            "name": "RC2_6_2",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_2.TXT",
+            "path": "test\\600\\RC2_6_2.TXT"
+          },
+          {
+            "name": "RC2_6_4",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_4.TXT",
+            "path": "test\\600\\RC2_6_4.TXT"
+          },
+          {
+            "name": "RC2_6_5",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_5.TXT",
+            "path": "test\\600\\RC2_6_5.TXT"
+          },
+          {
+            "name": "RC2_6_6",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_6.TXT",
+            "path": "test\\600\\RC2_6_6.TXT"
+          },
+          {
+            "name": "RC2_6_9",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_9.TXT",
+            "path": "test\\600\\RC2_6_9.TXT"
+          }
+        ]
+      },
+      "800": {
+        "train": [
+          {
+            "name": "C1_8_10",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_10.TXT",
+            "path": "train\\800\\C1_8_10.TXT"
+          },
+          {
+            "name": "C1_8_2",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_2.TXT",
+            "path": "train\\800\\C1_8_2.TXT"
+          },
+          {
+            "name": "C2_8_6",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_6.TXT",
+            "path": "train\\800\\C2_8_6.TXT"
+          },
+          {
+            "name": "C2_8_7",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_7.TXT",
+            "path": "train\\800\\C2_8_7.TXT"
+          },
+          {
+            "name": "R1_8_4",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_4.TXT",
+            "path": "train\\800\\R1_8_4.TXT"
+          },
+          {
+            "name": "R1_8_6",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_6.TXT",
+            "path": "train\\800\\R1_8_6.TXT"
+          },
+          {
+            "name": "R2_8_1",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_1.TXT",
+            "path": "train\\800\\R2_8_1.TXT"
+          },
+          {
+            "name": "R2_8_6",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_6.TXT",
+            "path": "train\\800\\R2_8_6.TXT"
+          },
+          {
+            "name": "RC1_8_3",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_3.TXT",
+            "path": "train\\800\\RC1_8_3.TXT"
+          },
+          {
+            "name": "RC1_8_8",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_8.TXT",
+            "path": "train\\800\\RC1_8_8.TXT"
+          },
+          {
+            "name": "RC2_8_10",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_10.TXT",
+            "path": "train\\800\\RC2_8_10.TXT"
+          },
+          {
+            "name": "RC2_8_6",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_6.TXT",
+            "path": "train\\800\\RC2_8_6.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_8_6",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_6.TXT",
+            "path": "val\\800\\C1_8_6.TXT"
+          },
+          {
+            "name": "C2_8_8",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_8.TXT",
+            "path": "val\\800\\C2_8_8.TXT"
+          },
+          {
+            "name": "R1_8_3",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_3.TXT",
+            "path": "val\\800\\R1_8_3.TXT"
+          },
+          {
+            "name": "R2_8_10",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_10.TXT",
+            "path": "val\\800\\R2_8_10.TXT"
+          },
+          {
+            "name": "R2_8_3",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_3.TXT",
+            "path": "val\\800\\R2_8_3.TXT"
+          },
+          {
+            "name": "RC1_8_4",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_4.TXT",
+            "path": "val\\800\\RC1_8_4.TXT"
+          },
+          {
+            "name": "RC1_8_9",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_9.TXT",
+            "path": "val\\800\\RC1_8_9.TXT"
+          },
+          {
+            "name": "RC2_8_3",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_3.TXT",
+            "path": "val\\800\\RC2_8_3.TXT"
+          },
+          {
+            "name": "RC2_8_8",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_8.TXT",
+            "path": "val\\800\\RC2_8_8.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_8_1",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_1.TXT",
+            "path": "test\\800\\C1_8_1.TXT"
+          },
+          {
+            "name": "C1_8_3",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_3.TXT",
+            "path": "test\\800\\C1_8_3.TXT"
+          },
+          {
+            "name": "C1_8_4",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_4.TXT",
+            "path": "test\\800\\C1_8_4.TXT"
+          },
+          {
+            "name": "C1_8_5",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_5.TXT",
+            "path": "test\\800\\C1_8_5.TXT"
+          },
+          {
+            "name": "C1_8_7",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_7.TXT",
+            "path": "test\\800\\C1_8_7.TXT"
+          },
+          {
+            "name": "C1_8_8",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_8.TXT",
+            "path": "test\\800\\C1_8_8.TXT"
+          },
+          {
+            "name": "C1_8_9",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_9.TXT",
+            "path": "test\\800\\C1_8_9.TXT"
+          },
+          {
+            "name": "C2_8_1",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_1.TXT",
+            "path": "test\\800\\C2_8_1.TXT"
+          },
+          {
+            "name": "C2_8_10",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_10.TXT",
+            "path": "test\\800\\C2_8_10.TXT"
+          },
+          {
+            "name": "C2_8_2",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_2.TXT",
+            "path": "test\\800\\C2_8_2.TXT"
+          },
+          {
+            "name": "C2_8_3",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_3.TXT",
+            "path": "test\\800\\C2_8_3.TXT"
+          },
+          {
+            "name": "C2_8_4",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_4.TXT",
+            "path": "test\\800\\C2_8_4.TXT"
+          },
+          {
+            "name": "C2_8_5",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_5.TXT",
+            "path": "test\\800\\C2_8_5.TXT"
+          },
+          {
+            "name": "C2_8_9",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_9.TXT",
+            "path": "test\\800\\C2_8_9.TXT"
+          },
+          {
+            "name": "R1_8_1",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_1.TXT",
+            "path": "test\\800\\R1_8_1.TXT"
+          },
+          {
+            "name": "R1_8_10",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_10.TXT",
+            "path": "test\\800\\R1_8_10.TXT"
+          },
+          {
+            "name": "R1_8_2",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_2.TXT",
+            "path": "test\\800\\R1_8_2.TXT"
+          },
+          {
+            "name": "R1_8_5",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_5.TXT",
+            "path": "test\\800\\R1_8_5.TXT"
+          },
+          {
+            "name": "R1_8_7",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_7.TXT",
+            "path": "test\\800\\R1_8_7.TXT"
+          },
+          {
+            "name": "R1_8_8",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_8.TXT",
+            "path": "test\\800\\R1_8_8.TXT"
+          },
+          {
+            "name": "R1_8_9",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_9.TXT",
+            "path": "test\\800\\R1_8_9.TXT"
+          },
+          {
+            "name": "R2_8_2",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_2.TXT",
+            "path": "test\\800\\R2_8_2.TXT"
+          },
+          {
+            "name": "R2_8_4",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_4.TXT",
+            "path": "test\\800\\R2_8_4.TXT"
+          },
+          {
+            "name": "R2_8_5",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_5.TXT",
+            "path": "test\\800\\R2_8_5.TXT"
+          },
+          {
+            "name": "R2_8_7",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_7.TXT",
+            "path": "test\\800\\R2_8_7.TXT"
+          },
+          {
+            "name": "R2_8_8",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_8.TXT",
+            "path": "test\\800\\R2_8_8.TXT"
+          },
+          {
+            "name": "R2_8_9",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_9.TXT",
+            "path": "test\\800\\R2_8_9.TXT"
+          },
+          {
+            "name": "RC1_8_1",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_1.TXT",
+            "path": "test\\800\\RC1_8_1.TXT"
+          },
+          {
+            "name": "RC1_8_10",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_10.TXT",
+            "path": "test\\800\\RC1_8_10.TXT"
+          },
+          {
+            "name": "RC1_8_2",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_2.TXT",
+            "path": "test\\800\\RC1_8_2.TXT"
+          },
+          {
+            "name": "RC1_8_5",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_5.TXT",
+            "path": "test\\800\\RC1_8_5.TXT"
+          },
+          {
+            "name": "RC1_8_6",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_6.TXT",
+            "path": "test\\800\\RC1_8_6.TXT"
+          },
+          {
+            "name": "RC1_8_7",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_7.TXT",
+            "path": "test\\800\\RC1_8_7.TXT"
+          },
+          {
+            "name": "RC2_8_1",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_1.TXT",
+            "path": "test\\800\\RC2_8_1.TXT"
+          },
+          {
+            "name": "RC2_8_2",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_2.TXT",
+            "path": "test\\800\\RC2_8_2.TXT"
+          },
+          {
+            "name": "RC2_8_4",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_4.TXT",
+            "path": "test\\800\\RC2_8_4.TXT"
+          },
+          {
+            "name": "RC2_8_5",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_5.TXT",
+            "path": "test\\800\\RC2_8_5.TXT"
+          },
+          {
+            "name": "RC2_8_7",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_7.TXT",
+            "path": "test\\800\\RC2_8_7.TXT"
+          },
+          {
+            "name": "RC2_8_9",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_9.TXT",
+            "path": "test\\800\\RC2_8_9.TXT"
+          }
+        ]
+      },
+      "1000": {
+        "train": [
+          {
+            "name": "C1_10_1",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_1.TXT",
+            "path": "train\\1000\\C1_10_1.TXT"
+          },
+          {
+            "name": "C1_10_8",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_8.TXT",
+            "path": "train\\1000\\C1_10_8.TXT"
+          },
+          {
+            "name": "C2_10_3",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_3.TXT",
+            "path": "train\\1000\\C2_10_3.TXT"
+          },
+          {
+            "name": "C2_10_9",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_9.TXT",
+            "path": "train\\1000\\C2_10_9.TXT"
+          },
+          {
+            "name": "R1_10_4",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_4.TXT",
+            "path": "train\\1000\\R1_10_4.TXT"
+          },
+          {
+            "name": "R1_10_5",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_5.TXT",
+            "path": "train\\1000\\R1_10_5.TXT"
+          },
+          {
+            "name": "R2_10_3",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_3.TXT",
+            "path": "train\\1000\\R2_10_3.TXT"
+          },
+          {
+            "name": "R2_10_6",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_6.TXT",
+            "path": "train\\1000\\R2_10_6.TXT"
+          },
+          {
+            "name": "RC1_10_3",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_3.TXT",
+            "path": "train\\1000\\RC1_10_3.TXT"
+          },
+          {
+            "name": "RC1_10_6",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_6.TXT",
+            "path": "train\\1000\\RC1_10_6.TXT"
+          },
+          {
+            "name": "RC2_10_1",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_1.TXT",
+            "path": "train\\1000\\RC2_10_1.TXT"
+          },
+          {
+            "name": "RC2_10_6",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_6.TXT",
+            "path": "train\\1000\\RC2_10_6.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_10_4",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_4.TXT",
+            "path": "val\\1000\\C1_10_4.TXT"
+          },
+          {
+            "name": "C2_10_5",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_5.TXT",
+            "path": "val\\1000\\C2_10_5.TXT"
+          },
+          {
+            "name": "R1_10_3",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_3.TXT",
+            "path": "val\\1000\\R1_10_3.TXT"
+          },
+          {
+            "name": "R2_10_4",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_4.TXT",
+            "path": "val\\1000\\R2_10_4.TXT"
+          },
+          {
+            "name": "R2_10_7",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_7.TXT",
+            "path": "val\\1000\\R2_10_7.TXT"
+          },
+          {
+            "name": "RC1_10_4",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_4.TXT",
+            "path": "val\\1000\\RC1_10_4.TXT"
+          },
+          {
+            "name": "RC1_10_8",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_8.TXT",
+            "path": "val\\1000\\RC1_10_8.TXT"
+          },
+          {
+            "name": "RC2_10_2",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_2.TXT",
+            "path": "val\\1000\\RC2_10_2.TXT"
+          },
+          {
+            "name": "RC2_10_9",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_9.TXT",
+            "path": "val\\1000\\RC2_10_9.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_10_10",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_10.TXT",
+            "path": "test\\1000\\C1_10_10.TXT"
+          },
+          {
+            "name": "C1_10_2",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_2.TXT",
+            "path": "test\\1000\\C1_10_2.TXT"
+          },
+          {
+            "name": "C1_10_3",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_3.TXT",
+            "path": "test\\1000\\C1_10_3.TXT"
+          },
+          {
+            "name": "C1_10_5",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_5.TXT",
+            "path": "test\\1000\\C1_10_5.TXT"
+          },
+          {
+            "name": "C1_10_6",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_6.TXT",
+            "path": "test\\1000\\C1_10_6.TXT"
+          },
+          {
+            "name": "C1_10_7",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_7.TXT",
+            "path": "test\\1000\\C1_10_7.TXT"
+          },
+          {
+            "name": "C1_10_9",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_9.TXT",
+            "path": "test\\1000\\C1_10_9.TXT"
+          },
+          {
+            "name": "C2_10_1",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_1.TXT",
+            "path": "test\\1000\\C2_10_1.TXT"
+          },
+          {
+            "name": "C2_10_10",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_10.TXT",
+            "path": "test\\1000\\C2_10_10.TXT"
+          },
+          {
+            "name": "C2_10_2",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_2.TXT",
+            "path": "test\\1000\\C2_10_2.TXT"
+          },
+          {
+            "name": "C2_10_4",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_4.TXT",
+            "path": "test\\1000\\C2_10_4.TXT"
+          },
+          {
+            "name": "C2_10_6",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_6.TXT",
+            "path": "test\\1000\\C2_10_6.TXT"
+          },
+          {
+            "name": "C2_10_7",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_7.TXT",
+            "path": "test\\1000\\C2_10_7.TXT"
+          },
+          {
+            "name": "C2_10_8",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_8.TXT",
+            "path": "test\\1000\\C2_10_8.TXT"
+          },
+          {
+            "name": "R1_10_1",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_1.TXT",
+            "path": "test\\1000\\R1_10_1.TXT"
+          },
+          {
+            "name": "R1_10_10",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_10.TXT",
+            "path": "test\\1000\\R1_10_10.TXT"
+          },
+          {
+            "name": "R1_10_2",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_2.TXT",
+            "path": "test\\1000\\R1_10_2.TXT"
+          },
+          {
+            "name": "R1_10_6",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_6.TXT",
+            "path": "test\\1000\\R1_10_6.TXT"
+          },
+          {
+            "name": "R1_10_7",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_7.TXT",
+            "path": "test\\1000\\R1_10_7.TXT"
+          },
+          {
+            "name": "R1_10_8",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_8.TXT",
+            "path": "test\\1000\\R1_10_8.TXT"
+          },
+          {
+            "name": "R1_10_9",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_9.TXT",
+            "path": "test\\1000\\R1_10_9.TXT"
+          },
+          {
+            "name": "R2_10_1",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_1.TXT",
+            "path": "test\\1000\\R2_10_1.TXT"
+          },
+          {
+            "name": "R2_10_10",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_10.TXT",
+            "path": "test\\1000\\R2_10_10.TXT"
+          },
+          {
+            "name": "R2_10_2",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_2.TXT",
+            "path": "test\\1000\\R2_10_2.TXT"
+          },
+          {
+            "name": "R2_10_5",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_5.TXT",
+            "path": "test\\1000\\R2_10_5.TXT"
+          },
+          {
+            "name": "R2_10_8",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_8.TXT",
+            "path": "test\\1000\\R2_10_8.TXT"
+          },
+          {
+            "name": "R2_10_9",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_9.TXT",
+            "path": "test\\1000\\R2_10_9.TXT"
+          },
+          {
+            "name": "RC1_10_1",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_1.TXT",
+            "path": "test\\1000\\RC1_10_1.TXT"
+          },
+          {
+            "name": "RC1_10_10",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_10.TXT",
+            "path": "test\\1000\\RC1_10_10.TXT"
+          },
+          {
+            "name": "RC1_10_2",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_2.TXT",
+            "path": "test\\1000\\RC1_10_2.TXT"
+          },
+          {
+            "name": "RC1_10_5",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_5.TXT",
+            "path": "test\\1000\\RC1_10_5.TXT"
+          },
+          {
+            "name": "RC1_10_7",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_7.TXT",
+            "path": "test\\1000\\RC1_10_7.TXT"
+          },
+          {
+            "name": "RC1_10_9",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_9.TXT",
+            "path": "test\\1000\\RC1_10_9.TXT"
+          },
+          {
+            "name": "RC2_10_10",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_10.TXT",
+            "path": "test\\1000\\RC2_10_10.TXT"
+          },
+          {
+            "name": "RC2_10_3",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_3.TXT",
+            "path": "test\\1000\\RC2_10_3.TXT"
+          },
+          {
+            "name": "RC2_10_4",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_4.TXT",
+            "path": "test\\1000\\RC2_10_4.TXT"
+          },
+          {
+            "name": "RC2_10_5",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_5.TXT",
+            "path": "test\\1000\\RC2_10_5.TXT"
+          },
+          {
+            "name": "RC2_10_7",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_7.TXT",
+            "path": "test\\1000\\RC2_10_7.TXT"
+          },
+          {
+            "name": "RC2_10_8",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_8.TXT",
+            "path": "test\\1000\\RC2_10_8.TXT"
+          }
+        ]
+      }
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 2816.2061665852866,
+      "reward": -41628.48103841146,
+      "train_total_cost": 78578.48221467932,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12,
+      "val_total_cost": 2953.0629245440164,
+      "val_cvr": 1.1666666666666667,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 1.1666666666666667,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 2,
+      "loss": 2770.839558919271,
+      "reward": -63803.13535563151,
+      "train_total_cost": 100536.46771964431,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 3,
+      "loss": 2726.8438924153647,
+      "reward": -53919.481872558594,
+      "train_total_cost": 89569.48350208998,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 4,
+      "loss": 2673.3832346598306,
+      "reward": -35755.342122395836,
+      "train_total_cost": 70305.34241605799,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 5,
+      "loss": 2620.4080225626626,
+      "reward": -26268.93184407552,
+      "train_total_cost": 63635.5990203917,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12,
+      "val_total_cost": 2501.8389561573663,
+      "val_cvr": 1.0,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 1.0,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 6,
+      "loss": 2548.7879358927407,
+      "reward": -28228.480916341145,
+      "train_total_cost": 64495.14726000031,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 7,
+      "loss": 2475.230967203776,
+      "reward": -35270.93827311198,
+      "train_total_cost": 69004.27234580119,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 8,
+      "loss": 2432.419537862142,
+      "reward": -53382.714599609375,
+      "train_total_cost": 90516.05000075698,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 9,
+      "loss": 0.0,
+      "reward": -29530.548665364582,
+      "train_total_cost": 65163.881288925804,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 10,
+      "loss": 0.0,
+      "reward": -46245.50649007162,
+      "train_total_cost": 83062.17131287853,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2694.2775731682777,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 11,
+      "loss": 0.0,
+      "reward": -64180.21671549479,
+      "train_total_cost": 98530.21858992179,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 12,
+      "loss": 0.0,
+      "reward": -77205.03279622395,
+      "train_total_cost": 113055.03252911568,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 13,
+      "loss": 0.0,
+      "reward": -48805.041178385414,
+      "train_total_cost": 83321.70933318138,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 14,
+      "loss": 0.0,
+      "reward": -84945.73258463542,
+      "train_total_cost": 117379.06635815899,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 15,
+      "loss": 0.0,
+      "reward": -43144.830726623535,
+      "train_total_cost": 77911.4984774689,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    }
+  ],
+  "best": {
+    "epoch": 15,
+    "loss": 0.0,
+    "reward": -43144.830726623535,
+    "train_total_cost": 77911.4984774689,
+    "train_cvr": 0.0,
+    "train_feasibility": 1.0,
+    "train_vehicles_excess": 0.0,
+    "train_time_window_violations": 0.0,
+    "train_capacity_violations": 0.0,
+    "phase": "reinforce",
+    "steps": 12,
+    "val_total_cost": 2687.488255083561,
+    "val_cvr": 0.6666666666666666,
+    "val_feasibility": 0.8333333333333334,
+    "val_vehicles_excess": 0.0,
+    "val_time_window_violations": 0.6666666666666666,
+    "val_capacity_violations": 0.0
+  }
+}

@@ -1,46 +1,63 @@
-# 独立 Solomon/TWCVRP 强化学习链路说明
+# Solomon/TWCVRP 强化学习当前链路说明
 
-本文件夹实现一条独立 PyTorch 强化学习链路，用于形成 `benchmark_report.pdf` 的 RL 对照组。它不依赖 RL4CO、TorchRL、Lightning，也不调用 `python -m vrp_bench solve`。
+本文档只保留当前正在使用的独立 PyTorch TWCVRP 强化学习链路。旧的 RL4CO/TorchRL/Lightning 接入、旧 `greedy_split` 主流程和早期固定规模实验命令不再作为主线使用。
 
-## 1. 环境检查
+当前策略目标不是先追求最低成本，而是先得到可行路线，再逐步降低距离、等待时间和车辆数。
+
+## 1. 当前默认策略
+
+当前主线为 v2 可行性优先策略：
+
+- 模型：`TWPointerPolicy`，共享节点编码器 + attention/pointer 解码。
+- 解码器：默认使用 `strict_insert`。
+- 约束优先级：车辆数、容量、时间窗可行性优先，然后再优化路线成本。
+- 训练方式：先使用启发式 imitation warm-start，再进入 REINFORCE。
+- checkpoint 选择：优先 `val_feasibility` 最大，其次 `val_cvr` 最小，最后 `val_total_cost` 最小。
+- 加速参数：使用 `--insert_top_k`、`--val_limit`、较小 `steps_per_epoch` 控制训练耗时。
+
+已经验证的方向：
+
+```text
+results/static_100_v2_smoke_test.json
+
+static_rl:
+  feasibility = 1.0
+  cvr = 0.0
+  vehicles_excess = 0.0
+
+hybrid_rl:
+  主要失败来源转为交通扰动下 time_window_violations
+```
+
+因此后续不应回退到旧 decoder，而应在 `strict_insert` 基础上继续优化速度和交通扰动鲁棒性。
+
+## 2. 环境检查
 
 所有命令都由你在 conda `svrp` 环境中手动执行：
 
 ```powershell
 conda activate svrp
 cd C:\Users\86136\Desktop\code\RL\SVRP\svrpbench\models\rl_solomon_tw
-python -c "import torch, numpy; print(torch.__version__)"
+python -c "import torch, numpy; print(torch.__version__, torch.cuda.is_available())"
 ```
 
-如果缺少依赖，手动安装最小依赖：
+如果输出为 `False`，说明当前环境没有使用 CUDA 版 PyTorch，训练会明显变慢。此文档不自动安装环境。
 
-```powershell
-pip install torch numpy
-```
+## 3. 数据来源
 
-## 2. 数据来源
-
-优先使用本地 Solomon/Homberger 文本数据：
+当前 TWCVRP 主线使用本地 Solomon/Homberger 文本数据：
 
 ```text
 C:\Users\86136\Desktop\code\RL\SVRP\solomon
 ```
 
-当前已识别规模：
-
-```text
-100, 200, 400, 600, 800, 1000
-```
-
-也可以读取 `vrp_benchmark\real_twcvrp` 中的 `.npz`，但报告对照建议优先使用 Solomon 文件夹。
-
-## 3. 检查数据与划分
+先检查可识别的数据规模：
 
 ```powershell
 python inspect_data.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 200 400 600 800 1000
 ```
 
-默认划分：
+默认文件级划分：
 
 - `train_ratio=0.70`
 - `val_ratio=0.15`
@@ -48,150 +65,107 @@ python inspect_data.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon -
 - `seed=1234`
 - 按 `C1/C2/R1/R2/RC1/RC2` 分层划分
 
-## 4. 可选：手动生成交通扰动说明或缓存
+## 4. 静态 100 规模快速训练
 
-Solomon 原始文件不包含交通扰动矩阵，因此交通扰动由脚本合成生成。
-
-默认只生成 manifest，不保存完整矩阵，适合先检查配置：
+如果 100 规模训练已经很慢，优先使用下面的快速确认命令。它会牺牲一部分训练充分性，但可以快速验证流程和趋势：
 
 ```powershell
-python prepare_traffic.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --mc_samples 30 --traffic_sigma 0.2 --output_dir data_cache\traffic
+python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode static --decoder strict_insert --insert_top_k 10 --imitation_epochs 1 --epochs 30 --steps_per_epoch 3 --batch_size 2 --val_every 5 --val_limit 4 --checkpoint checkpoints\static_100_v2_quick.pt
 ```
 
-如果确实需要保存完整矩阵，使用：
+如果仍然过慢，继续降低：
 
-```powershell
-python prepare_traffic.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --mc_samples 30 --traffic_sigma 0.2 --output_dir data_cache\traffic --store full
+```text
+--batch_size 1
+--steps_per_epoch 1
+--val_limit 2
 ```
 
-注意：`--store full` 在 1000 规模会非常占磁盘，因为每个样本矩阵约为 `1001 x 1001`。
+不建议一开始把 `--insert_top_k` 降到 `1`，路线质量容易明显变差。建议先用 `10`，稳定后再尝试 `30`。
 
-训练和评估脚本默认会按固定 seed 在线生成扰动矩阵，不强制依赖缓存。
+## 5. 静态测试集评估
 
-## 5. 启发式 sanity check
-
-先用最近邻启发式确认静态 TWCVRP 指标能算通：
+训练完成后，用 best checkpoint 在 test split 上评估：
 
 ```powershell
-python heuristic.py --input C:\Users\86136\Desktop\code\RL\SVRP\solomon\100\c101.txt --mode static --output results\heuristic_c101.json
+python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --split test --decoder strict_insert --insert_top_k 10 --static_checkpoint checkpoints\static_100_v2_quick_best.pt --mc_samples 5 --output_json results\static_100_v2_quick.json --output_csv results\static_100_v2_quick.csv
 ```
 
-## 6. 静态 RL smoke 训练
+静态阶段优先看：
 
-```powershell
-python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode static --epochs 1 --batch_size 2 --checkpoint checkpoints\static_100.pt --smoke
+- `static_rl.feasibility`
+- `static_rl.cvr`
+- `vehicles_excess`
+- `time_window_violations`
+- `total_cost`
+- `route_count`
+
+当前验收目标：
+
+```text
+static_rl feasibility = 1.0
+static_rl cvr = 0.0
+vehicles_excess = 0.0
 ```
 
-正常小规模训练：
+在这些指标稳定后，再比较 `total_cost`、`waiting_time`、`route_count`。
+
+## 6. 交通扰动训练
+
+Solomon 原始文件不包含交通扰动矩阵。当前脚本会按固定 seed 在线生成扰动，不需要提前生成缓存。
+
+交通扰动快速训练命令：
 
 ```powershell
-python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode static --epochs 100 --batch_size 8 --checkpoint checkpoints\static_100.pt
+python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode traffic --decoder strict_insert --insert_top_k 10 --traffic_sigma 0.2 --traffic_buffer 0.8 --imitation_epochs 1 --epochs 30 --steps_per_epoch 3 --batch_size 2 --val_every 5 --val_limit 4 --checkpoint checkpoints\traffic_100_v2_quick.pt
 ```
 
-## 7. 交通扰动 RL smoke 训练
+其中：
+
+- `--traffic_sigma 0.2` 控制扰动强度。
+- `--traffic_buffer 0.8` 给时间窗预留更保守的缓冲。
+- `mode=traffic` 训练得到的是 traffic-aware 模型。
+
+只有在需要审计或固定保存扰动矩阵时，才使用 `prepare_traffic.py`。正常训练和评估不需要这一步。
+
+## 7. 静态/交通对照评估
+
+使用静态模型和交通模型做对照：
 
 ```powershell
-python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode traffic --epochs 1 --batch_size 2 --traffic_sigma 0.2 --checkpoint checkpoints\traffic_100.pt --smoke
+python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --split test --decoder strict_insert --insert_top_k 10 --static_checkpoint checkpoints\static_100_v2_quick_best.pt --traffic_checkpoint checkpoints\traffic_100_v2_quick_best.pt --mc_samples 30 --traffic_sigma 0.2 --output_json results\v2_static_traffic_100.json --output_csv results\v2_static_traffic_100.csv
 ```
 
-正常小规模训练：
+评估中三组含义：
 
-```powershell
-python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode traffic --epochs 100 --batch_size 8 --traffic_sigma 0.2 --checkpoint checkpoints\traffic_100.pt
+- `static_rl`：静态模型在静态环境下评估。
+- `hybrid_rl`：静态模型在交通扰动下评估。
+- `traffic_rl`：交通扰动训练模型在交通扰动下评估。
+
+交通扰动阶段优先目标：
+
+```text
+traffic_rl cvr < hybrid_rl cvr
+traffic_rl time_window_violations < hybrid_rl time_window_violations
+vehicles_excess = 0.0
 ```
 
 ## 8. 单实例推理与 SVG 绘图
 
-```powershell
-python solve.py --input C:\Users\86136\Desktop\code\RL\SVRP\solomon\100\c101.txt --checkpoint checkpoints\static_100.pt --mode static --output results\c101_static_solution.json --plot_svg results\plots\c101_static.svg
-```
-
-SVG 绘图不依赖 Matplotlib，通常不会触发 OpenMP DLL 冲突。
-
-## 9. 批量对照评估
-
-只评估 100 规模 test 集：
+使用训练好的 checkpoint 求解单个 Solomon 文件：
 
 ```powershell
-python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --static_checkpoint checkpoints\static_100.pt --traffic_checkpoint checkpoints\traffic_100.pt --split test --mc_samples 30 --output_json results\comparison_100.json --output_csv results\comparison_100.csv
+python solve.py --input C:\Users\86136\Desktop\code\RL\SVRP\solomon\100\c101.txt --checkpoint checkpoints\static_100_v2_quick_best.pt --mode static --decoder strict_insert --insert_top_k 10 --output results\c101_static_solution.json --plot_svg results\plots\c101_static.svg
 ```
 
-多个规模建议每个规模训练独立 checkpoint，然后用模板路径：
+SVG 绘图不依赖 Matplotlib，通常可以避免 Windows 上 OpenMP DLL 冲突。
 
-```powershell
-python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 200 400 600 800 1000 --static_checkpoint checkpoints\static_{size}.pt --traffic_checkpoint checkpoints\traffic_{size}.pt --split test --mc_samples 30 --output_json results\comparison_all.json --output_csv results\comparison_all.csv
-```
+## 9. 多规模通用模型
 
-## 10. 验收标准
-
-- `python -m py_compile *.py` 通过。
-- `inspect_data.py` 能识别所有 Solomon 规模。
-- smoke 训练能生成 `.pt` checkpoint 和 `.json` 元数据。
-- `solve.py` 能生成路线 JSON 和 SVG。
-- `evaluate.py` 能生成 `static_rl`、`hybrid_rl`、`traffic_rl` 三组结果。
-- 输出中包含 `cvr`、`feasibility`、`runtime`、`robustness_std`。
-
-## 10.1 可行性优先 v2 策略
-
-如果旧训练出现 `vehicles_excess` 很高、`feasibility` 长期不提升，使用 v2 策略：
-
-- 默认 decoder 为 `strict_insert`，最多只使用实例允许的车辆数。
-- reward 优先奖励可行解、惩罚不可行解，再比较成本。
-- best checkpoint 按 `val_feasibility` 最大、`val_cvr` 最小、`val_total_cost` 最小选择。
-- 支持 `--imitation_epochs`，先模仿时间窗最近邻启发式，再进入 REINFORCE。
-
-推荐 100 规模训练命令：
-
-```powershell
-python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode static --decoder strict_insert --imitation_epochs 20 --epochs 300 --steps_per_epoch 20 --batch_size 8 --feasible_bonus 50000 --infeasible_penalty 50000 --vehicle_penalty 10000 --route_count_penalty 200 --time_window_penalty 5000 --capacity_penalty 5000 --late_penalty 50 --checkpoint checkpoints\static_100_v2.pt
-```
-
-测试：
-
-```powershell
-python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --split test --decoder strict_insert --static_checkpoint checkpoints\static_100_v2_best.pt --mc_samples 30 --output_json results\static_100_v2_test.json --output_csv results\static_100_v2_test.csv
-```
-
-和旧 decoder 做对照：
-
-```powershell
-python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --split test --decoder greedy_split --static_checkpoint checkpoints\static_100_feasible_best.pt --mc_samples 30 --output_json results\static_100_greedy_split_test.json --output_csv results\static_100_greedy_split_test.csv
-```
-
-## 11. 通用多规模模型 universal_v1
-
-如果希望训练一个 checkpoint 同时求解 `100/200/400/600/800/1000`，使用 `data_splits/universal_v1` 文件级划分。
-
-目录结构：
-
-```text
-data_splits/universal_v1/
-  split_manifest.json
-  train/100
-  train/200
-  train/400
-  train/600
-  train/800
-  train/1000
-  val/...
-  test/...
-```
-
-生成通用划分：
+如果希望一个 checkpoint 同时处理 `100/200/400/600/800/1000`，使用文件级数据划分：
 
 ```powershell
 python create_universal_split.py --source_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --output_root data_splits\universal_v1
-```
-
-如果该目录已经存在且需要重新复制，请显式使用：
-
-```powershell
-python create_universal_split.py --source_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --output_root data_splits\universal_v1 --overwrite
-```
-
-检查划分数量：
-
-```powershell
 python inspect_split.py --split_root data_splits\universal_v1
 ```
 
@@ -206,45 +180,71 @@ python inspect_split.py --split_root data_splits\universal_v1
 1000: 12 train / 9 val / 39 test
 ```
 
-静态通用 smoke 训练：
+多规模快速训练先从小配置开始：
 
 ```powershell
-python train.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --mode static --decoder strict_insert --epochs 1 --batch_size 2 --checkpoint checkpoints\tw_universal_static.pt --smoke
+python train.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --mode static --decoder strict_insert --insert_top_k 10 --imitation_epochs 1 --epochs 10 --steps_per_epoch 2 --batch_size 1 --val_every 5 --val_limit 2 --checkpoint checkpoints\tw_universal_static_quick.pt
 ```
 
-交通扰动通用 smoke 训练：
+多规模测试：
 
 ```powershell
-python train.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --mode traffic --decoder strict_insert --epochs 1 --batch_size 2 --traffic_sigma 0.2 --checkpoint checkpoints\tw_universal_traffic.pt --smoke
+python evaluate.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --split test --decoder strict_insert --insert_top_k 10 --static_checkpoint checkpoints\tw_universal_static_quick_best.pt --mc_samples 5 --output_json results\universal_static_quick.json --output_csv results\universal_static_quick.csv
 ```
 
-正式训练示例：
+注意：`400/600/800/1000` 在 `strict_insert` 下会显著变慢。先让 100 规模稳定，再推进多规模训练。
+
+## 10. 速度控制建议
+
+训练慢的主要瓶颈在 Python/CPU 侧的 `strict_insert` 插入评估，而不是神经网络前向本身。
+
+优先按这个顺序加速：
+
+1. 降低 `--steps_per_epoch`。
+2. 降低 `--batch_size`。
+3. 使用 `--val_limit` 减少训练期间验证开销。
+4. 使用 `--insert_top_k 10` 做候选插入剪枝。
+5. 增大 `--val_every`，减少验证频率。
+6. 确认 CUDA 环境启用，但不要期待 CUDA 解决全部慢的问题。
+
+建议不要为了速度回退到旧 `greedy_split`，因为旧策略的主要问题是车辆数超限，容易让可行率失真。
+
+## 11. 输出文件与指标解释
+
+常见输出：
+
+- `checkpoints\*_best.pt`：验证集最优 checkpoint。
+- `results\*.json`：完整评估结果，适合报告复盘。
+- `results\*.csv`：聚合表格，适合复制进表格或画图。
+- `results\plots\*.svg`：单实例路线图。
+
+关键指标：
+
+- `feasibility`：可行率，当前最优先。
+- `cvr`：constraint violation rate，越低越好。
+- `vehicles_excess`：超出允许车辆数的平均数量，应为 `0`。
+- `time_window_violations`：时间窗违约数量。
+- `late_minutes`：迟到分钟数。
+- `total_cost`：距离、等待、迟到等合成成本。
+- `route_count`：实际使用路线/车辆数量。
+
+报告中建议先比较 `feasibility` 和 `cvr`，再比较 `total_cost`。
+
+## 12. 最小验收流程
+
+如果只想确认当前链路完整可用，按下面顺序执行：
 
 ```powershell
-python train.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --mode static --decoder strict_insert --imitation_epochs 20 --epochs 100 --batch_size 8 --checkpoint checkpoints\tw_universal_static.pt
-python train.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --mode traffic --decoder strict_insert --imitation_epochs 20 --epochs 100 --batch_size 8 --traffic_sigma 0.2 --checkpoint checkpoints\tw_universal_traffic.pt
+python -m py_compile dataset.py traffic.py evaluator.py decoder.py model.py heuristic.py inspect_data.py create_universal_split.py inspect_split.py train.py solve.py evaluate.py
+python inspect_data.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100
+python train.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --size 100 --mode static --decoder strict_insert --insert_top_k 10 --imitation_epochs 1 --epochs 1 --steps_per_epoch 1 --batch_size 1 --val_limit 2 --checkpoint checkpoints\static_100_v2_smoke.pt
+python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --sizes 100 --split test --decoder strict_insert --insert_top_k 10 --static_checkpoint checkpoints\static_100_v2_smoke_best.pt --mc_samples 2 --output_json results\static_100_v2_smoke_check.json --output_csv results\static_100_v2_smoke_check.csv
 ```
 
-如果 800 或 1000 规模训练显存不足，先降低：
+验收标准：
 
-```powershell
---batch_size 1
-```
-
-测试集评估：
-
-```powershell
-python evaluate.py --split_root data_splits\universal_v1 --sizes 100 200 400 600 800 1000 --split test --decoder strict_insert --static_checkpoint checkpoints\tw_universal_static.pt --traffic_checkpoint checkpoints\tw_universal_traffic.pt --mc_samples 30 --output_json results\universal_test.json --output_csv results\universal_test.csv
-```
-
-单实例推理：
-
-```powershell
-python solve.py --input data_splits\universal_v1\test\100\c101.txt --checkpoint checkpoints\tw_universal_static.pt --mode static --decoder strict_insert --output results\single_solution.json --plot_svg results\plots\single_solution.svg
-```
-
-通用 checkpoint 会保存 `supported_sizes`。如果要测试未列入训练范围的规模，需要显式添加：
-
-```powershell
---allow_unseen_size
-```
+- 不出现 RL4CO/TorchRL/Lightning 相关报错。
+- 能生成 `.pt` checkpoint。
+- 能生成 JSON/CSV 结果。
+- 静态结果中 `vehicles_excess=0.0`。
+- 后续实验围绕 `strict_insert`、traffic-aware 训练和速度优化继续推进。

@@ -27,6 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--split", default="test", choices=["train", "val", "test", "all"])
     parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument("--insert_top_k", type=int, default=30)
     parser.add_argument("--static_checkpoint", default=None)
     parser.add_argument("--traffic_checkpoint", default=None)
     parser.add_argument("--seed", type=int, default=1234)
@@ -142,7 +143,13 @@ def policy_routes(model, instance, *, mode: str, args, device: torch.device) -> 
         traffic_sigma=args.traffic_sigma,
         traffic_buffer=args.traffic_buffer,
     )
-    return decode_order(instance, order, matrix, decoder=args.decoder)
+    return decode_order(
+        instance,
+        order,
+        matrix,
+        decoder=args.decoder,
+        insert_top_k=args.insert_top_k,
+    )
 
 
 def evaluate_static(instance, routes, *, method: str, size: str) -> dict:

@@ -26,6 +26,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--mode", default="static", choices=["static", "traffic"])
     parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument("--insert_top_k", type=int, default=30)
     parser.add_argument("--traffic_sigma", type=float, default=0.20)
     parser.add_argument("--traffic_buffer", type=float, default=0.50)
     parser.add_argument("--output", default="results/solution.json")
@@ -86,7 +87,13 @@ def solve_instance(model, instance, args, device: torch.device) -> dict:
         traffic_sigma=args.traffic_sigma,
         traffic_buffer=args.traffic_buffer,
     )
-    routes = decode_order(instance, order, matrix, decoder=args.decoder)
+    routes = decode_order(
+        instance,
+        order,
+        matrix,
+        decoder=args.decoder,
+        insert_top_k=args.insert_top_k,
+    )
     result = evaluate_routes(instance, routes, matrix)
     result["mode"] = args.mode
     result["order"] = order

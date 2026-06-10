@@ -32,6 +32,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--steps_per_epoch", type=int, default=None)
     parser.add_argument("--mode", default="static", choices=["static", "traffic"])
     parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument("--insert_top_k", type=int, default=30)
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--lr", type=float, default=1e-4)
@@ -47,6 +48,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
     parser.add_argument("--print_every", type=int, default=10)
     parser.add_argument("--val_every", type=int, default=10)
+    parser.add_argument("--val_limit", type=int, default=None)
     parser.add_argument("--grad_clip", type=float, default=1.0)
     parser.add_argument("--late_penalty", type=float, default=10.0)
     parser.add_argument("--time_window_penalty", type=float, default=1000.0)
@@ -213,6 +215,8 @@ def epoch_size_schedule(
 def evaluate_policy(policy, instances, args: argparse.Namespace, device: torch.device) -> dict:
     if not instances:
         return {"instances": 0}
+    if args.val_limit is not None and args.val_limit > 0:
+        instances = instances[: args.val_limit]
     rows = []
     policy.eval()
     with torch.no_grad():
@@ -231,6 +235,7 @@ def evaluate_policy(policy, instances, args: argparse.Namespace, device: torch.d
                 order,
                 matrix,
                 decoder=args.decoder,
+                insert_top_k=args.insert_top_k,
                 penalties=penalty_config(args),
             )
             rows.append(metrics)
@@ -245,16 +250,26 @@ def best_key(row: dict) -> tuple[float, float, float]:
     )
 
 
-def expert_orders_tensor(batch_instances, args: argparse.Namespace, device: torch.device) -> torch.Tensor:
+def expert_orders_tensor(
+    batch_instances,
+    args: argparse.Namespace,
+    device: torch.device,
+    expert_cache: dict[str, list[int]],
+) -> torch.Tensor:
     orders = []
     for instance in batch_instances:
-        matrix = planning_matrix(
-            instance,
-            mode=args.mode,
-            traffic_sigma=args.traffic_sigma,
-            traffic_buffer=args.traffic_buffer,
+        cache_key = (
+            f"{instance.source}|{args.mode}|{args.traffic_sigma}|{args.traffic_buffer}"
         )
-        orders.append(nearest_order(instance, matrix))
+        if cache_key not in expert_cache:
+            matrix = planning_matrix(
+                instance,
+                mode=args.mode,
+                traffic_sigma=args.traffic_sigma,
+                traffic_buffer=args.traffic_buffer,
+            )
+            expert_cache[cache_key] = nearest_order(instance, matrix)
+        orders.append(expert_cache[cache_key])
     return torch.tensor(orders, dtype=torch.long, device=device)
 
 
@@ -313,6 +328,7 @@ def main(argv: list[str] | None = None) -> int:
     model = TWPointerPolicy(embed_dim=args.embed_dim).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     rng = np.random.default_rng(args.seed)
+    expert_cache: dict[str, list[int]] = {}
     history: list[dict] = []
     best: dict | None = None
     best_checkpoint = args.best_checkpoint or str(Path(args.checkpoint).with_name(Path(args.checkpoint).stem + "_best.pt"))
@@ -340,7 +356,7 @@ def main(argv: list[str] | None = None) -> int:
             )
             train_metrics = []
             if imitation_phase:
-                expert_orders = expert_orders_tensor(batch_instances, args, device)
+                expert_orders = expert_orders_tensor(batch_instances, args, device, expert_cache)
                 log_probs = order_log_probs(model, batch, expert_orders)
                 loss = -args.imitation_weight * log_probs.mean()
                 rewards = []
@@ -357,6 +373,7 @@ def main(argv: list[str] | None = None) -> int:
                         order,
                         matrix,
                         decoder=args.decoder,
+                        insert_top_k=args.insert_top_k,
                         penalties=penalty_config(args),
                     )
                     rewards.append(reward)
@@ -378,6 +395,7 @@ def main(argv: list[str] | None = None) -> int:
                         order,
                         matrix,
                         decoder=args.decoder,
+                        insert_top_k=args.insert_top_k,
                         penalties=penalty_config(args),
                     )
                     rewards.append(reward)

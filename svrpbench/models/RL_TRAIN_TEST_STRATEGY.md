@@ -153,6 +153,10 @@ C:\Users\86136\Desktop\code\RL\SVRP\svrpbench\models\rl_solomon_tw\data_splits\u
 - 当前 v2 策略默认使用 `strict_insert` decoder，优先保证不超过车辆数。
 - best checkpoint 按 `val_feasibility`、`val_cvr`、`val_total_cost` 的顺序选择。
 - 若旧模型出现 `vehicles_excess` 高、可行率低，应优先使用 v2 可行性训练命令，而不是只比较 `total_cost`。
+- `static_100_v2_smoke_test` 已验证 v2 静态方向正确：`feasibility=1.0`、`cvr=0.0`、`vehicles_excess=0.0`。
+- 当前剩余主要矛盾是交通扰动下的时间窗鲁棒性，后续应比较 `hybrid_rl` 与 `traffic_rl` 的 `time_window_violations`、`late_minutes`、`cvr`。
+- 训练速度方面，短期使用轻量配置确认趋势；大规模训练前再实现候选插入剪枝和增量评分。
+- 当前已加入 `--insert_top_k`、`--val_limit` 和 imitation 专家顺序缓存。训练慢时先用 `insert_top_k=10`、`batch_size=2`、`steps_per_epoch=3` 做快速确认。
 
 推荐命令见：
 

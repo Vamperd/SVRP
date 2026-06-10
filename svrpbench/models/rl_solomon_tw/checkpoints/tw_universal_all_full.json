@@ -1,0 +1,5726 @@
+{
+  "embed_dim": 128,
+  "feature_dim": 6,
+  "context_dim": 9,
+  "dynamic_feature_dim": 7,
+  "model_version": "tw_pointer_dynamic_v2",
+  "supported_sizes": [
+    "100",
+    "200",
+    "400",
+    "600",
+    "800",
+    "1000"
+  ],
+  "num_customers": null,
+  "mode": "static",
+  "config": {
+    "data_root": null,
+    "split_root": "data_splits\\universal_v1",
+    "input": null,
+    "size": null,
+    "sizes": [
+      "100",
+      "200",
+      "400",
+      "600",
+      "800",
+      "1000"
+    ],
+    "source": "auto",
+    "pattern": "*",
+    "limit": null,
+    "size_sampling": "balanced",
+    "steps_per_epoch": 12,
+    "mode": "static",
+    "decoder": "strict_insert",
+    "insert_top_k": 10,
+    "epochs": 200,
+    "batch_size": 1,
+    "lr": 0.0001,
+    "embed_dim": 128,
+    "checkpoint": "checkpoints\\tw_universal_all_full.pt",
+    "best_checkpoint": null,
+    "seed": 1234,
+    "traffic_seed": 42,
+    "traffic_sigma": 0.2,
+    "traffic_buffer": 0.5,
+    "train_ratio": 0.7,
+    "val_ratio": 0.15,
+    "device": "auto",
+    "print_every": 10,
+    "val_every": 5,
+    "val_limit": 6,
+    "grad_clip": 1.0,
+    "late_penalty": 10.0,
+    "time_window_penalty": 1000.0,
+    "capacity_penalty": 1000.0,
+    "missing_penalty": 500.0,
+    "duplicate_penalty": 500.0,
+    "vehicle_penalty": 10000.0,
+    "route_count_penalty": 200.0,
+    "feasible_bonus": 50000.0,
+    "infeasible_penalty": 50000.0,
+    "imitation_epochs": 8,
+    "imitation_weight": 1.0,
+    "smoke": false
+  },
+  "split": {
+    "train": [
+      "c101",
+      "c104",
+      "c105",
+      "c106",
+      "c108",
+      "c109",
+      "c204",
+      "c205",
+      "c206",
+      "c207",
+      "c208",
+      "r102",
+      "r103",
+      "r104",
+      "r105",
+      "r107",
+      "r109",
+      "r110",
+      "r112",
+      "r201",
+      "r202",
+      "r203",
+      "r205",
+      "r206",
+      "r209",
+      "r210",
+      "r211",
+      "rc101",
+      "rc104",
+      "rc105",
+      "rc106",
+      "rc107",
+      "rc108",
+      "rc201",
+      "rc202",
+      "rc204",
+      "rc205",
+      "rc206",
+      "rc208",
+      "C1_2_1",
+      "C1_2_5",
+      "C1_2_6",
+      "C1_2_7",
+      "C1_2_8",
+      "C1_2_9",
+      "C1_2_10",
+      "C2_2_2",
+      "C2_2_3",
+      "C2_2_4",
+      "C2_2_6",
+      "C2_2_7",
+      "C2_2_8",
+      "C2_2_9",
+      "R1_2_2",
+      "R1_2_5",
+      "R1_2_6",
+      "R1_2_7",
+      "R1_2_8",
+      "R1_2_9",
+      "R1_2_10",
+      "R2_2_2",
+      "R2_2_4",
+      "R2_2_6",
+      "R2_2_7",
+      "R2_2_8",
+      "R2_2_9",
+      "R2_2_10",
+      "RC1_2_1",
+      "RC1_2_3",
+      "RC1_2_4",
+      "RC1_2_5",
+      "RC1_2_6",
+      "RC1_2_9",
+      "RC1_2_10",
+      "RC2_2_2",
+      "RC2_2_3",
+      "RC2_2_4",
+      "RC2_2_5",
+      "RC2_2_8",
+      "RC2_2_9",
+      "RC2_2_10",
+      "C1_4_2",
+      "C1_4_4",
+      "C1_4_5",
+      "C1_4_6",
+      "C1_4_7",
+      "C1_4_8",
+      "C1_4_9",
+      "C2_4_2",
+      "C2_4_3",
+      "C2_4_4",
+      "C2_4_6",
+      "C2_4_7",
+      "C2_4_8",
+      "C2_4_9",
+      "R1_4_1",
+      "R1_4_2",
+      "R1_4_3",
+      "R1_4_4",
+      "R1_4_6",
+      "R1_4_7",
+      "R1_4_8",
+      "R2_4_2",
+      "R2_4_3",
+      "R2_4_4",
+      "R2_4_5",
+      "R2_4_7",
+      "R2_4_8",
+      "R2_4_10",
+      "RC1_4_1",
+      "RC1_4_2",
+      "RC1_4_6",
+      "RC1_4_7",
+      "RC1_4_8",
+      "RC1_4_9",
+      "RC1_4_10",
+      "RC2_4_2",
+      "RC2_4_3",
+      "RC2_4_4",
+      "RC2_4_5",
+      "RC2_4_7",
+      "RC2_4_8",
+      "RC2_4_9",
+      "C1_6_2",
+      "C1_6_5",
+      "C2_6_2",
+      "C2_6_4",
+      "R1_6_7",
+      "R1_6_9",
+      "R2_6_3",
+      "R2_6_5",
+      "RC1_6_1",
+      "RC1_6_6",
+      "RC2_6_3",
+      "RC2_6_8",
+      "C1_8_2",
+      "C1_8_10",
+      "C2_8_6",
+      "C2_8_7",
+      "R1_8_4",
+      "R1_8_6",
+      "R2_8_1",
+      "R2_8_6",
+      "RC1_8_3",
+      "RC1_8_8",
+      "RC2_8_6",
+      "RC2_8_10",
+      "C1_10_1",
+      "C1_10_8",
+      "C2_10_3",
+      "C2_10_9",
+      "R1_10_4",
+      "R1_10_5",
+      "R2_10_3",
+      "R2_10_6",
+      "RC1_10_3",
+      "RC1_10_6",
+      "RC2_10_1",
+      "RC2_10_6"
+    ],
+    "val": [
+      "c102",
+      "c201",
+      "r101",
+      "r106",
+      "r204",
+      "r208",
+      "rc103",
+      "rc207",
+      "C1_2_4",
+      "C2_2_10",
+      "R1_2_1",
+      "R2_2_3",
+      "R2_2_5",
+      "RC1_2_7",
+      "RC1_2_8",
+      "RC2_2_1",
+      "RC2_2_7",
+      "C1_4_1",
+      "C2_4_5",
+      "R1_4_10",
+      "R2_4_6",
+      "R2_4_9",
+      "RC1_4_3",
+      "RC1_4_5",
+      "RC2_4_1",
+      "RC2_4_6",
+      "C1_6_7",
+      "C2_6_6",
+      "R1_6_4",
+      "R2_6_1",
+      "R2_6_10",
+      "RC1_6_2",
+      "RC1_6_9",
+      "RC2_6_7",
+      "RC2_6_10",
+      "C1_8_6",
+      "C2_8_8",
+      "R1_8_3",
+      "R2_8_3",
+      "R2_8_10",
+      "RC1_8_4",
+      "RC1_8_9",
+      "RC2_8_3",
+      "RC2_8_8",
+      "C1_10_4",
+      "C2_10_5",
+      "R1_10_3",
+      "R2_10_4",
+      "R2_10_7",
+      "RC1_10_4",
+      "RC1_10_8",
+      "RC2_10_2",
+      "RC2_10_9"
+    ],
+    "test": []
+  },
+  "split_manifest": {
+    "name": "universal_v1",
+    "source_root": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon",
+    "output_root": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\svrpbench\\models\\rl_solomon_tw\\data_splits\\universal_v1",
+    "seed": 1234,
+    "sizes": [
+      "100",
+      "200",
+      "400",
+      "600",
+      "800",
+      "1000"
+    ],
+    "rules": {
+      "primary_sizes": [
+        "100",
+        "200",
+        "400"
+      ],
+      "adaptation_sizes": [
+        "1000",
+        "600",
+        "800"
+      ],
+      "primary_train_ratio": 0.7,
+      "primary_val_ratio": 0.15,
+      "large_train_per_group": 2,
+      "large_val_total": 9
+    },
+    "splits": {
+      "100": {
+        "train": [
+          {
+            "name": "c101",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c101.txt",
+            "path": "train\\100\\c101.txt"
+          },
+          {
+            "name": "c104",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c104.txt",
+            "path": "train\\100\\c104.txt"
+          },
+          {
+            "name": "c105",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c105.txt",
+            "path": "train\\100\\c105.txt"
+          },
+          {
+            "name": "c106",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c106.txt",
+            "path": "train\\100\\c106.txt"
+          },
+          {
+            "name": "c108",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c108.txt",
+            "path": "train\\100\\c108.txt"
+          },
+          {
+            "name": "c109",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c109.txt",
+            "path": "train\\100\\c109.txt"
+          },
+          {
+            "name": "c204",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c204.txt",
+            "path": "train\\100\\c204.txt"
+          },
+          {
+            "name": "c205",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c205.txt",
+            "path": "train\\100\\c205.txt"
+          },
+          {
+            "name": "c206",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c206.txt",
+            "path": "train\\100\\c206.txt"
+          },
+          {
+            "name": "c207",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c207.txt",
+            "path": "train\\100\\c207.txt"
+          },
+          {
+            "name": "c208",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c208.txt",
+            "path": "train\\100\\c208.txt"
+          },
+          {
+            "name": "r102",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r102.txt",
+            "path": "train\\100\\r102.txt"
+          },
+          {
+            "name": "r103",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r103.txt",
+            "path": "train\\100\\r103.txt"
+          },
+          {
+            "name": "r104",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r104.txt",
+            "path": "train\\100\\r104.txt"
+          },
+          {
+            "name": "r105",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r105.txt",
+            "path": "train\\100\\r105.txt"
+          },
+          {
+            "name": "r107",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r107.txt",
+            "path": "train\\100\\r107.txt"
+          },
+          {
+            "name": "r109",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r109.txt",
+            "path": "train\\100\\r109.txt"
+          },
+          {
+            "name": "r110",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r110.txt",
+            "path": "train\\100\\r110.txt"
+          },
+          {
+            "name": "r112",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r112.txt",
+            "path": "train\\100\\r112.txt"
+          },
+          {
+            "name": "r201",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r201.txt",
+            "path": "train\\100\\r201.txt"
+          },
+          {
+            "name": "r202",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r202.txt",
+            "path": "train\\100\\r202.txt"
+          },
+          {
+            "name": "r203",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r203.txt",
+            "path": "train\\100\\r203.txt"
+          },
+          {
+            "name": "r205",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r205.txt",
+            "path": "train\\100\\r205.txt"
+          },
+          {
+            "name": "r206",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r206.txt",
+            "path": "train\\100\\r206.txt"
+          },
+          {
+            "name": "r209",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r209.txt",
+            "path": "train\\100\\r209.txt"
+          },
+          {
+            "name": "r210",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r210.txt",
+            "path": "train\\100\\r210.txt"
+          },
+          {
+            "name": "r211",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r211.txt",
+            "path": "train\\100\\r211.txt"
+          },
+          {
+            "name": "rc101",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc101.txt",
+            "path": "train\\100\\rc101.txt"
+          },
+          {
+            "name": "rc104",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc104.txt",
+            "path": "train\\100\\rc104.txt"
+          },
+          {
+            "name": "rc105",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc105.txt",
+            "path": "train\\100\\rc105.txt"
+          },
+          {
+            "name": "rc106",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc106.txt",
+            "path": "train\\100\\rc106.txt"
+          },
+          {
+            "name": "rc107",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc107.txt",
+            "path": "train\\100\\rc107.txt"
+          },
+          {
+            "name": "rc108",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc108.txt",
+            "path": "train\\100\\rc108.txt"
+          },
+          {
+            "name": "rc201",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc201.txt",
+            "path": "train\\100\\rc201.txt"
+          },
+          {
+            "name": "rc202",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc202.txt",
+            "path": "train\\100\\rc202.txt"
+          },
+          {
+            "name": "rc204",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc204.txt",
+            "path": "train\\100\\rc204.txt"
+          },
+          {
+            "name": "rc205",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc205.txt",
+            "path": "train\\100\\rc205.txt"
+          },
+          {
+            "name": "rc206",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc206.txt",
+            "path": "train\\100\\rc206.txt"
+          },
+          {
+            "name": "rc208",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc208.txt",
+            "path": "train\\100\\rc208.txt"
+          }
+        ],
+        "val": [
+          {
+            "name": "c102",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c102.txt",
+            "path": "val\\100\\c102.txt"
+          },
+          {
+            "name": "c201",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c201.txt",
+            "path": "val\\100\\c201.txt"
+          },
+          {
+            "name": "r101",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r101.txt",
+            "path": "val\\100\\r101.txt"
+          },
+          {
+            "name": "r106",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r106.txt",
+            "path": "val\\100\\r106.txt"
+          },
+          {
+            "name": "r204",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r204.txt",
+            "path": "val\\100\\r204.txt"
+          },
+          {
+            "name": "r208",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r208.txt",
+            "path": "val\\100\\r208.txt"
+          },
+          {
+            "name": "rc103",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc103.txt",
+            "path": "val\\100\\rc103.txt"
+          },
+          {
+            "name": "rc207",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc207.txt",
+            "path": "val\\100\\rc207.txt"
+          }
+        ],
+        "test": [
+          {
+            "name": "c103",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c103.txt",
+            "path": "test\\100\\c103.txt"
+          },
+          {
+            "name": "c107",
+            "group": "c1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c107.txt",
+            "path": "test\\100\\c107.txt"
+          },
+          {
+            "name": "c202",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c202.txt",
+            "path": "test\\100\\c202.txt"
+          },
+          {
+            "name": "c203",
+            "group": "c2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\c203.txt",
+            "path": "test\\100\\c203.txt"
+          },
+          {
+            "name": "r108",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r108.txt",
+            "path": "test\\100\\r108.txt"
+          },
+          {
+            "name": "r111",
+            "group": "r1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r111.txt",
+            "path": "test\\100\\r111.txt"
+          },
+          {
+            "name": "r207",
+            "group": "r2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\r207.txt",
+            "path": "test\\100\\r207.txt"
+          },
+          {
+            "name": "rc102",
+            "group": "rc1",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc102.txt",
+            "path": "test\\100\\rc102.txt"
+          },
+          {
+            "name": "rc203",
+            "group": "rc2",
+            "customers": 100,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\100\\rc203.txt",
+            "path": "test\\100\\rc203.txt"
+          }
+        ]
+      },
+      "200": {
+        "train": [
+          {
+            "name": "C1_2_1",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_1.TXT",
+            "path": "train\\200\\C1_2_1.TXT"
+          },
+          {
+            "name": "C1_2_10",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_10.TXT",
+            "path": "train\\200\\C1_2_10.TXT"
+          },
+          {
+            "name": "C1_2_5",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_5.TXT",
+            "path": "train\\200\\C1_2_5.TXT"
+          },
+          {
+            "name": "C1_2_6",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_6.TXT",
+            "path": "train\\200\\C1_2_6.TXT"
+          },
+          {
+            "name": "C1_2_7",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_7.TXT",
+            "path": "train\\200\\C1_2_7.TXT"
+          },
+          {
+            "name": "C1_2_8",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_8.TXT",
+            "path": "train\\200\\C1_2_8.TXT"
+          },
+          {
+            "name": "C1_2_9",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_9.TXT",
+            "path": "train\\200\\C1_2_9.TXT"
+          },
+          {
+            "name": "C2_2_2",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_2.TXT",
+            "path": "train\\200\\C2_2_2.TXT"
+          },
+          {
+            "name": "C2_2_3",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_3.TXT",
+            "path": "train\\200\\C2_2_3.TXT"
+          },
+          {
+            "name": "C2_2_4",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_4.TXT",
+            "path": "train\\200\\C2_2_4.TXT"
+          },
+          {
+            "name": "C2_2_6",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_6.TXT",
+            "path": "train\\200\\C2_2_6.TXT"
+          },
+          {
+            "name": "C2_2_7",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_7.TXT",
+            "path": "train\\200\\C2_2_7.TXT"
+          },
+          {
+            "name": "C2_2_8",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_8.TXT",
+            "path": "train\\200\\C2_2_8.TXT"
+          },
+          {
+            "name": "C2_2_9",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_9.TXT",
+            "path": "train\\200\\C2_2_9.TXT"
+          },
+          {
+            "name": "R1_2_10",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_10.TXT",
+            "path": "train\\200\\R1_2_10.TXT"
+          },
+          {
+            "name": "R1_2_2",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_2.TXT",
+            "path": "train\\200\\R1_2_2.TXT"
+          },
+          {
+            "name": "R1_2_5",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_5.TXT",
+            "path": "train\\200\\R1_2_5.TXT"
+          },
+          {
+            "name": "R1_2_6",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_6.TXT",
+            "path": "train\\200\\R1_2_6.TXT"
+          },
+          {
+            "name": "R1_2_7",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_7.TXT",
+            "path": "train\\200\\R1_2_7.TXT"
+          },
+          {
+            "name": "R1_2_8",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_8.TXT",
+            "path": "train\\200\\R1_2_8.TXT"
+          },
+          {
+            "name": "R1_2_9",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_9.TXT",
+            "path": "train\\200\\R1_2_9.TXT"
+          },
+          {
+            "name": "R2_2_10",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_10.TXT",
+            "path": "train\\200\\R2_2_10.TXT"
+          },
+          {
+            "name": "R2_2_2",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_2.TXT",
+            "path": "train\\200\\R2_2_2.TXT"
+          },
+          {
+            "name": "R2_2_4",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_4.TXT",
+            "path": "train\\200\\R2_2_4.TXT"
+          },
+          {
+            "name": "R2_2_6",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_6.TXT",
+            "path": "train\\200\\R2_2_6.TXT"
+          },
+          {
+            "name": "R2_2_7",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_7.TXT",
+            "path": "train\\200\\R2_2_7.TXT"
+          },
+          {
+            "name": "R2_2_8",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_8.TXT",
+            "path": "train\\200\\R2_2_8.TXT"
+          },
+          {
+            "name": "R2_2_9",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_9.TXT",
+            "path": "train\\200\\R2_2_9.TXT"
+          },
+          {
+            "name": "RC1_2_1",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_1.TXT",
+            "path": "train\\200\\RC1_2_1.TXT"
+          },
+          {
+            "name": "RC1_2_10",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_10.TXT",
+            "path": "train\\200\\RC1_2_10.TXT"
+          },
+          {
+            "name": "RC1_2_3",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_3.TXT",
+            "path": "train\\200\\RC1_2_3.TXT"
+          },
+          {
+            "name": "RC1_2_4",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_4.TXT",
+            "path": "train\\200\\RC1_2_4.TXT"
+          },
+          {
+            "name": "RC1_2_5",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_5.TXT",
+            "path": "train\\200\\RC1_2_5.TXT"
+          },
+          {
+            "name": "RC1_2_6",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_6.TXT",
+            "path": "train\\200\\RC1_2_6.TXT"
+          },
+          {
+            "name": "RC1_2_9",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_9.TXT",
+            "path": "train\\200\\RC1_2_9.TXT"
+          },
+          {
+            "name": "RC2_2_10",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_10.TXT",
+            "path": "train\\200\\RC2_2_10.TXT"
+          },
+          {
+            "name": "RC2_2_2",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_2.TXT",
+            "path": "train\\200\\RC2_2_2.TXT"
+          },
+          {
+            "name": "RC2_2_3",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_3.TXT",
+            "path": "train\\200\\RC2_2_3.TXT"
+          },
+          {
+            "name": "RC2_2_4",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_4.TXT",
+            "path": "train\\200\\RC2_2_4.TXT"
+          },
+          {
+            "name": "RC2_2_5",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_5.TXT",
+            "path": "train\\200\\RC2_2_5.TXT"
+          },
+          {
+            "name": "RC2_2_8",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_8.TXT",
+            "path": "train\\200\\RC2_2_8.TXT"
+          },
+          {
+            "name": "RC2_2_9",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_9.TXT",
+            "path": "train\\200\\RC2_2_9.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_2_4",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_4.TXT",
+            "path": "val\\200\\C1_2_4.TXT"
+          },
+          {
+            "name": "C2_2_10",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_10.TXT",
+            "path": "val\\200\\C2_2_10.TXT"
+          },
+          {
+            "name": "R1_2_1",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_1.TXT",
+            "path": "val\\200\\R1_2_1.TXT"
+          },
+          {
+            "name": "R2_2_3",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_3.TXT",
+            "path": "val\\200\\R2_2_3.TXT"
+          },
+          {
+            "name": "R2_2_5",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_5.TXT",
+            "path": "val\\200\\R2_2_5.TXT"
+          },
+          {
+            "name": "RC1_2_7",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_7.TXT",
+            "path": "val\\200\\RC1_2_7.TXT"
+          },
+          {
+            "name": "RC1_2_8",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_8.TXT",
+            "path": "val\\200\\RC1_2_8.TXT"
+          },
+          {
+            "name": "RC2_2_1",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_1.TXT",
+            "path": "val\\200\\RC2_2_1.TXT"
+          },
+          {
+            "name": "RC2_2_7",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_7.TXT",
+            "path": "val\\200\\RC2_2_7.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_2_2",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_2.TXT",
+            "path": "test\\200\\C1_2_2.TXT"
+          },
+          {
+            "name": "C1_2_3",
+            "group": "c1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C1_2_3.TXT",
+            "path": "test\\200\\C1_2_3.TXT"
+          },
+          {
+            "name": "C2_2_1",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_1.TXT",
+            "path": "test\\200\\C2_2_1.TXT"
+          },
+          {
+            "name": "C2_2_5",
+            "group": "c2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\C2_2_5.TXT",
+            "path": "test\\200\\C2_2_5.TXT"
+          },
+          {
+            "name": "R1_2_3",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_3.TXT",
+            "path": "test\\200\\R1_2_3.TXT"
+          },
+          {
+            "name": "R1_2_4",
+            "group": "r1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R1_2_4.TXT",
+            "path": "test\\200\\R1_2_4.TXT"
+          },
+          {
+            "name": "R2_2_1",
+            "group": "r2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\R2_2_1.TXT",
+            "path": "test\\200\\R2_2_1.TXT"
+          },
+          {
+            "name": "RC1_2_2",
+            "group": "rc1",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC1_2_2.TXT",
+            "path": "test\\200\\RC1_2_2.TXT"
+          },
+          {
+            "name": "RC2_2_6",
+            "group": "rc2",
+            "customers": 200,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\200\\RC2_2_6.TXT",
+            "path": "test\\200\\RC2_2_6.TXT"
+          }
+        ]
+      },
+      "400": {
+        "train": [
+          {
+            "name": "C1_4_2",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_2.TXT",
+            "path": "train\\400\\C1_4_2.TXT"
+          },
+          {
+            "name": "C1_4_4",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_4.TXT",
+            "path": "train\\400\\C1_4_4.TXT"
+          },
+          {
+            "name": "C1_4_5",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_5.TXT",
+            "path": "train\\400\\C1_4_5.TXT"
+          },
+          {
+            "name": "C1_4_6",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_6.TXT",
+            "path": "train\\400\\C1_4_6.TXT"
+          },
+          {
+            "name": "C1_4_7",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_7.TXT",
+            "path": "train\\400\\C1_4_7.TXT"
+          },
+          {
+            "name": "C1_4_8",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_8.TXT",
+            "path": "train\\400\\C1_4_8.TXT"
+          },
+          {
+            "name": "C1_4_9",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_9.TXT",
+            "path": "train\\400\\C1_4_9.TXT"
+          },
+          {
+            "name": "C2_4_2",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_2.TXT",
+            "path": "train\\400\\C2_4_2.TXT"
+          },
+          {
+            "name": "C2_4_3",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_3.TXT",
+            "path": "train\\400\\C2_4_3.TXT"
+          },
+          {
+            "name": "C2_4_4",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_4.TXT",
+            "path": "train\\400\\C2_4_4.TXT"
+          },
+          {
+            "name": "C2_4_6",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_6.TXT",
+            "path": "train\\400\\C2_4_6.TXT"
+          },
+          {
+            "name": "C2_4_7",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_7.TXT",
+            "path": "train\\400\\C2_4_7.TXT"
+          },
+          {
+            "name": "C2_4_8",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_8.TXT",
+            "path": "train\\400\\C2_4_8.TXT"
+          },
+          {
+            "name": "C2_4_9",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_9.TXT",
+            "path": "train\\400\\C2_4_9.TXT"
+          },
+          {
+            "name": "R1_4_1",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_1.TXT",
+            "path": "train\\400\\R1_4_1.TXT"
+          },
+          {
+            "name": "R1_4_2",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_2.TXT",
+            "path": "train\\400\\R1_4_2.TXT"
+          },
+          {
+            "name": "R1_4_3",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_3.TXT",
+            "path": "train\\400\\R1_4_3.TXT"
+          },
+          {
+            "name": "R1_4_4",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_4.TXT",
+            "path": "train\\400\\R1_4_4.TXT"
+          },
+          {
+            "name": "R1_4_6",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_6.TXT",
+            "path": "train\\400\\R1_4_6.TXT"
+          },
+          {
+            "name": "R1_4_7",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_7.TXT",
+            "path": "train\\400\\R1_4_7.TXT"
+          },
+          {
+            "name": "R1_4_8",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_8.TXT",
+            "path": "train\\400\\R1_4_8.TXT"
+          },
+          {
+            "name": "R2_4_10",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_10.TXT",
+            "path": "train\\400\\R2_4_10.TXT"
+          },
+          {
+            "name": "R2_4_2",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_2.TXT",
+            "path": "train\\400\\R2_4_2.TXT"
+          },
+          {
+            "name": "R2_4_3",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_3.TXT",
+            "path": "train\\400\\R2_4_3.TXT"
+          },
+          {
+            "name": "R2_4_4",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_4.TXT",
+            "path": "train\\400\\R2_4_4.TXT"
+          },
+          {
+            "name": "R2_4_5",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_5.TXT",
+            "path": "train\\400\\R2_4_5.TXT"
+          },
+          {
+            "name": "R2_4_7",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_7.TXT",
+            "path": "train\\400\\R2_4_7.TXT"
+          },
+          {
+            "name": "R2_4_8",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_8.TXT",
+            "path": "train\\400\\R2_4_8.TXT"
+          },
+          {
+            "name": "RC1_4_1",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_1.TXT",
+            "path": "train\\400\\RC1_4_1.TXT"
+          },
+          {
+            "name": "RC1_4_10",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_10.TXT",
+            "path": "train\\400\\RC1_4_10.TXT"
+          },
+          {
+            "name": "RC1_4_2",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_2.TXT",
+            "path": "train\\400\\RC1_4_2.TXT"
+          },
+          {
+            "name": "RC1_4_6",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_6.TXT",
+            "path": "train\\400\\RC1_4_6.TXT"
+          },
+          {
+            "name": "RC1_4_7",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_7.TXT",
+            "path": "train\\400\\RC1_4_7.TXT"
+          },
+          {
+            "name": "RC1_4_8",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_8.TXT",
+            "path": "train\\400\\RC1_4_8.TXT"
+          },
+          {
+            "name": "RC1_4_9",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_9.TXT",
+            "path": "train\\400\\RC1_4_9.TXT"
+          },
+          {
+            "name": "RC2_4_2",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_2.TXT",
+            "path": "train\\400\\RC2_4_2.TXT"
+          },
+          {
+            "name": "RC2_4_3",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_3.TXT",
+            "path": "train\\400\\RC2_4_3.TXT"
+          },
+          {
+            "name": "RC2_4_4",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_4.TXT",
+            "path": "train\\400\\RC2_4_4.TXT"
+          },
+          {
+            "name": "RC2_4_5",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_5.TXT",
+            "path": "train\\400\\RC2_4_5.TXT"
+          },
+          {
+            "name": "RC2_4_7",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_7.TXT",
+            "path": "train\\400\\RC2_4_7.TXT"
+          },
+          {
+            "name": "RC2_4_8",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_8.TXT",
+            "path": "train\\400\\RC2_4_8.TXT"
+          },
+          {
+            "name": "RC2_4_9",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_9.TXT",
+            "path": "train\\400\\RC2_4_9.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_4_1",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_1.TXT",
+            "path": "val\\400\\C1_4_1.TXT"
+          },
+          {
+            "name": "C2_4_5",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_5.TXT",
+            "path": "val\\400\\C2_4_5.TXT"
+          },
+          {
+            "name": "R1_4_10",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_10.TXT",
+            "path": "val\\400\\R1_4_10.TXT"
+          },
+          {
+            "name": "R2_4_6",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_6.TXT",
+            "path": "val\\400\\R2_4_6.TXT"
+          },
+          {
+            "name": "R2_4_9",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_9.TXT",
+            "path": "val\\400\\R2_4_9.TXT"
+          },
+          {
+            "name": "RC1_4_3",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_3.TXT",
+            "path": "val\\400\\RC1_4_3.TXT"
+          },
+          {
+            "name": "RC1_4_5",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_5.TXT",
+            "path": "val\\400\\RC1_4_5.TXT"
+          },
+          {
+            "name": "RC2_4_1",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_1.TXT",
+            "path": "val\\400\\RC2_4_1.TXT"
+          },
+          {
+            "name": "RC2_4_6",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_6.TXT",
+            "path": "val\\400\\RC2_4_6.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_4_10",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_10.TXT",
+            "path": "test\\400\\C1_4_10.TXT"
+          },
+          {
+            "name": "C1_4_3",
+            "group": "c1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C1_4_3.TXT",
+            "path": "test\\400\\C1_4_3.TXT"
+          },
+          {
+            "name": "C2_4_1",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_1.TXT",
+            "path": "test\\400\\C2_4_1.TXT"
+          },
+          {
+            "name": "C2_4_10",
+            "group": "c2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\C2_4_10.TXT",
+            "path": "test\\400\\C2_4_10.TXT"
+          },
+          {
+            "name": "R1_4_5",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_5.TXT",
+            "path": "test\\400\\R1_4_5.TXT"
+          },
+          {
+            "name": "R1_4_9",
+            "group": "r1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R1_4_9.TXT",
+            "path": "test\\400\\R1_4_9.TXT"
+          },
+          {
+            "name": "R2_4_1",
+            "group": "r2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\R2_4_1.TXT",
+            "path": "test\\400\\R2_4_1.TXT"
+          },
+          {
+            "name": "RC1_4_4",
+            "group": "rc1",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC1_4_4.TXT",
+            "path": "test\\400\\RC1_4_4.TXT"
+          },
+          {
+            "name": "RC2_4_10",
+            "group": "rc2",
+            "customers": 400,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\400\\RC2_4_10.TXT",
+            "path": "test\\400\\RC2_4_10.TXT"
+          }
+        ]
+      },
+      "600": {
+        "train": [
+          {
+            "name": "C1_6_2",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_2.TXT",
+            "path": "train\\600\\C1_6_2.TXT"
+          },
+          {
+            "name": "C1_6_5",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_5.TXT",
+            "path": "train\\600\\C1_6_5.TXT"
+          },
+          {
+            "name": "C2_6_2",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_2.TXT",
+            "path": "train\\600\\C2_6_2.TXT"
+          },
+          {
+            "name": "C2_6_4",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_4.TXT",
+            "path": "train\\600\\C2_6_4.TXT"
+          },
+          {
+            "name": "R1_6_7",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_7.TXT",
+            "path": "train\\600\\R1_6_7.TXT"
+          },
+          {
+            "name": "R1_6_9",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_9.TXT",
+            "path": "train\\600\\R1_6_9.TXT"
+          },
+          {
+            "name": "R2_6_3",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_3.TXT",
+            "path": "train\\600\\R2_6_3.TXT"
+          },
+          {
+            "name": "R2_6_5",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_5.TXT",
+            "path": "train\\600\\R2_6_5.TXT"
+          },
+          {
+            "name": "RC1_6_1",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_1.TXT",
+            "path": "train\\600\\RC1_6_1.TXT"
+          },
+          {
+            "name": "RC1_6_6",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_6.TXT",
+            "path": "train\\600\\RC1_6_6.TXT"
+          },
+          {
+            "name": "RC2_6_3",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_3.TXT",
+            "path": "train\\600\\RC2_6_3.TXT"
+          },
+          {
+            "name": "RC2_6_8",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_8.TXT",
+            "path": "train\\600\\RC2_6_8.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_6_7",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_7.TXT",
+            "path": "val\\600\\C1_6_7.TXT"
+          },
+          {
+            "name": "C2_6_6",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_6.TXT",
+            "path": "val\\600\\C2_6_6.TXT"
+          },
+          {
+            "name": "R1_6_4",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_4.TXT",
+            "path": "val\\600\\R1_6_4.TXT"
+          },
+          {
+            "name": "R2_6_1",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_1.TXT",
+            "path": "val\\600\\R2_6_1.TXT"
+          },
+          {
+            "name": "R2_6_10",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_10.TXT",
+            "path": "val\\600\\R2_6_10.TXT"
+          },
+          {
+            "name": "RC1_6_2",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_2.TXT",
+            "path": "val\\600\\RC1_6_2.TXT"
+          },
+          {
+            "name": "RC1_6_9",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_9.TXT",
+            "path": "val\\600\\RC1_6_9.TXT"
+          },
+          {
+            "name": "RC2_6_10",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_10.TXT",
+            "path": "val\\600\\RC2_6_10.TXT"
+          },
+          {
+            "name": "RC2_6_7",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_7.TXT",
+            "path": "val\\600\\RC2_6_7.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_6_1",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_1.TXT",
+            "path": "test\\600\\C1_6_1.TXT"
+          },
+          {
+            "name": "C1_6_10",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_10.TXT",
+            "path": "test\\600\\C1_6_10.TXT"
+          },
+          {
+            "name": "C1_6_3",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_3.TXT",
+            "path": "test\\600\\C1_6_3.TXT"
+          },
+          {
+            "name": "C1_6_4",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_4.TXT",
+            "path": "test\\600\\C1_6_4.TXT"
+          },
+          {
+            "name": "C1_6_6",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_6.TXT",
+            "path": "test\\600\\C1_6_6.TXT"
+          },
+          {
+            "name": "C1_6_8",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_8.TXT",
+            "path": "test\\600\\C1_6_8.TXT"
+          },
+          {
+            "name": "C1_6_9",
+            "group": "c1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C1_6_9.TXT",
+            "path": "test\\600\\C1_6_9.TXT"
+          },
+          {
+            "name": "C2_6_1",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_1.TXT",
+            "path": "test\\600\\C2_6_1.TXT"
+          },
+          {
+            "name": "C2_6_10",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_10.TXT",
+            "path": "test\\600\\C2_6_10.TXT"
+          },
+          {
+            "name": "C2_6_3",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_3.TXT",
+            "path": "test\\600\\C2_6_3.TXT"
+          },
+          {
+            "name": "C2_6_5",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_5.TXT",
+            "path": "test\\600\\C2_6_5.TXT"
+          },
+          {
+            "name": "C2_6_7",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_7.TXT",
+            "path": "test\\600\\C2_6_7.TXT"
+          },
+          {
+            "name": "C2_6_8",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_8.TXT",
+            "path": "test\\600\\C2_6_8.TXT"
+          },
+          {
+            "name": "C2_6_9",
+            "group": "c2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\C2_6_9.TXT",
+            "path": "test\\600\\C2_6_9.TXT"
+          },
+          {
+            "name": "R1_6_1",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_1.TXT",
+            "path": "test\\600\\R1_6_1.TXT"
+          },
+          {
+            "name": "R1_6_10",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_10.TXT",
+            "path": "test\\600\\R1_6_10.TXT"
+          },
+          {
+            "name": "R1_6_2",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_2.TXT",
+            "path": "test\\600\\R1_6_2.TXT"
+          },
+          {
+            "name": "R1_6_3",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_3.TXT",
+            "path": "test\\600\\R1_6_3.TXT"
+          },
+          {
+            "name": "R1_6_5",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_5.TXT",
+            "path": "test\\600\\R1_6_5.TXT"
+          },
+          {
+            "name": "R1_6_6",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_6.TXT",
+            "path": "test\\600\\R1_6_6.TXT"
+          },
+          {
+            "name": "R1_6_8",
+            "group": "r1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R1_6_8.TXT",
+            "path": "test\\600\\R1_6_8.TXT"
+          },
+          {
+            "name": "R2_6_2",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_2.TXT",
+            "path": "test\\600\\R2_6_2.TXT"
+          },
+          {
+            "name": "R2_6_4",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_4.TXT",
+            "path": "test\\600\\R2_6_4.TXT"
+          },
+          {
+            "name": "R2_6_6",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_6.TXT",
+            "path": "test\\600\\R2_6_6.TXT"
+          },
+          {
+            "name": "R2_6_7",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_7.TXT",
+            "path": "test\\600\\R2_6_7.TXT"
+          },
+          {
+            "name": "R2_6_8",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_8.TXT",
+            "path": "test\\600\\R2_6_8.TXT"
+          },
+          {
+            "name": "R2_6_9",
+            "group": "r2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\R2_6_9.TXT",
+            "path": "test\\600\\R2_6_9.TXT"
+          },
+          {
+            "name": "RC1_6_10",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_10.TXT",
+            "path": "test\\600\\RC1_6_10.TXT"
+          },
+          {
+            "name": "RC1_6_3",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_3.TXT",
+            "path": "test\\600\\RC1_6_3.TXT"
+          },
+          {
+            "name": "RC1_6_4",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_4.TXT",
+            "path": "test\\600\\RC1_6_4.TXT"
+          },
+          {
+            "name": "RC1_6_5",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_5.TXT",
+            "path": "test\\600\\RC1_6_5.TXT"
+          },
+          {
+            "name": "RC1_6_7",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_7.TXT",
+            "path": "test\\600\\RC1_6_7.TXT"
+          },
+          {
+            "name": "RC1_6_8",
+            "group": "rc1",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC1_6_8.TXT",
+            "path": "test\\600\\RC1_6_8.TXT"
+          },
+          {
+            "name": "RC2_6_1",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_1.TXT",
+            "path": "test\\600\\RC2_6_1.TXT"
+          },
+          {
+            "name": "RC2_6_2",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_2.TXT",
+            "path": "test\\600\\RC2_6_2.TXT"
+          },
+          {
+            "name": "RC2_6_4",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_4.TXT",
+            "path": "test\\600\\RC2_6_4.TXT"
+          },
+          {
+            "name": "RC2_6_5",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_5.TXT",
+            "path": "test\\600\\RC2_6_5.TXT"
+          },
+          {
+            "name": "RC2_6_6",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_6.TXT",
+            "path": "test\\600\\RC2_6_6.TXT"
+          },
+          {
+            "name": "RC2_6_9",
+            "group": "rc2",
+            "customers": 600,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\600\\RC2_6_9.TXT",
+            "path": "test\\600\\RC2_6_9.TXT"
+          }
+        ]
+      },
+      "800": {
+        "train": [
+          {
+            "name": "C1_8_10",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_10.TXT",
+            "path": "train\\800\\C1_8_10.TXT"
+          },
+          {
+            "name": "C1_8_2",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_2.TXT",
+            "path": "train\\800\\C1_8_2.TXT"
+          },
+          {
+            "name": "C2_8_6",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_6.TXT",
+            "path": "train\\800\\C2_8_6.TXT"
+          },
+          {
+            "name": "C2_8_7",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_7.TXT",
+            "path": "train\\800\\C2_8_7.TXT"
+          },
+          {
+            "name": "R1_8_4",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_4.TXT",
+            "path": "train\\800\\R1_8_4.TXT"
+          },
+          {
+            "name": "R1_8_6",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_6.TXT",
+            "path": "train\\800\\R1_8_6.TXT"
+          },
+          {
+            "name": "R2_8_1",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_1.TXT",
+            "path": "train\\800\\R2_8_1.TXT"
+          },
+          {
+            "name": "R2_8_6",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_6.TXT",
+            "path": "train\\800\\R2_8_6.TXT"
+          },
+          {
+            "name": "RC1_8_3",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_3.TXT",
+            "path": "train\\800\\RC1_8_3.TXT"
+          },
+          {
+            "name": "RC1_8_8",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_8.TXT",
+            "path": "train\\800\\RC1_8_8.TXT"
+          },
+          {
+            "name": "RC2_8_10",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_10.TXT",
+            "path": "train\\800\\RC2_8_10.TXT"
+          },
+          {
+            "name": "RC2_8_6",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_6.TXT",
+            "path": "train\\800\\RC2_8_6.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_8_6",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_6.TXT",
+            "path": "val\\800\\C1_8_6.TXT"
+          },
+          {
+            "name": "C2_8_8",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_8.TXT",
+            "path": "val\\800\\C2_8_8.TXT"
+          },
+          {
+            "name": "R1_8_3",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_3.TXT",
+            "path": "val\\800\\R1_8_3.TXT"
+          },
+          {
+            "name": "R2_8_10",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_10.TXT",
+            "path": "val\\800\\R2_8_10.TXT"
+          },
+          {
+            "name": "R2_8_3",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_3.TXT",
+            "path": "val\\800\\R2_8_3.TXT"
+          },
+          {
+            "name": "RC1_8_4",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_4.TXT",
+            "path": "val\\800\\RC1_8_4.TXT"
+          },
+          {
+            "name": "RC1_8_9",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_9.TXT",
+            "path": "val\\800\\RC1_8_9.TXT"
+          },
+          {
+            "name": "RC2_8_3",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_3.TXT",
+            "path": "val\\800\\RC2_8_3.TXT"
+          },
+          {
+            "name": "RC2_8_8",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_8.TXT",
+            "path": "val\\800\\RC2_8_8.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_8_1",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_1.TXT",
+            "path": "test\\800\\C1_8_1.TXT"
+          },
+          {
+            "name": "C1_8_3",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_3.TXT",
+            "path": "test\\800\\C1_8_3.TXT"
+          },
+          {
+            "name": "C1_8_4",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_4.TXT",
+            "path": "test\\800\\C1_8_4.TXT"
+          },
+          {
+            "name": "C1_8_5",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_5.TXT",
+            "path": "test\\800\\C1_8_5.TXT"
+          },
+          {
+            "name": "C1_8_7",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_7.TXT",
+            "path": "test\\800\\C1_8_7.TXT"
+          },
+          {
+            "name": "C1_8_8",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_8.TXT",
+            "path": "test\\800\\C1_8_8.TXT"
+          },
+          {
+            "name": "C1_8_9",
+            "group": "c1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C1_8_9.TXT",
+            "path": "test\\800\\C1_8_9.TXT"
+          },
+          {
+            "name": "C2_8_1",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_1.TXT",
+            "path": "test\\800\\C2_8_1.TXT"
+          },
+          {
+            "name": "C2_8_10",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_10.TXT",
+            "path": "test\\800\\C2_8_10.TXT"
+          },
+          {
+            "name": "C2_8_2",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_2.TXT",
+            "path": "test\\800\\C2_8_2.TXT"
+          },
+          {
+            "name": "C2_8_3",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_3.TXT",
+            "path": "test\\800\\C2_8_3.TXT"
+          },
+          {
+            "name": "C2_8_4",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_4.TXT",
+            "path": "test\\800\\C2_8_4.TXT"
+          },
+          {
+            "name": "C2_8_5",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_5.TXT",
+            "path": "test\\800\\C2_8_5.TXT"
+          },
+          {
+            "name": "C2_8_9",
+            "group": "c2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\C2_8_9.TXT",
+            "path": "test\\800\\C2_8_9.TXT"
+          },
+          {
+            "name": "R1_8_1",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_1.TXT",
+            "path": "test\\800\\R1_8_1.TXT"
+          },
+          {
+            "name": "R1_8_10",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_10.TXT",
+            "path": "test\\800\\R1_8_10.TXT"
+          },
+          {
+            "name": "R1_8_2",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_2.TXT",
+            "path": "test\\800\\R1_8_2.TXT"
+          },
+          {
+            "name": "R1_8_5",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_5.TXT",
+            "path": "test\\800\\R1_8_5.TXT"
+          },
+          {
+            "name": "R1_8_7",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_7.TXT",
+            "path": "test\\800\\R1_8_7.TXT"
+          },
+          {
+            "name": "R1_8_8",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_8.TXT",
+            "path": "test\\800\\R1_8_8.TXT"
+          },
+          {
+            "name": "R1_8_9",
+            "group": "r1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R1_8_9.TXT",
+            "path": "test\\800\\R1_8_9.TXT"
+          },
+          {
+            "name": "R2_8_2",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_2.TXT",
+            "path": "test\\800\\R2_8_2.TXT"
+          },
+          {
+            "name": "R2_8_4",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_4.TXT",
+            "path": "test\\800\\R2_8_4.TXT"
+          },
+          {
+            "name": "R2_8_5",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_5.TXT",
+            "path": "test\\800\\R2_8_5.TXT"
+          },
+          {
+            "name": "R2_8_7",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_7.TXT",
+            "path": "test\\800\\R2_8_7.TXT"
+          },
+          {
+            "name": "R2_8_8",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_8.TXT",
+            "path": "test\\800\\R2_8_8.TXT"
+          },
+          {
+            "name": "R2_8_9",
+            "group": "r2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\R2_8_9.TXT",
+            "path": "test\\800\\R2_8_9.TXT"
+          },
+          {
+            "name": "RC1_8_1",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_1.TXT",
+            "path": "test\\800\\RC1_8_1.TXT"
+          },
+          {
+            "name": "RC1_8_10",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_10.TXT",
+            "path": "test\\800\\RC1_8_10.TXT"
+          },
+          {
+            "name": "RC1_8_2",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_2.TXT",
+            "path": "test\\800\\RC1_8_2.TXT"
+          },
+          {
+            "name": "RC1_8_5",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_5.TXT",
+            "path": "test\\800\\RC1_8_5.TXT"
+          },
+          {
+            "name": "RC1_8_6",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_6.TXT",
+            "path": "test\\800\\RC1_8_6.TXT"
+          },
+          {
+            "name": "RC1_8_7",
+            "group": "rc1",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC1_8_7.TXT",
+            "path": "test\\800\\RC1_8_7.TXT"
+          },
+          {
+            "name": "RC2_8_1",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_1.TXT",
+            "path": "test\\800\\RC2_8_1.TXT"
+          },
+          {
+            "name": "RC2_8_2",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_2.TXT",
+            "path": "test\\800\\RC2_8_2.TXT"
+          },
+          {
+            "name": "RC2_8_4",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_4.TXT",
+            "path": "test\\800\\RC2_8_4.TXT"
+          },
+          {
+            "name": "RC2_8_5",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_5.TXT",
+            "path": "test\\800\\RC2_8_5.TXT"
+          },
+          {
+            "name": "RC2_8_7",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_7.TXT",
+            "path": "test\\800\\RC2_8_7.TXT"
+          },
+          {
+            "name": "RC2_8_9",
+            "group": "rc2",
+            "customers": 800,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\800\\RC2_8_9.TXT",
+            "path": "test\\800\\RC2_8_9.TXT"
+          }
+        ]
+      },
+      "1000": {
+        "train": [
+          {
+            "name": "C1_10_1",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_1.TXT",
+            "path": "train\\1000\\C1_10_1.TXT"
+          },
+          {
+            "name": "C1_10_8",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_8.TXT",
+            "path": "train\\1000\\C1_10_8.TXT"
+          },
+          {
+            "name": "C2_10_3",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_3.TXT",
+            "path": "train\\1000\\C2_10_3.TXT"
+          },
+          {
+            "name": "C2_10_9",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_9.TXT",
+            "path": "train\\1000\\C2_10_9.TXT"
+          },
+          {
+            "name": "R1_10_4",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_4.TXT",
+            "path": "train\\1000\\R1_10_4.TXT"
+          },
+          {
+            "name": "R1_10_5",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_5.TXT",
+            "path": "train\\1000\\R1_10_5.TXT"
+          },
+          {
+            "name": "R2_10_3",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_3.TXT",
+            "path": "train\\1000\\R2_10_3.TXT"
+          },
+          {
+            "name": "R2_10_6",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_6.TXT",
+            "path": "train\\1000\\R2_10_6.TXT"
+          },
+          {
+            "name": "RC1_10_3",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_3.TXT",
+            "path": "train\\1000\\RC1_10_3.TXT"
+          },
+          {
+            "name": "RC1_10_6",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_6.TXT",
+            "path": "train\\1000\\RC1_10_6.TXT"
+          },
+          {
+            "name": "RC2_10_1",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_1.TXT",
+            "path": "train\\1000\\RC2_10_1.TXT"
+          },
+          {
+            "name": "RC2_10_6",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_6.TXT",
+            "path": "train\\1000\\RC2_10_6.TXT"
+          }
+        ],
+        "val": [
+          {
+            "name": "C1_10_4",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_4.TXT",
+            "path": "val\\1000\\C1_10_4.TXT"
+          },
+          {
+            "name": "C2_10_5",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_5.TXT",
+            "path": "val\\1000\\C2_10_5.TXT"
+          },
+          {
+            "name": "R1_10_3",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_3.TXT",
+            "path": "val\\1000\\R1_10_3.TXT"
+          },
+          {
+            "name": "R2_10_4",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_4.TXT",
+            "path": "val\\1000\\R2_10_4.TXT"
+          },
+          {
+            "name": "R2_10_7",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_7.TXT",
+            "path": "val\\1000\\R2_10_7.TXT"
+          },
+          {
+            "name": "RC1_10_4",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_4.TXT",
+            "path": "val\\1000\\RC1_10_4.TXT"
+          },
+          {
+            "name": "RC1_10_8",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_8.TXT",
+            "path": "val\\1000\\RC1_10_8.TXT"
+          },
+          {
+            "name": "RC2_10_2",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_2.TXT",
+            "path": "val\\1000\\RC2_10_2.TXT"
+          },
+          {
+            "name": "RC2_10_9",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_9.TXT",
+            "path": "val\\1000\\RC2_10_9.TXT"
+          }
+        ],
+        "test": [
+          {
+            "name": "C1_10_10",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_10.TXT",
+            "path": "test\\1000\\C1_10_10.TXT"
+          },
+          {
+            "name": "C1_10_2",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_2.TXT",
+            "path": "test\\1000\\C1_10_2.TXT"
+          },
+          {
+            "name": "C1_10_3",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_3.TXT",
+            "path": "test\\1000\\C1_10_3.TXT"
+          },
+          {
+            "name": "C1_10_5",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_5.TXT",
+            "path": "test\\1000\\C1_10_5.TXT"
+          },
+          {
+            "name": "C1_10_6",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_6.TXT",
+            "path": "test\\1000\\C1_10_6.TXT"
+          },
+          {
+            "name": "C1_10_7",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_7.TXT",
+            "path": "test\\1000\\C1_10_7.TXT"
+          },
+          {
+            "name": "C1_10_9",
+            "group": "c1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C1_10_9.TXT",
+            "path": "test\\1000\\C1_10_9.TXT"
+          },
+          {
+            "name": "C2_10_1",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_1.TXT",
+            "path": "test\\1000\\C2_10_1.TXT"
+          },
+          {
+            "name": "C2_10_10",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_10.TXT",
+            "path": "test\\1000\\C2_10_10.TXT"
+          },
+          {
+            "name": "C2_10_2",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_2.TXT",
+            "path": "test\\1000\\C2_10_2.TXT"
+          },
+          {
+            "name": "C2_10_4",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_4.TXT",
+            "path": "test\\1000\\C2_10_4.TXT"
+          },
+          {
+            "name": "C2_10_6",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_6.TXT",
+            "path": "test\\1000\\C2_10_6.TXT"
+          },
+          {
+            "name": "C2_10_7",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_7.TXT",
+            "path": "test\\1000\\C2_10_7.TXT"
+          },
+          {
+            "name": "C2_10_8",
+            "group": "c2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\C2_10_8.TXT",
+            "path": "test\\1000\\C2_10_8.TXT"
+          },
+          {
+            "name": "R1_10_1",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_1.TXT",
+            "path": "test\\1000\\R1_10_1.TXT"
+          },
+          {
+            "name": "R1_10_10",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_10.TXT",
+            "path": "test\\1000\\R1_10_10.TXT"
+          },
+          {
+            "name": "R1_10_2",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_2.TXT",
+            "path": "test\\1000\\R1_10_2.TXT"
+          },
+          {
+            "name": "R1_10_6",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_6.TXT",
+            "path": "test\\1000\\R1_10_6.TXT"
+          },
+          {
+            "name": "R1_10_7",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_7.TXT",
+            "path": "test\\1000\\R1_10_7.TXT"
+          },
+          {
+            "name": "R1_10_8",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_8.TXT",
+            "path": "test\\1000\\R1_10_8.TXT"
+          },
+          {
+            "name": "R1_10_9",
+            "group": "r1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R1_10_9.TXT",
+            "path": "test\\1000\\R1_10_9.TXT"
+          },
+          {
+            "name": "R2_10_1",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_1.TXT",
+            "path": "test\\1000\\R2_10_1.TXT"
+          },
+          {
+            "name": "R2_10_10",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_10.TXT",
+            "path": "test\\1000\\R2_10_10.TXT"
+          },
+          {
+            "name": "R2_10_2",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_2.TXT",
+            "path": "test\\1000\\R2_10_2.TXT"
+          },
+          {
+            "name": "R2_10_5",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_5.TXT",
+            "path": "test\\1000\\R2_10_5.TXT"
+          },
+          {
+            "name": "R2_10_8",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_8.TXT",
+            "path": "test\\1000\\R2_10_8.TXT"
+          },
+          {
+            "name": "R2_10_9",
+            "group": "r2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\R2_10_9.TXT",
+            "path": "test\\1000\\R2_10_9.TXT"
+          },
+          {
+            "name": "RC1_10_1",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_1.TXT",
+            "path": "test\\1000\\RC1_10_1.TXT"
+          },
+          {
+            "name": "RC1_10_10",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_10.TXT",
+            "path": "test\\1000\\RC1_10_10.TXT"
+          },
+          {
+            "name": "RC1_10_2",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_2.TXT",
+            "path": "test\\1000\\RC1_10_2.TXT"
+          },
+          {
+            "name": "RC1_10_5",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_5.TXT",
+            "path": "test\\1000\\RC1_10_5.TXT"
+          },
+          {
+            "name": "RC1_10_7",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_7.TXT",
+            "path": "test\\1000\\RC1_10_7.TXT"
+          },
+          {
+            "name": "RC1_10_9",
+            "group": "rc1",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC1_10_9.TXT",
+            "path": "test\\1000\\RC1_10_9.TXT"
+          },
+          {
+            "name": "RC2_10_10",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_10.TXT",
+            "path": "test\\1000\\RC2_10_10.TXT"
+          },
+          {
+            "name": "RC2_10_3",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_3.TXT",
+            "path": "test\\1000\\RC2_10_3.TXT"
+          },
+          {
+            "name": "RC2_10_4",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_4.TXT",
+            "path": "test\\1000\\RC2_10_4.TXT"
+          },
+          {
+            "name": "RC2_10_5",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_5.TXT",
+            "path": "test\\1000\\RC2_10_5.TXT"
+          },
+          {
+            "name": "RC2_10_7",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_7.TXT",
+            "path": "test\\1000\\RC2_10_7.TXT"
+          },
+          {
+            "name": "RC2_10_8",
+            "group": "rc2",
+            "customers": 1000,
+            "source": "C:\\Users\\86136\\Desktop\\code\\RL\\SVRP\\solomon\\1000\\RC2_10_8.TXT",
+            "path": "test\\1000\\RC2_10_8.TXT"
+          }
+        ]
+      }
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 2816.2061665852866,
+      "reward": -41628.48103841146,
+      "train_total_cost": 78578.48221467932,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12,
+      "val_total_cost": 2953.0629245440164,
+      "val_cvr": 1.1666666666666667,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 1.1666666666666667,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 2,
+      "loss": 2770.839558919271,
+      "reward": -63803.13535563151,
+      "train_total_cost": 100536.46771964431,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 3,
+      "loss": 2726.8438924153647,
+      "reward": -53919.481872558594,
+      "train_total_cost": 89569.48350208998,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 4,
+      "loss": 2673.3832346598306,
+      "reward": -35755.342122395836,
+      "train_total_cost": 70305.34241605799,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 5,
+      "loss": 2620.4080225626626,
+      "reward": -26268.93184407552,
+      "train_total_cost": 63635.5990203917,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12,
+      "val_total_cost": 2501.8389561573663,
+      "val_cvr": 1.0,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 1.0,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 6,
+      "loss": 2548.7879358927407,
+      "reward": -28228.480916341145,
+      "train_total_cost": 64495.14726000031,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 7,
+      "loss": 2475.230967203776,
+      "reward": -35270.93827311198,
+      "train_total_cost": 69004.27234580119,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 8,
+      "loss": 2432.419537862142,
+      "reward": -53382.714599609375,
+      "train_total_cost": 90516.05000075698,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "imitation",
+      "steps": 12
+    },
+    {
+      "epoch": 9,
+      "loss": 0.0,
+      "reward": -29530.548665364582,
+      "train_total_cost": 65163.881288925804,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 10,
+      "loss": 0.0,
+      "reward": -46245.50649007162,
+      "train_total_cost": 83062.17131287853,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2694.2775731682777,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 11,
+      "loss": 0.0,
+      "reward": -64180.21671549479,
+      "train_total_cost": 98530.21858992179,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 12,
+      "loss": 0.0,
+      "reward": -77205.03279622395,
+      "train_total_cost": 113055.03252911568,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 13,
+      "loss": 0.0,
+      "reward": -48805.041178385414,
+      "train_total_cost": 83321.70933318138,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 14,
+      "loss": 0.0,
+      "reward": -84945.73258463542,
+      "train_total_cost": 117379.06635815899,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 15,
+      "loss": 0.0,
+      "reward": -43144.830726623535,
+      "train_total_cost": 77911.4984774689,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 16,
+      "loss": 0.0,
+      "reward": -30279.21026611328,
+      "train_total_cost": 66012.54302747051,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 17,
+      "loss": 0.0,
+      "reward": -39933.20933024088,
+      "train_total_cost": 73649.87506902218,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 18,
+      "loss": 0.0,
+      "reward": -92179.69356282552,
+      "train_total_cost": 127879.6928930978,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 19,
+      "loss": 0.0,
+      "reward": -63579.58927408854,
+      "train_total_cost": 99779.58921519916,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 20,
+      "loss": 0.0,
+      "reward": -63871.14284261068,
+      "train_total_cost": 100087.81022085746,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 21,
+      "loss": 0.0,
+      "reward": -60533.591959635414,
+      "train_total_cost": 93950.25871601701,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 22,
+      "loss": 0.0,
+      "reward": -68707.73860677083,
+      "train_total_cost": 101207.73923157652,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 23,
+      "loss": 0.0,
+      "reward": -80993.6044921875,
+      "train_total_cost": 117593.60292591651,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 24,
+      "loss": 0.0,
+      "reward": -63576.59912109375,
+      "train_total_cost": 95359.93070756395,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 25,
+      "loss": 0.0,
+      "reward": -59283.14440917969,
+      "train_total_cost": 96133.14525172114,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 26,
+      "loss": 0.0,
+      "reward": -55881.28381347656,
+      "train_total_cost": 92064.61680146058,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 27,
+      "loss": 0.0,
+      "reward": -42296.40665690104,
+      "train_total_cost": 75663.07408379515,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 28,
+      "loss": 0.0,
+      "reward": -69072.5506362915,
+      "train_total_cost": 107572.55147140224,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 29,
+      "loss": 0.0,
+      "reward": -38038.06815083822,
+      "train_total_cost": 77188.06823640068,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 30,
+      "loss": 0.0,
+      "reward": -58773.37350972494,
+      "train_total_cost": 94790.03958636522,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 31,
+      "loss": 0.0,
+      "reward": -67935.73221842448,
+      "train_total_cost": 102552.39738449454,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 32,
+      "loss": 0.0,
+      "reward": -53850.906005859375,
+      "train_total_cost": 88334.23855730891,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 33,
+      "loss": 0.0,
+      "reward": -61201.180501302086,
+      "train_total_cost": 98501.18023655812,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 34,
+      "loss": 0.0,
+      "reward": -56116.583740234375,
+      "train_total_cost": 93949.91764217615,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 35,
+      "loss": 0.0,
+      "reward": -46630.31241861979,
+      "train_total_cost": 82780.3133923908,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 36,
+      "loss": 0.0,
+      "reward": -49702.508626302086,
+      "train_total_cost": 82952.50894167025,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 37,
+      "loss": 0.0,
+      "reward": -50683.14689127604,
+      "train_total_cost": 86933.1460678478,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 38,
+      "loss": 0.0,
+      "reward": -87835.21272786458,
+      "train_total_cost": 123168.5437649091,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 39,
+      "loss": 0.0,
+      "reward": -74316.59181722005,
+      "train_total_cost": 105783.25863514344,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 40,
+      "loss": 0.0,
+      "reward": -93459.72393798828,
+      "train_total_cost": 122001.24462503195,
+      "train_cvr": 0.08333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.08333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 41,
+      "loss": 0.0,
+      "reward": -73428.74283854167,
+      "train_total_cost": 107928.74458084504,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 42,
+      "loss": 0.0,
+      "reward": -69310.59903971355,
+      "train_total_cost": 102527.26481565833,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 43,
+      "loss": 0.0,
+      "reward": -41037.916666666664,
+      "train_total_cost": 79404.58359772961,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 44,
+      "loss": 0.0,
+      "reward": -65716.67757161458,
+      "train_total_cost": 102300.01149822275,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 45,
+      "loss": 0.0,
+      "reward": -79834.63146972656,
+      "train_total_cost": 117501.29880485933,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 46,
+      "loss": 0.0,
+      "reward": -60037.320475260414,
+      "train_total_cost": 93870.6547311445,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 47,
+      "loss": 0.0,
+      "reward": -63362.24357096354,
+      "train_total_cost": 101445.57614800334,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 48,
+      "loss": 0.0,
+      "reward": -96611.28398386638,
+      "train_total_cost": 135544.61878879866,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 49,
+      "loss": 0.0,
+      "reward": -50324.458170572914,
+      "train_total_cost": 78365.85663246115,
+      "train_cvr": 0.3333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.3333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 50,
+      "loss": 0.0,
+      "reward": -35634.194580078125,
+      "train_total_cost": 62138.506241450705,
+      "train_cvr": 0.25,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.25,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 51,
+      "loss": 0.0,
+      "reward": -38080.81925455729,
+      "train_total_cost": 72980.8205338021,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 52,
+      "loss": 0.0,
+      "reward": -47543.135091145836,
+      "train_total_cost": 71753.11264911294,
+      "train_cvr": 0.16666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.16666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 53,
+      "loss": 0.0,
+      "reward": -34263.39766438802,
+      "train_total_cost": 66763.39687910676,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 54,
+      "loss": 0.0,
+      "reward": -109419.33939615886,
+      "train_total_cost": 147336.00611899295,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 55,
+      "loss": 0.0,
+      "reward": -94511.4474843343,
+      "train_total_cost": 131294.78275485834,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 56,
+      "loss": 0.0,
+      "reward": -61159.44787597656,
+      "train_total_cost": 98359.44923141599,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 57,
+      "loss": 0.0,
+      "reward": -32335.522298177082,
+      "train_total_cost": 69118.85560842355,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 58,
+      "loss": 0.0,
+      "reward": -39958.022786458336,
+      "train_total_cost": 76641.35667925079,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 59,
+      "loss": 0.0,
+      "reward": -52859.390625,
+      "train_total_cost": 86659.38947586219,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 60,
+      "loss": 0.0,
+      "reward": -94250.24877929688,
+      "train_total_cost": 131633.58251579604,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 61,
+      "loss": 0.0,
+      "reward": -67283.41088867188,
+      "train_total_cost": 94384.46176638205,
+      "train_cvr": 0.3333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.3333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 62,
+      "loss": 0.0,
+      "reward": -76423.89556884766,
+      "train_total_cost": 111590.56176247199,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 63,
+      "loss": 0.0,
+      "reward": -51760.786295572914,
+      "train_total_cost": 88194.12023105223,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 64,
+      "loss": 0.0,
+      "reward": -62483.208587646484,
+      "train_total_cost": 99033.20878773928,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 65,
+      "loss": 0.0,
+      "reward": -65071.015625,
+      "train_total_cost": 94702.44450369477,
+      "train_cvr": 0.16666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.16666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 66,
+      "loss": 0.0,
+      "reward": -86476.63380940755,
+      "train_total_cost": 123759.96636814873,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 67,
+      "loss": 0.0,
+      "reward": -84241.38106282552,
+      "train_total_cost": 121074.7140964667,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 68,
+      "loss": 0.0,
+      "reward": -28899.479888916016,
+      "train_total_cost": 64582.81333281597,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 69,
+      "loss": 0.0,
+      "reward": -47380.021240234375,
+      "train_total_cost": 83030.02161764105,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 70,
+      "loss": 0.0,
+      "reward": -44033.58553059896,
+      "train_total_cost": 82500.25213937958,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 71,
+      "loss": 0.0,
+      "reward": -81550.32055664062,
+      "train_total_cost": 108421.66981061299,
+      "train_cvr": 0.5,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.5,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 72,
+      "loss": 0.0,
+      "reward": -102127.24235026042,
+      "train_total_cost": 139677.2414675355,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 73,
+      "loss": 0.0,
+      "reward": -117766.08927408855,
+      "train_total_cost": 154299.42379539213,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 74,
+      "loss": 0.0,
+      "reward": -112697.7089029948,
+      "train_total_cost": 149864.37548015514,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 75,
+      "loss": 0.0,
+      "reward": -92977.79410807292,
+      "train_total_cost": 119938.21613286932,
+      "train_cvr": 0.5833333333333334,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.5833333333333334,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 76,
+      "loss": 0.0,
+      "reward": -45015.396321614586,
+      "train_total_cost": 78365.39658669631,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 77,
+      "loss": 0.0,
+      "reward": -63690.600911458336,
+      "train_total_cost": 100090.60132775705,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 78,
+      "loss": 0.0,
+      "reward": -55193.746256510414,
+      "train_total_cost": 93627.08012037475,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 79,
+      "loss": 0.0,
+      "reward": -83235.09008789062,
+      "train_total_cost": 121668.42380928,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 80,
+      "loss": 0.0,
+      "reward": -70232.91878255208,
+      "train_total_cost": 104899.58561439316,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 81,
+      "loss": 0.0,
+      "reward": -93200.36796061198,
+      "train_total_cost": 131100.36831698814,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 82,
+      "loss": 0.0,
+      "reward": -70048.94165039062,
+      "train_total_cost": 104365.61034517486,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 83,
+      "loss": 0.0,
+      "reward": -83320.60546875,
+      "train_total_cost": 118053.93743732572,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 84,
+      "loss": 0.0,
+      "reward": -44557.208333333336,
+      "train_total_cost": 81023.87553361058,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 85,
+      "loss": 0.0,
+      "reward": -55959.14896647135,
+      "train_total_cost": 92225.81609171629,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 86,
+      "loss": 0.0,
+      "reward": -81069.87217203777,
+      "train_total_cost": 117486.53716032703,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 87,
+      "loss": 0.0,
+      "reward": -36030.15763346354,
+      "train_total_cost": 71613.49060238402,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 88,
+      "loss": 0.0,
+      "reward": -56077.86706542969,
+      "train_total_cost": 91577.86678787072,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 89,
+      "loss": 0.0,
+      "reward": -49010.37489827474,
+      "train_total_cost": 86193.70859582226,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 90,
+      "loss": 0.0,
+      "reward": -83239.1911722819,
+      "train_total_cost": 118822.52581104636,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 91,
+      "loss": 0.0,
+      "reward": -72348.9981282552,
+      "train_total_cost": 107365.66445617874,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 92,
+      "loss": 0.0,
+      "reward": -79671.80891927083,
+      "train_total_cost": 117605.14287269115,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 93,
+      "loss": 0.0,
+      "reward": -39309.07771809896,
+      "train_total_cost": 74825.74468578894,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 94,
+      "loss": 0.0,
+      "reward": -78917.0987141927,
+      "train_total_cost": 116083.76609910528,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 95,
+      "loss": 0.0,
+      "reward": -77152.13861083984,
+      "train_total_cost": 111485.47271540761,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 96,
+      "loss": 0.0,
+      "reward": -31368.34033203125,
+      "train_total_cost": 66168.33960532148,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 97,
+      "loss": 0.0,
+      "reward": -45347.49178059896,
+      "train_total_cost": 80697.49337302645,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 98,
+      "loss": 0.0,
+      "reward": -60493.28621419271,
+      "train_total_cost": 97293.28536173701,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 99,
+      "loss": 0.0,
+      "reward": -60180.78800455729,
+      "train_total_cost": 98447.45363232493,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 100,
+      "loss": 0.0,
+      "reward": -27451.321370442707,
+      "train_total_cost": 60451.32128561536,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 101,
+      "loss": 0.0,
+      "reward": -63362.497495015465,
+      "train_total_cost": 99012.49761692683,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 102,
+      "loss": 0.0,
+      "reward": -32406.359130859375,
+      "train_total_cost": 68989.69299838941,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 103,
+      "loss": 0.0,
+      "reward": -74508.71830240886,
+      "train_total_cost": 109308.71933690707,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 104,
+      "loss": 0.0,
+      "reward": -62250.7509765625,
+      "train_total_cost": 98217.41743070881,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 105,
+      "loss": 0.0,
+      "reward": -26325.725911458332,
+      "train_total_cost": 60859.05919416746,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 106,
+      "loss": 0.0,
+      "reward": -52260.24916585287,
+      "train_total_cost": 90493.58155089617,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 107,
+      "loss": 0.0,
+      "reward": -80945.45064290364,
+      "train_total_cost": 119045.45000478625,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 108,
+      "loss": 0.0,
+      "reward": -95612.46382649739,
+      "train_total_cost": 132929.13074800372,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 109,
+      "loss": 0.0,
+      "reward": -116082.3438313802,
+      "train_total_cost": 153865.67668082318,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 110,
+      "loss": 0.0,
+      "reward": -75880.43383789062,
+      "train_total_cost": 110180.43529891968,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 111,
+      "loss": 0.0,
+      "reward": -56872.745768229164,
+      "train_total_cost": 91889.41316193342,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 112,
+      "loss": 0.0,
+      "reward": -55998.10888671875,
+      "train_total_cost": 92498.10855127375,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 113,
+      "loss": 0.0,
+      "reward": -42958.35689290365,
+      "train_total_cost": 75575.02418667078,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 114,
+      "loss": 0.0,
+      "reward": -71537.91650390625,
+      "train_total_cost": 108671.25072824955,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 115,
+      "loss": 0.0,
+      "reward": -38415.95271809896,
+      "train_total_cost": 72815.95177018642,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 116,
+      "loss": 0.0,
+      "reward": -85210.83153327306,
+      "train_total_cost": 110986.71696483095,
+      "train_cvr": 0.3333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.3333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 117,
+      "loss": 0.0,
+      "reward": -65066.50924682617,
+      "train_total_cost": 98966.50859245658,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 118,
+      "loss": 0.0,
+      "reward": -55021.56691996256,
+      "train_total_cost": 89438.23356038332,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 119,
+      "loss": 0.0,
+      "reward": -41423.6562093099,
+      "train_total_cost": 78273.65677193801,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 120,
+      "loss": 0.0,
+      "reward": -91933.37337239583,
+      "train_total_cost": 128166.70582282543,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 121,
+      "loss": 0.0,
+      "reward": -63287.746337890625,
+      "train_total_cost": 99771.08024622004,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 122,
+      "loss": 0.0,
+      "reward": -29637.38360595703,
+      "train_total_cost": 64387.38368801276,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 123,
+      "loss": 0.0,
+      "reward": -54096.65065511068,
+      "train_total_cost": 88429.98300025861,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 124,
+      "loss": 0.0,
+      "reward": -56677.77742513021,
+      "train_total_cost": 92077.77666633327,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 125,
+      "loss": 0.0,
+      "reward": -82730.87736002605,
+      "train_total_cost": 110804.75072733562,
+      "train_cvr": 0.16666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.16666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 126,
+      "loss": 0.0,
+      "reward": -106044.54361979167,
+      "train_total_cost": 144277.87776575485,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 127,
+      "loss": 0.0,
+      "reward": -53690.71980794271,
+      "train_total_cost": 90674.0521911184,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 128,
+      "loss": 0.0,
+      "reward": -76073.93440755208,
+      "train_total_cost": 110890.60203539331,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 129,
+      "loss": 0.0,
+      "reward": -36411.59855143229,
+      "train_total_cost": 73578.26549083988,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 130,
+      "loss": 0.0,
+      "reward": -85850.3848470052,
+      "train_total_cost": 114548.33840919535,
+      "train_cvr": 0.16666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.16666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 131,
+      "loss": 0.0,
+      "reward": -77502.31758626302,
+      "train_total_cost": 112985.65118381381,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 132,
+      "loss": 0.0,
+      "reward": -73938.42578125,
+      "train_total_cost": 111455.09358673294,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 133,
+      "loss": 0.0,
+      "reward": -59652.15903727213,
+      "train_total_cost": 96902.15941247344,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 134,
+      "loss": 0.0,
+      "reward": -36955.91544596354,
+      "train_total_cost": 71822.58254719774,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 135,
+      "loss": 0.0,
+      "reward": -45736.963541666664,
+      "train_total_cost": 83070.29557044308,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 136,
+      "loss": 0.0,
+      "reward": -56881.97355143229,
+      "train_total_cost": 93398.6397690773,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 137,
+      "loss": 0.0,
+      "reward": -72754.64617919922,
+      "train_total_cost": 108371.31191187103,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 138,
+      "loss": 0.0,
+      "reward": -46845.26574707031,
+      "train_total_cost": 82311.93229605754,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 139,
+      "loss": 0.0,
+      "reward": -60432.22941080729,
+      "train_total_cost": 94948.89664359887,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 140,
+      "loss": 0.0,
+      "reward": -39353.3930003643,
+      "train_total_cost": 74886.7262263596,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 141,
+      "loss": 0.0,
+      "reward": -58588.06662495931,
+      "train_total_cost": 95988.06754535437,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 142,
+      "loss": 0.0,
+      "reward": -94730.27992757161,
+      "train_total_cost": 131613.61084717512,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 143,
+      "loss": 0.0,
+      "reward": -61406.47013346354,
+      "train_total_cost": 86349.14140234391,
+      "train_cvr": 0.3333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.3333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 144,
+      "loss": 0.0,
+      "reward": -41407.175048828125,
+      "train_total_cost": 72357.17452698946,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 145,
+      "loss": 0.0,
+      "reward": -62896.349934895836,
+      "train_total_cost": 96379.68249721329,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 146,
+      "loss": 0.0,
+      "reward": -38321.784016927086,
+      "train_total_cost": 72855.11686088641,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 147,
+      "loss": 0.0,
+      "reward": -50509.650146484375,
+      "train_total_cost": 85442.98410516977,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 148,
+      "loss": 0.0,
+      "reward": -62076.17600504557,
+      "train_total_cost": 97292.84412531058,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 149,
+      "loss": 0.0,
+      "reward": -50115.173014322914,
+      "train_total_cost": 84265.17414160569,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 150,
+      "loss": 0.0,
+      "reward": -81316.13879394531,
+      "train_total_cost": 116582.80715107918,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 151,
+      "loss": 0.0,
+      "reward": -112126.63218180339,
+      "train_total_cost": 147409.96287953854,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 152,
+      "loss": 0.0,
+      "reward": -30378.403238932293,
+      "train_total_cost": 65278.40335985025,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 153,
+      "loss": 0.0,
+      "reward": -63568.43400065104,
+      "train_total_cost": 100218.43538999557,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 154,
+      "loss": 0.0,
+      "reward": -30461.418701171875,
+      "train_total_cost": 64961.418746878706,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 155,
+      "loss": 0.0,
+      "reward": -37466.9951171875,
+      "train_total_cost": 73683.66163202126,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 156,
+      "loss": 0.0,
+      "reward": -39617.42588297526,
+      "train_total_cost": 73584.09288974603,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 157,
+      "loss": 0.0,
+      "reward": -107708.90350341797,
+      "train_total_cost": 142975.57052483162,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 158,
+      "loss": 0.0,
+      "reward": -34442.63468424479,
+      "train_total_cost": 70375.96877848108,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 159,
+      "loss": 0.0,
+      "reward": -53024.421875,
+      "train_total_cost": 91224.42212245862,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 160,
+      "loss": 0.0,
+      "reward": -93163.65771484375,
+      "train_total_cost": 131330.32518259683,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 161,
+      "loss": 0.0,
+      "reward": -56890.49210611979,
+      "train_total_cost": 91957.1585438947,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 162,
+      "loss": 0.0,
+      "reward": -34381.74776204427,
+      "train_total_cost": 61116.23496900996,
+      "train_cvr": 0.6666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.6666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 163,
+      "loss": 0.0,
+      "reward": -59753.45548502604,
+      "train_total_cost": 95020.12091010809,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 164,
+      "loss": 0.0,
+      "reward": -101262.1766764323,
+      "train_total_cost": 139128.84488597512,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 165,
+      "loss": 0.0,
+      "reward": -35523.921223958336,
+      "train_total_cost": 70923.92168566585,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 166,
+      "loss": 0.0,
+      "reward": -73658.14208984375,
+      "train_total_cost": 107941.47429302335,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 167,
+      "loss": 0.0,
+      "reward": -56327.31604003906,
+      "train_total_cost": 91793.98176718752,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 168,
+      "loss": 0.0,
+      "reward": -48780.728515625,
+      "train_total_cost": 83480.72874848048,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 169,
+      "loss": 0.0,
+      "reward": -135737.30356852213,
+      "train_total_cost": 171770.63663526377,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 170,
+      "loss": 0.0,
+      "reward": -56923.468770345055,
+      "train_total_cost": 94073.46975789468,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 171,
+      "loss": 0.0,
+      "reward": -66042.06815592448,
+      "train_total_cost": 94702.70354182522,
+      "train_cvr": 0.08333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.08333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 172,
+      "loss": 0.0,
+      "reward": -57148.260986328125,
+      "train_total_cost": 90998.26143364112,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 173,
+      "loss": 0.0,
+      "reward": -45429.66672770182,
+      "train_total_cost": 82262.99996041258,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 174,
+      "loss": 0.0,
+      "reward": -64065.008138020836,
+      "train_total_cost": 101231.6750991245,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 175,
+      "loss": 0.0,
+      "reward": -62157.591552734375,
+      "train_total_cost": 88984.17135054867,
+      "train_cvr": 0.08333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.08333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 176,
+      "loss": 0.0,
+      "reward": -30340.713155110676,
+      "train_total_cost": 66524.04624035954,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 177,
+      "loss": 0.0,
+      "reward": -84613.5540669759,
+      "train_total_cost": 118113.55247659485,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 178,
+      "loss": 0.0,
+      "reward": -45779.45487467448,
+      "train_total_cost": 83346.1221767962,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 179,
+      "loss": 0.0,
+      "reward": -43430.76131184896,
+      "train_total_cost": 69950.74107566476,
+      "train_cvr": 0.08333333333333333,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.08333333333333333,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 180,
+      "loss": 0.0,
+      "reward": -57771.6484375,
+      "train_total_cost": 91471.6483583351,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 181,
+      "loss": 0.0,
+      "reward": -64667.18054199219,
+      "train_total_cost": 99083.84641249974,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 182,
+      "loss": 0.0,
+      "reward": -27260.411865234375,
+      "train_total_cost": 59310.4118095239,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 183,
+      "loss": 0.0,
+      "reward": -88075.81404622395,
+      "train_total_cost": 124175.81447519858,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 184,
+      "loss": 0.0,
+      "reward": -53808.799967447914,
+      "train_total_cost": 86192.13411289454,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 185,
+      "loss": 0.0,
+      "reward": -69751.86450195312,
+      "train_total_cost": 106685.1985629797,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 186,
+      "loss": 0.0,
+      "reward": -73927.9494934082,
+      "train_total_cost": 110194.61617599924,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 187,
+      "loss": 0.0,
+      "reward": -65790.91149902344,
+      "train_total_cost": 102557.57782709599,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 188,
+      "loss": 0.0,
+      "reward": -78652.08203125,
+      "train_total_cost": 115818.74883024891,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 189,
+      "loss": 0.0,
+      "reward": -59235.92494710287,
+      "train_total_cost": 96069.25771572192,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 190,
+      "loss": 0.0,
+      "reward": -72800.13802083333,
+      "train_total_cost": 108150.13746590416,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 191,
+      "loss": 0.0,
+      "reward": -57122.23865509033,
+      "train_total_cost": 92205.57353797555,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 192,
+      "loss": 0.0,
+      "reward": -53618.5078125,
+      "train_total_cost": 88968.50852211316,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 193,
+      "loss": 0.0,
+      "reward": -73629.09790039062,
+      "train_total_cost": 110962.43031352758,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 194,
+      "loss": 0.0,
+      "reward": -58507.65828450521,
+      "train_total_cost": 93590.99242586891,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 195,
+      "loss": 0.0,
+      "reward": -58121.52225748698,
+      "train_total_cost": 94971.52086675167,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    },
+    {
+      "epoch": 196,
+      "loss": 0.0,
+      "reward": -85845.47472254436,
+      "train_total_cost": 122028.80939669411,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 197,
+      "loss": 0.0,
+      "reward": -116684.45837402344,
+      "train_total_cost": 143746.65381066003,
+      "train_cvr": 0.16666666666666666,
+      "train_feasibility": 0.9166666666666666,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.16666666666666666,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 198,
+      "loss": 0.0,
+      "reward": -46096.45174153646,
+      "train_total_cost": 79963.11904458205,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 199,
+      "loss": 0.0,
+      "reward": -90787.54801432292,
+      "train_total_cost": 128554.21612341206,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12
+    },
+    {
+      "epoch": 200,
+      "loss": 0.0,
+      "reward": -47537.68497721354,
+      "train_total_cost": 81887.68375674884,
+      "train_cvr": 0.0,
+      "train_feasibility": 1.0,
+      "train_vehicles_excess": 0.0,
+      "train_time_window_violations": 0.0,
+      "train_capacity_violations": 0.0,
+      "phase": "reinforce",
+      "steps": 12,
+      "val_total_cost": 2687.488255083561,
+      "val_cvr": 0.6666666666666666,
+      "val_feasibility": 0.8333333333333334,
+      "val_vehicles_excess": 0.0,
+      "val_time_window_violations": 0.6666666666666666,
+      "val_capacity_violations": 0.0
+    }
+  ],
+  "best": {
+    "epoch": 15,
+    "loss": 0.0,
+    "reward": -43144.830726623535,
+    "train_total_cost": 77911.4984774689,
+    "train_cvr": 0.0,
+    "train_feasibility": 1.0,
+    "train_vehicles_excess": 0.0,
+    "train_time_window_violations": 0.0,
+    "train_capacity_violations": 0.0,
+    "phase": "reinforce",
+    "steps": 12,
+    "val_total_cost": 2687.488255083561,
+    "val_cvr": 0.6666666666666666,
+    "val_feasibility": 0.8333333333333334,
+    "val_vehicles_excess": 0.0,
+    "val_time_window_violations": 0.6666666666666666,
+    "val_capacity_violations": 0.0
+  }
+}
