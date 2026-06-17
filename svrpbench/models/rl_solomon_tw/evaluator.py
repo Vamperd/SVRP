@@ -131,6 +131,11 @@ def aggregate_metrics(rows: list[dict]) -> dict:
         "capacity_violations",
         "vehicles_excess",
         "route_count",
+        "route_overuse",
+        "cost_per_customer",
+        "late_per_customer",
+        "time_window_violations_per_customer",
+        "capacity_violations_per_customer",
         "cvr",
         "runtime",
     ]

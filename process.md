@@ -602,3 +602,537 @@ checkpoints/tw_universal_all_full_best.pt
 - 当前结果可支持“可行性优先 decoder 使 RL 在多规模静态 TWCVRP 上稳定达到 100% 可行率”。
 - 成本层面应谨慎表述：100-800 规模具备明显优势，1000 规模略弱于 PDF 表格。
 - 后续若继续优化，应优先降低等待时间，而不是继续只优化可行率。
+
+### 31. Hybrid 交通扰动测试后的再训练判断
+
+用户完成 `benchmark_pdf_hybrid_100` 至 `benchmark_pdf_hybrid_1000` 的分规模交通扰动评估，并询问是否需要继续再训练。
+
+阶段结论：
+- 当前 hybrid 结果表明，静态训练模型在交通扰动下基本保持稳定：
+  - `static100` 各规模平均成本相对静态只增加约 `0.018%-0.043%`；
+  - `universal` 各规模平均成本相对静态只增加约 `0.019%-0.034%`；
+  - 100/200/400/600 规模 corrected feasibility 均为 `1.0`；
+  - 800/1000 规模仅出现极少量 Monte Carlo 样本级时间窗违约，`CVR` 接近 `0`。
+- `benchmark_pdf_hybrid_*.csv` 中的 `feasibility_rate=0.0` 不能直接用于报告，这是 hybrid/traffic 聚合字段名不一致导致的统计显示问题；应以 JSON 中逐实例 `benchmark_feasibility` 重新聚合后的 corrected feasibility 为准。
+- 在当前交通扰动强度和评估口径下，不建议立刻训练新的 traffic 模型；已有 static 模型已经能作为带扰动场景的有效鲁棒性结果。
+
+报告启示：
+- 可以将 hybrid 结果写为“静态训练策略在交通扰动下具有较强稳定性，平均成本波动极小，可行性基本保持”。
+- 若后续需要更强对照，可以先修复 CSV 聚合字段，再考虑更强扰动或专门 traffic 训练；但当前阶段不应把时间投入大规模再训练。
+
+### 32. 修复 hybrid/traffic CSV 可行率显示并准备强扰动对照
+
+用户要求先修复 `benchmark_pdf_hybrid_*.csv` 中 `feasibility_rate=0.0` 的聚合显示问题，并说明后续希望尝试更强交通扰动，以比较 `static_rl` 与 `traffic_rl` 的训练区别。
+
+阶段结论：
+- 已修复 `benchmark_evaluate.py` 的聚合逻辑：
+  - 静态单样本行继续兼容 `benchmark_feasible` 布尔字段；
+  - hybrid/traffic 的 Monte Carlo 聚合行兼容 `benchmark_feasibility` 小数可行率字段；
+  - CSV、JSON aggregate 后续都会使用一致的 `feasibility_rate`。
+- 已通过 `python -m py_compile` 和聚合函数 sanity check，确认 `benchmark_feasibility=1.0/0.5` 可正确汇总为 `0.75`，不再被当作缺失字段归零。
+- 后续若做“更强交通扰动”，需要注意当前 PDF 同口径评估中的 `--traffic_sigma` 不是主要扰动强度来源；更合理的下一步是增加评估侧扰动强度参数，再分别评估 `static_rl` 与 `traffic_rl`。
+
+报告启示：
+- 修复前的 hybrid CSV 可行率不能作为最终报告依据；修复后重新生成 CSV 才可直接入表。
+- 强扰动实验应作为新的鲁棒性对照组，不应混入当前标准 PDF 同口径结果。
+
+### 33. 生成 RL-TWCVRP 多规模实验 Markdown 报告
+
+用户要求基于当前所有测试结果，仿照 `benchmark_report.pdf` 的大体格式生成 Markdown 报告，并重点说明模型组成、奖励函数、训练方法、泛化 detector 头设计、静态结果和交通扰动结果。
+
+阶段结论：
+- 已生成 `svrpbench/models/rl_solomon_tw/results/RL_TWCVRP_EXPERIMENT_REPORT.md`。
+- 报告按 PDF 结构组织为：
+  - 任务与评估口径；
+  - 模型组成；
+  - 训练方法与奖励函数；
+  - 静态 TWCVRP 结果；
+  - Hybrid 交通扰动鲁棒性；
+  - 与 PDF 报告对照；
+  - 综合结论与后续建议。
+- 报告中将“泛化 detector 头”按当前代码解释为动态可行性特征头：它并非独立分类器，而是将候选客户的 `travel/arrival/wait/late/slack/capacity` 等动态约束风险特征编码后并入 pointer 打分。
+- 报告结果明确区分：
+  - `static100`：100 规模训练模型，在 100-1000 上做 zero-shot 泛化；
+  - `universal`：100/200/400/600/800/1000 多规模训练模型；
+  - 静态 PDF 同口径评估；
+  - hybrid 交通扰动评估。
+
+报告启示：
+- 当前报告可作为阶段性实验总结，用于说明独立 RL 链路已经具备多规模可行求解能力。
+- 报告中的后续建议应聚焦等待时间压缩和更强交通扰动下的 `static_rl`/`traffic_rl` 对照，而不是继续只优化可行率。
+
+### 34. 新增强交通扰动评估参数 `--traffic_strength`
+
+用户决定先推进强交通扰动评估，并要求先实现 `--traffic_strength`。
+
+阶段结论：
+- 已在 `benchmark_evaluate.py` 中新增 `--traffic_strength`，默认值为 `1.0`，保持此前 PDF 风格 baseline 评估兼容。
+- 该参数只放大 stochastic traffic delay 和 accident delay，不放大基础欧氏距离：
+  - `traffic_strength=0.0` 等价于无随机交通延迟；
+  - `traffic_strength=1.0` 等价于此前标准 hybrid/traffic 扰动；
+  - `traffic_strength=3.0/5.0` 可用于强扰动压力测试。
+- CSV/JSON 输出中已增加 `traffic_strength` 字段，便于后续按扰动强度整理实验表格。
+- 已通过 `python -m py_compile benchmark_evaluate.py` 和函数级 sanity check。
+
+报告启示：
+- 后续强扰动实验应先从 `traffic_strength=3.0` 开始；若 `CVR` 和可行率仍几乎不变，再提高到 `5.0`。
+- 强扰动结果应作为新实验组单独呈现，不覆盖此前标准 PDF 同口径 hybrid 结果。
+
+### 35. 强交通扰动结果分析与 traffic 模型训练判断
+
+用户完成强交通扰动评估，并询问是否需要训练扰动模型。
+
+阶段结论：
+- 已读取 `strong_hybrid_s3_100/400/1000` 以及 `strong_hybrid_s6/s10/s15_1000`。
+- `traffic_strength=3.0` 下：
+  - 100 和 400 规模两个模型仍 `CVR=0`、可行率 `100%`；
+  - 1000 规模 `static100` 出现轻微时间窗违约，`CVR≈0.0015%`、可行率约 `99.57%`；
+  - 1000 规模 `universal` 仍 `CVR=0`、可行率 `100%`。
+- 1000 规模压力曲线中，即使提高到 `traffic_strength=15.0`：
+  - `static100` 约 `CVR=0.0073%`、可行率约 `98.97%`；
+  - `universal` 约 `CVR=0.0022%`、可行率约 `99.74%`。
+- 平均总成本相对静态增长仍很小，1000 规模在 `traffic_strength=15.0` 下仅约 `+0.21%`。
+
+报告启示：
+- 当前扰动设置已经显示 `universal` 比 `static100` 更鲁棒，但退化幅度仍偏小。
+- 不建议立即投入 traffic 模型训练；应先让扰动评估能稳定制造更明显的中大规模退化，否则 traffic_rl 很难在报告中体现充分增益。
+- 下一步更合理的是强化评估侧交通模型，例如使用距离比例型延迟或更高强度压力测试，再决定是否训练 traffic_rl。
+
+### 36. 增加距离比例型强交通扰动 `--traffic_profile proportional`
+
+用户要求继续进行更强扰动。此前 `--traffic_strength` 只放大额外 additive delay，实测即使 `traffic_strength=15`，1000 规模退化仍然很小。
+
+阶段结论：
+- 已在 `benchmark_evaluate.py` 中新增 `--traffic_profile`：
+  - `additive`：默认旧口径，`travel_time = distance + strength * delay`；
+  - `proportional`：新强扰动口径，`travel_time = distance * (1 + strength * delay_ratio) + strength * accident_delay`。
+- CSV/JSON 已增加 `traffic_profile` 字段，便于报告区分标准扰动和强扰动。
+- 函数级 sanity check 显示同一条距离为 100 的边：
+  - `additive, strength=3` 得到约 `100.25`；
+  - `proportional, strength=3` 得到约 `124.52`；
+  因此 proportional 能显著提高中大规模路径的时间窗压力。
+- 已通过 `python -m py_compile benchmark_evaluate.py`。
+
+报告启示：
+- 后续强扰动实验建议使用 `--traffic_profile proportional`，先从 `traffic_strength=1.0` 或 `2.0` 开始，再按退化程度提高。
+- 与 PDF 标准扰动结果对比时，必须标明这是额外 stress-test 口径，不应替代标准 PDF 同口径结果。
+
+### 37. proportional 强扰动结果后的 traffic_rl 训练判断
+
+用户完成 `stress_prop_s1_400/800/1000` 评估，并询问当前是否应该训练交通扰动模型。
+
+阶段结论：
+- `traffic_profile=proportional, traffic_strength=1.0` 已经制造出明显中大规模退化：
+  - 400 规模：`static100` 可行率约 `82.22%`、`CVR≈0.0454%`；`universal` 可行率约 `88.89%`、`CVR≈0.0324%`；
+  - 800 规模：两模型可行率降至约 `45%-48%`，`CVR≈1.0%`；
+  - 1000 规模：两模型可行率降至约 `36%`，`CVR≈1.42%-1.45%`。
+- 与 additive 强扰动不同，proportional s1 已能稳定暴露大规模时间窗脆弱性，因此具备训练 `traffic_rl` 的实验必要性。
+- 不建议继续增大到 s2/s3 后再训练；当前 s1 已足够强，继续加大会让问题过难，难以区分训练改进和整体崩溃。
+
+报告启示：
+- 可以将 proportional s1 作为“强交通压力测试”主场景。
+- 下一步应训练 traffic-aware 模型，并在同一 `traffic_profile=proportional, traffic_strength=1.0`、同一 test split、同一 `mc_samples=30` 和 `traffic_seed=42` 下与 static_rl 对比。
+- 训练前最好补齐 100/200/600 的 s1 评估，形成完整 100-1000 强扰动基线表。
+
+### 38. 接入强交通扰动训练脚本参数
+
+用户补齐 proportional 强扰动测试后，要求给出可训练强交通扰动模型的修改后脚本。
+
+阶段结论：
+- 已将强交通扰动参数接入训练侧：
+  - `train.py` 新增 `--traffic_profile {additive,proportional}`；
+  - `train.py` 新增 `--traffic_strength`；
+  - `traffic.py` 的 `planning_matrix` 和 `sample_traffic_matrix` 支持 proportional 强扰动；
+  - `benchmark_evaluate.py --mode traffic` 的规划矩阵也使用同样的 profile/strength；
+  - `solve.py` 支持同样参数，便于单实例推理和绘图。
+- proportional 训练矩阵采用距离比例型扰动近似强交通压力，使 traffic-aware decoder 在训练时能看到更保守的旅行时间。
+- 已通过 `python -m py_compile traffic.py train.py benchmark_evaluate.py solve.py`，并通过 CLI sanity check 确认 `train.py --help` 已显示新参数。
+
+报告启示：
+- 后续 `traffic_rl` 建议以 `traffic_profile=proportional, traffic_strength=1.0` 作为主训练口径。
+- 评估对比时，`static_rl` 应使用 `mode=hybrid`，`traffic_rl` 应使用 `mode=traffic`；二者不能混在同一个 `benchmark_evaluate.py --mode` 调用中直接比较。
+
+### 39. traffic_prop_s1_universal_v3 训练效果评估
+
+用户完成 `traffic_prop_s1_universal_v3_best.pt` 在 100-1000 各规模上的 `mode=traffic` 强扰动评估，并要求判断训练效果。
+
+阶段结论：
+- 本轮 traffic_rl 不是最终可采用的强扰动模型，只能作为“traffic-aware 训练初版/消融结果”。
+- 相比 `stress_prop_s1` 的静态模型 hybrid 基线，traffic_rl 在大规模上提高了部分实例的完全可行率：
+  - 800 规模可行率约从 `45%-48%` 提升到 `56.58%`；
+  - 1000 规模可行率约从 `36.41%` 提升到 `53.68%`。
+- 但代价非常明显：
+  - 800 规模 CVR 从约 `1.0%` 升到 `5.05%`；
+  - 1000 规模 CVR 从约 `1.42%-1.45%` 升到 `5.98%`；
+  - 600/800/1000 平均总成本分别比 universal hybrid baseline 高约 `65.5%/74.4%/81.2%`。
+- 主要原因是 traffic_rl 形成了过度保守的多路线策略：
+  - 400 路线数从约 `37-38` 增至 `63.8`；
+  - 600 从约 `57` 增至 `102.8`；
+  - 800 从约 `77-78` 增至 `141.3`；
+  - 1000 从约 `97-99` 增至 `183.1`。
+
+报告启示：
+- 可以写为：traffic-aware 训练证明了“增加交通缓冲可以提升部分大规模实例的完全可行率”，但当前 reward/decoder 组合导致路线过度分散，CVR 和成本恶化。
+- 下一步不应继续直接加长同一训练，而应调整目标函数和训练口径：提高 CVR 逐客户惩罚、限制 route_count 膨胀、加入 PDF 强扰动评估口径的验证/选择机制。
+
+### 40. 实现 v4 强扰动 `robust_cvr` 训练目标
+
+用户要求按“强交通扰动训练目标重构计划”实现 v4 训练目标，使 traffic_rl 更贴近报告需求：优先降低 CVR，其次提高可行率，再控制路线数和成本。
+
+阶段结论：
+- 已新增 `--objective robust_cvr`，保留默认 `feasibility` 目标以兼容旧训练。
+- `robust_cvr` reward 改为按客户数归一化：
+  - 惩罚 `time_window_violations / num_customers`；
+  - 惩罚 `capacity_violations / num_customers`；
+  - 惩罚 `late_minutes / num_customers`；
+  - 成本使用 `total_cost / num_customers`；
+  - `feasible_bonus` 和 `infeasible_penalty` 也按客户数缩放。
+- 已新增路线膨胀控制：
+  - `--target_customers_per_route`；
+  - `--route_overuse_penalty`；
+  - `route_overuse = max(0, route_count - ceil(num_customers / target_customers_per_route))`。
+- 已调整 best checkpoint 选择逻辑：
+  - `robust_cvr` 下优先最小化 `val_cvr`；
+  - 其次最大化 `val_feasibility`；
+  - 再最小化 `val_route_overuse` 和 `val_total_cost`。
+- 已新增轻量 robust validation：
+  - `--robust_val_samples`；
+  - validation 中同一路线用多个 traffic sample 评估，减少训练 proxy 与最终强扰动评估的偏差。
+- 日志和 history 增加：
+  - `train/val_route_count`；
+  - `train/val_route_overuse`；
+  - `train/val_cost_per_customer`；
+  - `train/val_late_per_customer`。
+- 已通过：
+  - `python -m py_compile train.py decoder.py traffic.py benchmark_evaluate.py`；
+  - CLI 参数检查；
+  - 单实例函数级 sanity check。
+
+报告启示：
+- v4 的重点不是继续追求“更多路线换完全可行率”，而是压低强扰动下的平均 CVR，同时避免路线数膨胀。
+- 后续评估 v4 时，应重点对比 `avg_cvr`、`feasibility_rate`、`avg_route_count` 和 `avg_cost` 四个指标。
+
+### 41. v4 smoke_b 训练结果判断
+
+用户运行了 `traffic_prop_s1_v4_smoke_b`，该命令使用 `objective=robust_cvr`、`traffic_profile=proportional`、`traffic_strength=1.0`，训练规模为 `400/600/800/1000`。
+
+阶段结论：
+- 训练链路是正常的，日志中已出现 `val_cvr`、`val_route_overuse`、`val_cost_per_customer` 等 v4 诊断指标。
+- `best_checkpoint` 被选在 epoch 1，这是符合当前 best 规则的：epoch 1 的 `val_cvr=5.676`，低于 epoch 5/10/15。
+- 后续 epoch 虽然在部分指标上有改善，例如 epoch 10 的 `val_total_cost=126908.97`、`val_route_overuse=23.42`、`val_cost_per_customer=163.60`，但 `val_cvr` 升至 `6.064`，因此不能作为强扰动目标下的更优 checkpoint。
+- 该 smoke 结果说明当前 v4 配置尚未真正降低验证集 CVR；继续简单拉长同一配置训练，收益不确定。
+
+报告启示：
+- v4 smoke_b 可以作为“强扰动目标重构后的中间实验”记录：它验证了 robust_cvr 指标链路可用，但也暴露出训练目标仍没有有效压低验证 CVR。
+- 下一步不应只增加 epoch，而应优先调整目标权重、训练尺度或让验证口径更贴近最终 `benchmark_evaluate.py` 的强扰动 Monte Carlo 结果。
+
+### 42. 转向 vrp_benchmark 外部数据可行性验证
+
+用户表示当前不希望继续投入过多交通扰动训练尝试，希望改用 `vrp_benchmark` 数据验证当前模型的可行性。
+
+阶段结论：
+- 当前最稳妥路线是暂时不再使用旧的 `python -m vrp_bench solve` 接入口，而是继续使用独立 PyTorch 链路。
+- 对 `vrp_benchmark/real_twcvrp/*.npz`：
+  - `rl_solomon_tw/dataset.py` 已支持 `.npz` 读取；
+  - `solve.py --input *.npz` 可用于单文件推理；
+  - `evaluate.py --data_root ... --source npz` 或 `benchmark_evaluate.py --eval_files ...` 可用于批量评估。
+- 对 `vrp_benchmark/real_cvrp/*.npz`：
+  - 应使用 `rl_standalone` 的 CVRP 链路；
+  - 该链路适合验证“CVRP 数据读取 -> RL 推理 -> 路线 JSON 输出”的闭环；
+  - checkpoint 仍按客户规模绑定，跨规模需要重新训练或改造模型。
+- 推荐优先验证 single-depot 数据：
+  - TWCVRP：`real_twcvrp/twvrp_{size}_single_depot.npz`；
+  - CVRP：`real_cvrp/cvrp_{size}_single_depot_single_vehicule_sumDemands.npz`。
+
+报告启示：
+- `vrp_benchmark` 外部验证可以作为 Solomon/Homberger 实验之后的“跨数据源可行性验证”。
+- 首要指标仍应是 `feasibility`、`cvr`、`vehicles_excess`、`missing_customers` 和 `duplicate_visits`，成本指标放在第二层解释。
+
+### 43. static100 在 vrp_benchmark TWCVRP100 上的首次外部验证
+
+用户使用 `static_100_v2_full_best.pt` 对 `vrp_benchmark/real_twcvrp/twvrp_100_single_depot.npz` 进行静态推理，输出 `results/vrpbench_tw100_static100_solution.json`。
+
+阶段结论：
+- 10 个实例中 `4/10` 完全可行，平均 `cvr=0.90`。
+- 所有实例均无漏访、无重复访问、无容量违约、无车辆数超限。
+- 不可行实例全部由时间窗迟到造成：
+  - 平均 `time_window_violations=0.9`；
+  - 总计 9 个时间窗违约；
+  - 平均 `late_minutes=37.2`。
+- 平均路线数约 `23.7`，车辆约束保持稳定，说明 `strict_insert` 对车辆数和访问完整性的结构性控制仍然有效。
+
+报告启示：
+- 这是一个典型跨数据源验证结果：模型没有崩溃，仍能服务全部客户并满足容量/车辆约束，但时间窗泛化明显弱于 Solomon/Homberger 测试集。
+- 报告中可表述为“Solomon 训练模型在 vrp_benchmark TWCVRP100 上具备路线生成与基本约束保持能力，但时间窗分布迁移导致完全可行率下降”。
+- 下一步应优先比较 `tw_universal_all_full_best.pt` 在同一数据上的结果，而不是立即继续交通扰动训练。
+
+### 44. 实现 vrp_benchmark TW100 fine-tune 接入
+
+用户要求按计划实现以 `vrp_benchmark/real_twcvrp/twvrp_100_single_depot.npz` 为目标数据集的 fine-tune 与 native 评估入口。
+
+阶段结论：
+- 已在 `train.py` 新增 `--init_checkpoint`，可从 `static_100_v2_full_best.pt` 等已有 checkpoint 初始化后继续训练。
+- checkpoint 元数据现在会额外记录 `split_indices`，便于报告中明确 train/val/test 实例编号。
+- 已在 `benchmark_evaluate.py` 新增 `--metric_profile native|pdf_compatible`：
+  - 默认 `pdf_compatible` 保持旧报告口径；
+  - `native` 使用项目 evaluator 与 `vrp_benchmark` 自带 `time_matrix`，作为 fine-tune 的主验收口径。
+- 修复了 `.npz` 规模匹配问题：`--source npz --size 100` 不再误匹配 `twvrp_1000_single_depot.npz`。
+- 已通过：
+  - `python -m py_compile train.py benchmark_evaluate.py dataset.py decoder.py evaluator.py`；
+  - `train.py --help` 中确认 `--init_checkpoint`；
+  - `benchmark_evaluate.py --help` 中确认 `--metric_profile`；
+  - 临时 native 评估 smoke，test split 输出 `base` 指标：`instances=2`、`avg_cvr=1.0`、`feasibility_rate=0.5`。
+- 0 epoch 初始化检查确认固定 split 索引为：
+  - train: `[2, 3, 4, 5, 7, 9]`
+  - val: `[6, 8]`
+  - test: `[0, 1]`
+
+报告启示：
+- 现在可以正式进行 `vrp_benchmark` TW100 留出 fine-tune 实验。
+- 若 fine-tune 后 test split 的 `avg_cvr` 和 `late_minutes` 不能下降，可将结论推进到“当前 policy 排序 + strict_insert 对难时间窗分布仍不足，需要 time-window repair 或 deadline-aware decoder”。
+
+### 45. vrp_benchmark TW100 smoke fine-tune 结果判断
+
+用户完成 `vrpbench_tw100_static100_ft_smoke_best.pt` 在留出 test split 上的 native 口径评估，并询问是否值得继续正式 fine-tune。
+
+阶段结论：
+- smoke fine-tune 没有改善 test split 结果；`base` 与 `smoke` 指标完全一致：
+  - `avg_cost=31305.5`
+  - `single_customer_cost=313.055`
+  - `avg_waiting=7706.0`
+  - `avg_cvr=1.0`
+  - `feasibility_rate=0.5`
+  - `avg_route_count=23.5`
+- per-instance 也完全一致：
+  - test instance 0 可行，`cvr=0`；
+  - test instance 1 不可行，`time_window_violations=2`、`late_minutes=51.0`。
+- smoke checkpoint 的 best epoch 停在 epoch 1，validation 仍为 `val_feasibility=0.0`、`val_cvr=2.0`，说明当前短 fine-tune 没有让 greedy 策略发生有效改变。
+
+执行建议：
+- 不建议直接运行原计划的 80 epoch 正式 fine-tune 命令，因为当前 smoke 没有显示正向信号。
+- 若仍要验证“继续 RL 微调是否可能修复 TW100”，应先改为更强但较短的 v2 fine-tune：提高学习率和时间窗惩罚、取消路线数惩罚、缩短到 40 epoch，并严格看 validation/test 的 `avg_cvr` 与 `late_minutes` 是否下降。
+- 如果 v2 仍无改善，下一步应停止单纯 fine-tune，转向 `time_window_repair` 或 `deadline-aware decoder`，因为问题更可能在解码/修复结构，而不是训练轮次不足。
+
+### 46. 实现 time-window repair 与 deadline-aware decoder，并修正 TW100 结论
+
+用户要求实现“时间窗优先 decoder/repair”计划，用于验证当前策略是否能更好适应 `vrp_benchmark TW100` 的窄时间窗分布。
+
+阶段实现：
+- 在 `decoder.py` 中新增 `deadline_aware_insert`：
+  - 不再只按旅行增量筛选插入位置；
+  - 候选位置按时间窗违约数、迟到分钟、路线数、最小 slack、等待增量、成本增量排序；
+  - 保留 `strict_insert` 作为 baseline。
+- 在 `decoder.py` 中新增 `post_opt=time_window_repair`：
+  - 围绕迟到客户及其前后邻居做 relocate；
+  - 再尝试与其他客户 swap；
+  - 只接受不破坏访问完整性、容量、车辆数，且指标字典序更优的移动。
+- 在 `solve.py`、`benchmark_evaluate.py`、`evaluate.py`、`train.py` 中接入：
+  - `--decoder deadline_aware_insert`
+  - `--post_opt none|time_window_repair`
+- 已通过 `python -m py_compile decoder.py solve.py benchmark_evaluate.py train.py evaluate.py`。
+
+关键验证：
+- 对 `static_100_v2_full_best.pt` 在 `vrp_benchmark TW100` 全 10 实例上做临时 native 评估：
+  - `strict_insert + time_window_repair`：`avg_cvr=0.9`、`feasibility_rate=0.4`，成本从约 `31290.7` 小幅降到约 `31272.4`；
+  - `deadline_aware_insert + time_window_repair`：`avg_cvr=0.9`、`feasibility_rate=0.4`，成本更高，暂不优于 strict baseline。
+- 进一步检查发现，`vrp_benchmark TW100` 的 9 个迟到违约刚好对应 9 个“从 depot 直接出发也超过 due time”的客户：
+  - instance 1: 2 个；
+  - instance 2: 1 个；
+  - instance 3: 1 个；
+  - instance 6: 2 个；
+  - instance 8: 2 个；
+  - instance 9: 1 个。
+- 这意味着在当前 native `time_matrix` 口径下，这些客户存在静态时间窗不可达下界；因此 `4/10 feasible, avg_cvr=0.9` 很可能不是模型/decoder 单独造成的失败，而是数据口径本身包含不可完全满足的时间窗。
+
+报告启示：
+- 不能简单写成“static_insert 泛化失败”；更准确的说法是：
+  - 当前链路已经达到 `vrp_benchmark TW100` native 口径下由 depot 直达时间窗下界所限制的可行性水平；
+  - `strict_insert` 仍有效保证无漏访、无重复、容量可行和车辆数不超限；
+  - 对这批数据若要追求 100% 可行率，需要调整时间窗口径、允许软时间窗、或验证 benchmark 原始时间矩阵/时间窗是否设计为硬可行。
+- 后续改进方向应从“强行 fine-tune”转向：
+  - 在评估中显式报告 `direct-depot infeasible lower bound`；
+  - 对硬不可达客户采用软时间窗迟到惩罚；
+  - 或引入允许等待/出发时间偏移/数据修复的业务假设。
+
+### 47. 交通扰动时间尺度归一化假设与 A/B 验证入口
+
+用户提出：交通扰动实验失效可能来自 Solomon/Homberger 与 SVRP 的时间尺度不一致。SVRP 的交通扰动函数使用固定日内分钟峰值，例如早高峰 `480`、晚高峰 `1020`、事故峰 `1260`；而 Solomon/Homberger 的 depot due time 从数百到数千不等，直接使用原始 `current_time` 可能让扰动落在错误时间段。
+
+阶段判断：
+- 该猜测方向正确，但需要区分训练侧和评估侧：
+  - 当前 `traffic.py` 的训练侧扰动主要是整张时间矩阵乘因子，不使用 route traversal 的实时 `current_time`；
+  - `benchmark_evaluate.py` 的 PDF/SVRP 风格 hybrid/traffic 评估会逐边使用 `current_time`，因此时间尺度错位主要影响评估侧 PDF traffic 口径。
+- 在验证时间尺度假设前，应先把强扰动参数回退到旧/标准扰动强度：
+  - `traffic_profile=additive`
+  - `traffic_strength=1.0`
+  - `traffic_sigma=0.2`
+  - `traffic_buffer=0.5`
+  - `decoder=strict_insert`
+  - `post_opt=none`
+- 不建议删除强扰动代码或 checkpoint，只通过参数做非破坏式实验回退。
+
+阶段实现：
+- 在 `benchmark_evaluate.py` 新增 `--traffic_time_scale raw|depot_day`：
+  - `raw`：旧口径，直接使用原始 `current_time`；
+  - `depot_day`：将 depot 时间窗 `[ready_0, due_0]` 映射到 `[0, 1440]` 后再计算 SVRP 早晚高峰和事故扰动。
+- 新增诊断字段并写入 CSV/JSON：
+  - `traffic_time_scale`
+  - `avg_depot_due`
+  - `avg_traffic_edges`
+  - `avg_raw_current_time`
+  - `avg_scaled_current_time`
+  - `avg_delay`
+  - `avg_delay_ratio`
+- 更新 `README_TW_RL.md`，加入 raw/depot_day A/B 验证命令。
+- 已通过：
+  - `python -m py_compile traffic.py benchmark_evaluate.py train.py evaluate.py solve.py`
+  - 100 规模 `mc_samples=2` 临时 raw/depot_day A/B sanity check。
+
+初步 sanity 结果：
+- 在 `universal_v1/test/100` 上，raw 与 depot_day 的差异很小：
+  - raw: `avg_raw_current_time≈402.38`，`avg_scaled_current_time≈402.38`，`avg_delay_ratio≈0.00231`；
+  - depot_day: `avg_raw_current_time≈402.38`，`avg_scaled_current_time≈419.75`，`avg_delay_ratio≈0.00232`。
+- 这说明 100 规模不能充分验证该假设；应重点在 `600/800/1000` 等 depot horizon 明显偏离 1440 的规模上做 A/B。
+
+报告启示：
+- 后续是否训练 traffic_rl，应先看 raw/depot_day 在大规模上的 `avg_delay_ratio`、`avg_cvr`、`feasibility_rate` 是否显著不同。
+- 若差异明显，可说明此前交通扰动对 Solomon/Homberger 时间尺度不够敏感；若差异很小，则问题更可能来自训练目标和路线数膨胀，而不是时间归一化。
+
+### 49. 新建 Event-Driven Online Recourse RL 实验线
+
+用户提出在线追溯式 RL 架构优化建议：采用事件驱动环境，避免 `车辆数 x 客户数` 动作空间爆炸；引入时间编码；使用 hard mask 避免 RL 早期崩溃。
+
+阶段实现：
+- 新建独立实验目录 `svrpbench/models/rl_recourse_tw/`，不替换当前 `rl_solomon_tw` 主链路。
+- 实现 `EventDrivenTWEnv`：
+  - 每步选择最早空闲车辆；
+  - 策略只为该车选择下一个客户；
+  - hard mask 屏蔽已服务、容量超限、最快到达也必迟到客户；
+  - 若全部时间窗 mask，则 fallback 到容量可行客户并记录 `forced_late_actions`。
+- 实现 `EventDrivenSTPolicy`：
+  - 当前车辆作为 query；
+  - 客户节点作为 key/value；
+  - 客户特征中包含坐标、需求、时间窗、预计到达、等待、迟到、slack、sin/cos 时间编码和 legal mask。
+- 实现 `rollout.py`、`heuristic.py`、`train.py`、`evaluate.py`：
+  - 支持 `earliest_due`、`min_late`、`recourse`、`strict_insert` 对比；
+  - 支持 `risk_objective=mean|cvar`；
+  - checkpoint 保存普通字典，不保存环境对象。
+- 新增 `README_RECOURSE_RL.md`，提供 smoke 训练和评估命令。
+
+验证结果：
+- 已通过：
+  - `python -m py_compile common.py env.py policy.py rollout.py heuristic.py train.py evaluate.py`
+  - 100 规模静态启发式临时评估；
+  - 1 epoch/1 step smoke 训练；
+  - smoke checkpoint 加载评估。
+- 临时 100 静态测试结果：
+  - `earliest_due`：`feasibility≈0.778`、`avg_cvr≈0.667`、`late_minutes≈8.22`；
+  - 未充分训练的 `recourse`：`feasibility≈0.222`、`avg_cvr≈9.0`、`late_minutes≈2875.6`。
+
+报告启示：
+- 事件驱动环境本身是可用的，且简单在线启发式已经显示比随机未训练策略稳定得多。
+- 当前 recourse 神经策略仍需正式训练或 imitation warm-start；不能用 smoke checkpoint 的低性能评价该架构。
+- 后续优先比较 `earliest_due/min_late` 与 `strict_insert` 在交通扰动下的表现，再决定是否投入更长 RL 训练。
+
+### 48. 交通时间尺度 A/B：400 与 600 规模初步结果
+
+用户完成 `traffic_time_scale=raw` 与 `traffic_time_scale=depot_day` 在 400、600 规模上的标准扰动 A/B 评估，并要求比较结果。
+
+阶段结论：
+- `depot_day` 确实改变了交通函数看到的时间坐标：
+  - 400 规模中，`avg_scaled_current_time` 从约 `633/628` 降到约 `398/393`；
+  - 600 规模中，`avg_scaled_current_time` 从约 `794/783` 降到约 `385/381`。
+- 但该变化没有显著改变扰动强度和最终结果：
+  - 400 规模：
+    - static100 `avg_delay_ratio` 从 `0.002130` 到 `0.002133`，`avg_cvr=0.0`、`feasibility=1.0` 不变；
+    - universal `avg_delay_ratio` 从 `0.002125` 到 `0.002128`，`avg_cvr=0.0`、`feasibility=1.0` 不变。
+  - 600 规模：
+    - static100 `avg_delay_ratio` 从 `0.002106` 到 `0.002015`，`avg_cvr=0.0`、`feasibility=1.0` 不变；
+    - universal `avg_delay_ratio` 从 `0.002018` 到 `0.002009`，`avg_cvr≈0.0598`、`feasibility≈0.9744` 不变。
+- 成本、等待、robustness 标准差几乎没有变化，说明在标准扰动强度下，400/600 的 raw vs depot_day 时间尺度不是主要影响因素。
+
+报告启示：
+- 时间尺度归一化是合理假设，但 400/600 结果暂不支持它是当前交通扰动实验失效的主因。
+- 当前 PDF/SVRP 交通函数的 `time_factor` 峰值幅度本身很小，且 additive 扰动的平均 delay ratio 约只有 `0.2%`，因此即使时间坐标变化，最终路径指标也几乎不动。
+- 下一步可继续看 800/1000，但若仍无明显差异，后续重点应转向交通扰动强度公式、扰动注入方式和 traffic-aware 训练目标，而不是单纯时间归一化。
+### 50. Event-driven recourse 实验阶段性结论与后续方向
+
+用户完成了四组 recourse 实验：启发式与 `strict_insert` 基线对比、recourse smoke 训练、100 规模正式训练，以及 100 模型跨 200/400 规模评估。该节点用于判断“事件驱动在线追溯”方向是否值得继续。
+
+阶段性结果：
+- `earliest_due` 启发式在可行性和 CVR 上明显优于 `strict_insert`，尤其在 200/400 规模上接近或达到完全可行：
+  - 200 规模：`earliest_due feasibility≈0.9667`、`avg_cvr≈0.0167`，而 `strict_insert feasibility≈0.2889`、`avg_cvr≈1.1722`。
+  - 400 规模：`earliest_due feasibility≈0.9963`、`avg_cvr≈0.0009`，而 `strict_insert feasibility≈0.1074`、`avg_cvr≈1.2417`。
+- 这说明事件驱动环境、异步车辆决策和 hard mask 对时间窗可行性非常有效。
+- 但当前训练得到的神经 `recourse` 策略尚未成功：
+  - 100 规模测试：`recourse feasibility≈0.5111`，略高于 `strict_insert≈0.4926`，但 `avg_cvr≈7.1778`、`late_minutes≈898`，显著差于 `strict_insert` 和 `earliest_due`。
+  - 200/400 跨规模测试中，`recourse` 的可行率高于 `strict_insert`，但 CVR 与迟到分钟数明显更差，说明它更多是在“用满车辆数”而不是学到稳定的时间窗排序策略。
+- 100 规模训练日志显示 best checkpoint 停在较早 epoch，validation 的 `val_cvr` 和 `val_feasibility` 没有形成稳定改善，说明从零开始 REINFORCE 方差过大，当前奖励不足以让策略靠探索学到 `earliest_due` 这类强启发式行为。
+
+执行判断：
+- 不建议继续直接加长当前 recourse RL 训练，也不建议立刻做 600/800/1000 的神经 recourse 长训。
+- 应先把 `earliest_due` 作为专家策略，加入 imitation warm-start / behavior cloning，让模型先学会低 CVR、低迟到的动作分布，再进入 RL 微调。
+- 下一阶段推荐对比：
+  - `strict_insert`：低成本但时间窗可行性弱；
+  - `earliest_due`：高可行性但路线数和成本高；
+  - `imitation-only recourse`：验证神经策略能否复刻启发式；
+  - `imitation + RL recourse`：在保持可行性的基础上降低成本和路线数。
+
+报告表述建议：
+- 可以写“事件驱动 recourse 框架被启发式结果验证为有效，尤其在时间窗可行性上显著优于一次性静态排序解码；但当前纯 REINFORCE 神经策略尚未达到启发式水平，需要引入专家模仿和分阶段训练。”
+### 51. Recourse imitation warm-start 实现
+
+基于前一阶段结论，用户要求实现 `recourse` 模型的专家模仿预训练，避免继续从零开始依赖高方差 REINFORCE 探索。
+
+阶段实现：
+- 在 `svrpbench/models/rl_recourse_tw/train.py` 中新增 imitation 参数：
+  - `--imitation_epochs`
+  - `--expert_strategy earliest_due|min_late`
+  - `--imitation_weight`
+  - `--bc_weight_after_imitation`
+- 新增专家监督 rollout：
+  - 每个 event-driven 决策状态下由专家策略选择客户；
+  - 策略网络对专家动作计算 cross entropy；
+  - 环境执行专家动作并记录专家路线指标；
+  - 日志新增 `phase`、`imit_loss`、`bc_loss`、`train_imit_accuracy`。
+- REINFORCE 阶段保留原有逻辑，同时可加入少量 BC 正则，防止策略在 RL 微调时偏离低 CVR 专家行为。
+- 更新 `README_RECOURSE_RL.md` 为中文说明，加入 imitation smoke、正式训练、100 测试和跨规模评估命令。
+
+执行判断：
+- 当前推荐先运行 100 规模 imitation smoke，观察 `train_acc`、`train_cvr`、`val_cvr` 是否明显优于旧 recourse。
+- 若 `recourse_100_imitation_best.pt` 的 100 测试 `avg_cvr` 仍明显差于 `strict_insert`，应暂停多规模长训，继续改专家策略或 reward。
+### 52. recourse_100_bc_long 跨 600/800 规模评估
+
+用户完成 `recourse_100_bc_long_best.pt` 在 600 与 800 规模上的标准弱交通扰动评估，并要求判断后续方向。当前结果目录中未发现 1000 规模输出文件，因此本节点先基于 600/800 结论。
+
+阶段结果：
+- 600 规模：
+  - `recourse avg_cvr≈0.0853`、`feasibility≈0.8598`，明显优于 `strict_insert avg_cvr≈1.3473`、`feasibility≈0.10`。
+  - 但 `recourse` 弱于 `earliest_due avg_cvr≈0.0184`、`feasibility≈0.9239`，说明 100 规模训练模型在 600 上仍有泛化，但已经开始落后专家。
+  - `recourse avg_cost≈256383`，低于 `earliest_due≈265774`，高于 `strict_insert≈73338`。
+- 800 规模：
+  - `recourse avg_cvr≈0.4223`、`feasibility≈0.7667`，仍明显优于 `strict_insert avg_cvr≈1.9932`、`feasibility≈0.0744`。
+  - 但已经明显弱于 `earliest_due avg_cvr≈0.0474`、`feasibility≈0.8590`。
+  - `recourse late_minutes≈2052`，高于 `earliest_due≈285` 与 `strict_insert≈207`，说明大规模下迟到严重度开始上升。
+
+执行判断：
+- `recourse_100_bc_long_best.pt` 已证明 100 训练模型具备跨 600/800 的时间窗鲁棒性泛化，仍显著优于静态 `strict_insert`。
+- 但从 600 到 800，模型与 `earliest_due` 的差距明显扩大，说明不应直接把 100 模型作为最终大规模模型。
+- 下一步应先补跑 1000 评估；若 1000 继续退化，应训练 100/200/400/600/800 的多规模 imitation+RL 模型，再考虑路线数/成本压缩。
+
+### 53. recourse_100_bc_long 跨 1000 规模评估与下一阶段判断
+
+用户补跑 `recourse_100_bc_long_best.pt` 在 1000 规模上的标准弱交通扰动评估。
+
+阶段结果：
+- 1000 规模：
+  - `earliest_due avg_cvr≈0.0403`、`feasibility≈0.8453`、`late_minutes≈491.49`、`avg_cost≈656782`。
+  - `recourse avg_cvr≈0.2674`、`feasibility≈0.7359`、`late_minutes≈2146.72`、`avg_cost≈637539`。
+  - `strict_insert avg_cvr≈2.4697`、`feasibility≈0.0444`、`late_minutes≈429.95`、`avg_cost≈199793`。
+- `recourse` 在 1000 上仍显著优于 `strict_insert` 的 CVR 与完全可行率，说明 100 规模训练出的 online recourse 策略具有真实跨规模泛化能力。
+- 但相对 `earliest_due`，`recourse` 在 800/1000 上差距明显扩大，尤其迟到分钟数偏高，说明单 100 规模训练不足以作为最终大规模模型。
+
+执行判断：
+- 当前 `recourse_100_bc_long_best.pt` 可作为报告中的“100 训练模型跨规模泛化”核心结果。
+- 后续若继续优化，应优先训练覆盖大规模的 recourse 模型，例如 `400/600/800/1000` 或 `100/200/400/600/800/1000` 多规模 imitation+RL。
+- 不建议立刻做成本/路线数压缩，因为大规模时间窗鲁棒性还没有追平专家；应先提升 800/1000 的 CVR 和 feasibility。

@@ -248,3 +248,73 @@ python evaluate.py --data_root C:\Users\86136\Desktop\code\RL\SVRP\solomon --siz
 - 能生成 JSON/CSV 结果。
 - 静态结果中 `vehicles_excess=0.0`。
 - 后续实验围绕 `strict_insert`、traffic-aware 训练和速度优化继续推进。
+
+## 13. vrp_benchmark TW100 时间窗修复实验
+
+`vrp_benchmark\real_twcvrp\twvrp_100_single_depot.npz` 可用于检查 Solomon 训练模型的跨数据源表现。当前支持两个额外开关：
+
+- `--decoder deadline_aware_insert`：时间窗优先插入 decoder。
+- `--post_opt time_window_repair`：在生成路线后尝试 relocate/swap 修复迟到客户。
+
+先复现当前 baseline：
+
+```powershell
+python benchmark_evaluate.py --metric_profile native --mode static --decoder strict_insert --insert_top_k 0 --eval_set vrpbench_tw100_baseline --eval_files C:\Users\86136\Desktop\code\RL\SVRP\vrp_benchmark\real_twcvrp\twvrp_100_single_depot.npz --checkpoints base=checkpoints\static_100_v2_full_best.pt --output_json results\vrpbench_tw100_baseline_native.json --output_csv results\vrpbench_tw100_baseline_native.csv
+```
+
+测试 repair：
+
+```powershell
+python benchmark_evaluate.py --metric_profile native --mode static --decoder strict_insert --insert_top_k 0 --post_opt time_window_repair --eval_set vrpbench_tw100_repair --eval_files C:\Users\86136\Desktop\code\RL\SVRP\vrp_benchmark\real_twcvrp\twvrp_100_single_depot.npz --checkpoints base=checkpoints\static_100_v2_full_best.pt --output_json results\vrpbench_tw100_repair_native.json --output_csv results\vrpbench_tw100_repair_native.csv
+```
+
+测试 deadline-aware decoder：
+
+```powershell
+python benchmark_evaluate.py --metric_profile native --mode static --decoder deadline_aware_insert --insert_top_k 0 --post_opt time_window_repair --eval_set vrpbench_tw100_deadline_repair --eval_files C:\Users\86136\Desktop\code\RL\SVRP\vrp_benchmark\real_twcvrp\twvrp_100_single_depot.npz --checkpoints base=checkpoints\static_100_v2_full_best.pt --output_json results\vrpbench_tw100_deadline_repair_native.json --output_csv results\vrpbench_tw100_deadline_repair_native.csv
+```
+
+注意：本地诊断发现该 TW100 文件中存在若干客户从 depot 直接出发也超过 `due_time` 的情况，因此 native 口径下不一定存在 100% 硬可行解。报告中建议同时说明这一数据下界，避免把不可达时间窗误判为模型完全失效。
+
+## 14. 交通扰动时间尺度 A/B 验证
+
+为了验证 Solomon/Homberger 的时间尺度是否和 SVRP 的 24 小时交通扰动函数错位，可以只在评估阶段对比：
+
+- `--traffic_time_scale raw`：直接使用路线当前时间，这是旧口径。
+- `--traffic_time_scale depot_day`：把 depot 时间窗 `[ready_0, due_0]` 映射到 `[0, 1440]`，再计算早晚高峰和事故扰动。
+
+验证该假设时建议先回到标准扰动强度，不使用强扰动版本：
+
+```text
+--traffic_profile additive --traffic_strength 1.0 --traffic_sigma 0.2 --traffic_buffer 0.5
+```
+
+100 规模 raw：
+
+```powershell
+python benchmark_evaluate.py --mode hybrid --metric_profile pdf_compatible --decoder strict_insert --insert_top_k 10 --post_opt none --split_root data_splits\universal_v1 --sizes 100 --split test --mc_samples 30 --traffic_seed 42 --traffic_profile additive --traffic_strength 1.0 --traffic_time_scale raw --checkpoints static100=checkpoints\static_100_v2_full_best.pt universal=checkpoints\tw_universal_all_full_best.pt --allow_unseen_size --output_json results\traffic_scale_raw_100.json --output_csv results\traffic_scale_raw_100.csv
+```
+
+100 规模 depot_day：
+
+```powershell
+python benchmark_evaluate.py --mode hybrid --metric_profile pdf_compatible --decoder strict_insert --insert_top_k 10 --post_opt none --split_root data_splits\universal_v1 --sizes 100 --split test --mc_samples 30 --traffic_seed 42 --traffic_profile additive --traffic_strength 1.0 --traffic_time_scale depot_day --checkpoints static100=checkpoints\static_100_v2_full_best.pt universal=checkpoints\tw_universal_all_full_best.pt --allow_unseen_size --output_json results\traffic_scale_depot_day_100.json --output_csv results\traffic_scale_depot_day_100.csv
+```
+
+对其它规模只替换 `--sizes` 和输出文件名即可，例如 `600`：
+
+```powershell
+python benchmark_evaluate.py --mode hybrid --metric_profile pdf_compatible --decoder strict_insert --insert_top_k 10 --post_opt none --split_root data_splits\universal_v1 --sizes 600 --split test --mc_samples 30 --traffic_seed 42 --traffic_profile additive --traffic_strength 1.0 --traffic_time_scale raw --checkpoints static100=checkpoints\static_100_v2_full_best.pt universal=checkpoints\tw_universal_all_full_best.pt --allow_unseen_size --output_json results\traffic_scale_raw_600.json --output_csv results\traffic_scale_raw_600.csv
+python benchmark_evaluate.py --mode hybrid --metric_profile pdf_compatible --decoder strict_insert --insert_top_k 10 --post_opt none --split_root data_splits\universal_v1 --sizes 600 --split test --mc_samples 30 --traffic_seed 42 --traffic_profile additive --traffic_strength 1.0 --traffic_time_scale depot_day --checkpoints static100=checkpoints\static_100_v2_full_best.pt universal=checkpoints\tw_universal_all_full_best.pt --allow_unseen_size --output_json results\traffic_scale_depot_day_600.json --output_csv results\traffic_scale_depot_day_600.csv
+```
+
+CSV 中会额外输出：
+
+- `traffic_time_scale`
+- `avg_depot_due`
+- `avg_raw_current_time`
+- `avg_scaled_current_time`
+- `avg_delay`
+- `avg_delay_ratio`
+
+如果 `raw` 与 `depot_day` 的 `avg_scaled_current_time`、`avg_delay_ratio`、`avg_cvr` 或 `feasibility_rate` 明显不同，说明时间尺度是交通扰动实验中的关键变量。

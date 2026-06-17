@@ -78,7 +78,12 @@ def load_instances(
             return [load_solomon_file(path, index=i) for i, path in enumerate(files)]
 
     if source in {"auto", "npz"}:
-        candidates = sorted(root.glob(f"*{size}*single_depot*.npz"))
+        size_pattern = re.compile(rf"(?<!\d){re.escape(str(size))}(?!\d)")
+        candidates = [
+            path
+            for path in sorted(root.glob("*single_depot*.npz"))
+            if size_pattern.search(path.stem)
+        ]
         if candidates:
             return load_npz_instances(candidates[0], limit=limit)
 

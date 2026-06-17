@@ -14,8 +14,9 @@ import torch
 
 from dataset import load_instances, split_instances, instances_to_tensors
 from decoder import decode_order
+from evaluator import evaluate_routes
 from model import TWPointerPolicy, actions_to_order, rollout
-from traffic import planning_matrix
+from traffic import planning_matrix, sample_traffic_matrix, stable_seed
 
 
 CSV_FIELDS = [
@@ -23,7 +24,19 @@ CSV_FIELDS = [
     "model_name",
     "size",
     "mode",
+    "metric_profile",
+    "decoder",
+    "post_opt",
+    "traffic_profile",
+    "traffic_strength",
+    "traffic_time_scale",
     "instances",
+    "avg_depot_due",
+    "avg_traffic_edges",
+    "avg_raw_current_time",
+    "avg_scaled_current_time",
+    "avg_delay",
+    "avg_delay_ratio",
     "avg_cost",
     "single_customer_cost",
     "avg_waiting",
@@ -49,8 +62,19 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--split", default="test", choices=["train", "val", "test", "all"])
     parser.add_argument("--mode", default="static", choices=["static", "hybrid", "traffic"])
-    parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument(
+        "--metric_profile",
+        default="pdf_compatible",
+        choices=["pdf_compatible", "native"],
+        help="pdf_compatible keeps the report metric style; native uses benchmark/project travel matrices.",
+    )
+    parser.add_argument(
+        "--decoder",
+        default="strict_insert",
+        choices=["strict_insert", "deadline_aware_insert", "greedy_split"],
+    )
     parser.add_argument("--insert_top_k", type=int, default=30)
+    parser.add_argument("--post_opt", default="none", choices=["none", "time_window_repair"])
     parser.add_argument(
         "--checkpoints",
         nargs="+",
@@ -61,6 +85,28 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--traffic_seed", type=int, default=42)
     parser.add_argument("--traffic_sigma", type=float, default=0.20)
     parser.add_argument("--traffic_buffer", type=float, default=0.50)
+    parser.add_argument(
+        "--traffic_profile",
+        default="additive",
+        choices=["additive", "proportional"],
+        help="Traffic stress model for hybrid/traffic evaluation. additive preserves prior results; proportional scales delay by edge distance.",
+    )
+    parser.add_argument(
+        "--traffic_strength",
+        type=float,
+        default=1.0,
+        help="Multiplier for stochastic traffic delay in hybrid/traffic evaluation. 1.0 keeps the PDF-style baseline.",
+    )
+    parser.add_argument(
+        "--traffic_time_scale",
+        default="raw",
+        choices=["raw", "depot_day"],
+        help=(
+            "Time coordinate used by PDF/SVRP traffic peaks. raw uses route current_time directly; "
+            "depot_day maps depot [ready,due] to [0,1440]. Native matrix evaluation records this "
+            "setting but does not use route-time traffic peaks."
+        ),
+    )
     parser.add_argument("--mc_samples", type=int, default=30)
     parser.add_argument("--train_ratio", type=float, default=0.70)
     parser.add_argument("--val_ratio", type=float, default=0.15)
@@ -96,20 +142,18 @@ def parse_checkpoints(specs: list[str]) -> list[tuple[str, Path]]:
 def load_policy(path: Path, device: torch.device) -> tuple[TWPointerPolicy, dict]:
     checkpoint = torch.load(path, map_location=device, weights_only=False)
     state = checkpoint["model_state_dict"]
-    context_dim = int(
-        checkpoint.get(
-            "context_dim",
-            state.get("context_encoder.0.weight").shape[1],
-        )
-    )
-    dynamic_feature_dim = int(
-        checkpoint.get(
-            "dynamic_feature_dim",
-            state["dynamic_encoder.0.weight"].shape[1]
-            if "dynamic_encoder.0.weight" in state
-            else 0,
-        )
-    )
+    context_weight = state.get("context_encoder.0.weight")
+    if "context_dim" in checkpoint:
+        context_dim = int(checkpoint["context_dim"])
+    elif context_weight is not None:
+        context_dim = int(context_weight.shape[1])
+    else:
+        context_dim = 9
+    dynamic_weight = state.get("dynamic_encoder.0.weight")
+    if "dynamic_feature_dim" in checkpoint:
+        dynamic_feature_dim = int(checkpoint["dynamic_feature_dim"])
+    else:
+        dynamic_feature_dim = int(dynamic_weight.shape[1] if dynamic_weight is not None else 0)
     model = TWPointerPolicy(
         embed_dim=int(checkpoint.get("embed_dim", 128)),
         feature_dim=int(checkpoint.get("feature_dim", 6)),
@@ -215,6 +259,8 @@ def solve_routes(model, instance, args: argparse.Namespace, device: torch.device
         mode=route_planning_mode(args.mode),
         traffic_sigma=args.traffic_sigma,
         traffic_buffer=args.traffic_buffer,
+        traffic_profile=args.traffic_profile,
+        traffic_strength=args.traffic_strength,
     )
     routes = decode_order(
         instance,
@@ -222,6 +268,7 @@ def solve_routes(model, instance, args: argparse.Namespace, device: torch.device
         matrix,
         decoder=args.decoder,
         insert_top_k=args.insert_top_k,
+        post_opt=args.post_opt,
     )
     return routes, time.perf_counter() - start
 
@@ -388,6 +435,8 @@ def pdf_sample_travel_time(
     distance_matrix: np.ndarray,
     current_time: float,
     rng: np.random.Generator,
+    traffic_strength: float = 1.0,
+    traffic_profile: str = "additive",
 ) -> float:
     """Source-compatible traffic sample for one edge traversal."""
     if i == j:
@@ -397,13 +446,90 @@ def pdf_sample_travel_time(
         return 0.0
     time_fac = _time_factor(current_time)
     distance_factor = 1.0 - math.exp(-distance / 50.0)
-    base_delay = 0.25 * time_fac * distance_factor
-    delay = base_delay * _random_factor(current_time, rng)
-    delay += _sample_accidents(current_time, rng)
-    return distance + delay
+    delay_ratio = 0.25 * time_fac * distance_factor
+    stochastic_delay = delay_ratio * _random_factor(current_time, rng)
+    accident_delay = _sample_accidents(current_time, rng)
+    strength = max(0.0, float(traffic_strength))
+    if traffic_profile == "additive":
+        return distance + strength * (stochastic_delay + accident_delay)
+    if traffic_profile == "proportional":
+        return distance * (1.0 + strength * stochastic_delay) + strength * accident_delay
+    raise ValueError("traffic_profile must be 'additive' or 'proportional'.")
 
 
-def evaluate_static(instance, routes, *, solver_runtime_s: float) -> dict:
+def scale_traffic_time(instance, current_time: float, traffic_time_scale: str) -> float:
+    """Map route time into the time coordinate used by SVRP traffic peaks."""
+    if traffic_time_scale == "raw":
+        return float(current_time)
+    if traffic_time_scale == "depot_day":
+        start = float(instance.ready_times[0])
+        end = float(instance.due_times[0])
+        horizon = max(end - start, 1e-6)
+        day_fraction = min(max((float(current_time) - start) / horizon, 0.0), 1.0)
+        return day_fraction * 1440.0
+    raise ValueError("traffic_time_scale must be 'raw' or 'depot_day'.")
+
+
+def new_traffic_stats(instance) -> dict:
+    return {
+        "depot_due": float(instance.due_times[0]),
+        "traffic_edges": 0,
+        "raw_current_time_sum": 0.0,
+        "scaled_current_time_sum": 0.0,
+        "delay_sum": 0.0,
+        "delay_ratio_sum": 0.0,
+    }
+
+
+def record_traffic_stats(
+    stats: dict,
+    *,
+    distance: float,
+    travel_time: float,
+    raw_current_time: float,
+    scaled_current_time: float,
+) -> None:
+    if distance <= 0:
+        return
+    delay = max(0.0, float(travel_time) - float(distance))
+    stats["traffic_edges"] += 1
+    stats["raw_current_time_sum"] += float(raw_current_time)
+    stats["scaled_current_time_sum"] += float(scaled_current_time)
+    stats["delay_sum"] += delay
+    stats["delay_ratio_sum"] += delay / max(float(distance), 1e-6)
+
+
+def summarize_traffic_stats(stats: dict) -> dict:
+    edges = max(1, int(stats.get("traffic_edges", 0)))
+    return {
+        "depot_due": float(stats.get("depot_due", 0.0)),
+        "traffic_edges": int(stats.get("traffic_edges", 0)),
+        "raw_current_time_mean": float(stats.get("raw_current_time_sum", 0.0)) / edges,
+        "scaled_current_time_mean": float(stats.get("scaled_current_time_sum", 0.0)) / edges,
+        "delay_mean": float(stats.get("delay_sum", 0.0)) / edges,
+        "delay_ratio_mean": float(stats.get("delay_ratio_sum", 0.0)) / edges,
+    }
+
+
+def native_benchmark_row(row: dict) -> dict:
+    """Expose native evaluator metrics through the benchmark report fields."""
+    row["benchmark_total_cost"] = float(row.get("total_cost", 0.0))
+    row["benchmark_cvr"] = float(row.get("cvr", 0.0))
+    row["benchmark_feasible"] = bool(row.get("feasible", False))
+    row["project_total_cost"] = float(row.get("total_cost", 0.0))
+    row["project_cvr"] = float(row.get("cvr", 0.0))
+    row["project_feasible"] = bool(row.get("feasible", False))
+    row["metric_profile"] = "native"
+    return row
+
+
+def evaluate_static(instance, routes, *, args: argparse.Namespace, solver_runtime_s: float) -> dict:
+    if args.metric_profile == "native":
+        matrix = planning_matrix(instance, mode="static")
+        row = native_benchmark_row(evaluate_routes(instance, routes, matrix))
+        row["solver_runtime_s"] = float(solver_runtime_s)
+        return row
+
     matrix = pdf_static_time_matrix(instance)
     row = evaluate_pdf_routes(instance, routes, lambda i, j, _current_time: float(matrix[i, j]))
     row["solver_runtime_s"] = float(solver_runtime_s)
@@ -412,15 +538,53 @@ def evaluate_static(instance, routes, *, solver_runtime_s: float) -> dict:
 
 def evaluate_traffic_mc(instance, routes, *, model_name: str, args: argparse.Namespace, solver_runtime_s: float) -> dict:
     rows = []
+    if args.metric_profile == "native":
+        for sample_idx in range(max(1, args.mc_samples)):
+            matrix = sample_traffic_matrix(
+                instance,
+                seed=stable_seed(instance.name, model_name, sample_idx, base_seed=args.traffic_seed),
+                traffic_sigma=args.traffic_sigma,
+                traffic_profile=args.traffic_profile,
+                traffic_strength=args.traffic_strength,
+            )
+            row = native_benchmark_row(evaluate_routes(instance, routes, matrix))
+            row["solver_runtime_s"] = float(solver_runtime_s)
+            rows.append(row)
+        return aggregate_benchmark_rows(rows, mode=args.mode, static_runtime_s=solver_runtime_s)
+
     distance = pdf_distance_matrix(instance)
     child_seeds = np.random.SeedSequence(args.traffic_seed).spawn(max(1, args.mc_samples))
     for sample_idx in range(max(1, args.mc_samples)):
         rng = np.random.default_rng(child_seeds[sample_idx])
+        traffic_stats = new_traffic_stats(instance)
+
+        def traffic_travel_time(i, j, current_time, rng=rng, stats=traffic_stats):
+            raw_current_time = float(current_time)
+            scaled_current_time = scale_traffic_time(instance, raw_current_time, args.traffic_time_scale)
+            travel_time = pdf_sample_travel_time(
+                i,
+                j,
+                distance,
+                scaled_current_time,
+                rng,
+                traffic_strength=args.traffic_strength,
+                traffic_profile=args.traffic_profile,
+            )
+            record_traffic_stats(
+                stats,
+                distance=float(distance[i, j]),
+                travel_time=float(travel_time),
+                raw_current_time=raw_current_time,
+                scaled_current_time=scaled_current_time,
+            )
+            return travel_time
+
         row = evaluate_pdf_routes(
             instance,
             routes,
-            lambda i, j, current_time, rng=rng: pdf_sample_travel_time(i, j, distance, current_time, rng),
+            traffic_travel_time,
         )
+        row.update(summarize_traffic_stats(traffic_stats))
         row["solver_runtime_s"] = float(solver_runtime_s)
         rows.append(row)
     return aggregate_benchmark_rows(rows, mode=args.mode, static_runtime_s=solver_runtime_s)
@@ -431,6 +595,12 @@ def aggregate_benchmark_rows(rows: list[dict], *, mode: str, static_runtime_s: f
         return {"instances": 0}
     result = {
         "instances": len(rows),
+        "depot_due": mean(rows, "depot_due"),
+        "traffic_edges": mean(rows, "traffic_edges"),
+        "raw_current_time_mean": mean(rows, "raw_current_time_mean"),
+        "scaled_current_time_mean": mean(rows, "scaled_current_time_mean"),
+        "delay_mean": mean(rows, "delay_mean"),
+        "delay_ratio_mean": mean(rows, "delay_ratio_mean"),
         "total_distance": mean(rows, "total_distance"),
         "total_travel_time": mean(rows, "total_travel_time"),
         "waiting_time": mean(rows, "waiting_time"),
@@ -442,10 +612,10 @@ def aggregate_benchmark_rows(rows: list[dict], *, mode: str, static_runtime_s: f
         "route_count": mean(rows, "route_count"),
         "project_total_cost": mean(rows, "project_total_cost"),
         "project_cvr": mean(rows, "project_cvr"),
-        "project_feasibility": feasibility_mean(rows, "project_feasible"),
+        "project_feasibility": feasibility_mean(rows, "project_feasible", "project_feasibility"),
         "benchmark_total_cost": mean(rows, "benchmark_total_cost"),
         "benchmark_cvr": mean(rows, "benchmark_cvr"),
-        "benchmark_feasibility": feasibility_mean(rows, "benchmark_feasible"),
+        "benchmark_feasibility": feasibility_mean(rows, "benchmark_feasible", "benchmark_feasibility", "feasible"),
         "solver_runtime_s": float(static_runtime_s if static_runtime_s is not None else mean(rows, "solver_runtime_s")),
     }
     values = [float(row.get("benchmark_total_cost", 0.0)) for row in rows]
@@ -470,7 +640,17 @@ def aggregate_for_report(rows: list[dict], *, eval_set: str, model_name: str, si
         "model_name": model_name,
         "size": str(size),
         "mode": mode,
+        "metric_profile": rows[0].get("metric_profile", "pdf_compatible") if rows else "pdf_compatible",
+        "decoder": rows[0].get("decoder", "strict_insert") if rows else "strict_insert",
+        "post_opt": rows[0].get("post_opt", "none") if rows else "none",
+        "traffic_time_scale": rows[0].get("traffic_time_scale", "raw") if rows else "raw",
         "instances": instances,
+        "avg_depot_due": float(base.get("depot_due", 0.0)),
+        "avg_traffic_edges": float(base.get("traffic_edges", 0.0)),
+        "avg_raw_current_time": float(base.get("raw_current_time_mean", 0.0)),
+        "avg_scaled_current_time": float(base.get("scaled_current_time_mean", 0.0)),
+        "avg_delay": float(base.get("delay_mean", 0.0)),
+        "avg_delay_ratio": float(base.get("delay_ratio_mean", 0.0)),
         "avg_cost": float(base.get("benchmark_total_cost", 0.0)),
         "single_customer_cost": float(base.get("benchmark_total_cost", 0.0)) / max(1, size_int),
         "avg_waiting": float(base.get("waiting_time", 0.0)),
@@ -490,8 +670,21 @@ def mean(rows: list[dict], key: str) -> float:
     return float(np.mean([float(row.get(key, 0.0)) for row in rows]))
 
 
-def feasibility_mean(rows: list[dict], key: str) -> float:
-    return float(np.mean([1.0 if row.get(key) else 0.0 for row in rows]))
+def feasibility_mean(rows: list[dict], key: str, *fallback_keys: str) -> float:
+    values = []
+    for row in rows:
+        value = None
+        for candidate in (key, *fallback_keys):
+            if candidate in row:
+                value = row[candidate]
+                break
+        if value is None:
+            values.append(0.0)
+        elif isinstance(value, bool):
+            values.append(1.0 if value else 0.0)
+        else:
+            values.append(float(value))
+    return float(np.mean(values))
 
 
 def check_checkpoint_size(model_name: str, checkpoint: dict, instance) -> None:
@@ -538,7 +731,7 @@ def main(argv: list[str] | None = None) -> int:
             size = str(instance.num_customers)
             routes, solve_seconds = solve_routes(model, instance, args, device)
             if args.mode == "static":
-                row = evaluate_static(instance, routes, solver_runtime_s=solve_seconds)
+                row = evaluate_static(instance, routes, args=args, solver_runtime_s=solve_seconds)
             else:
                 row = evaluate_traffic_mc(
                     instance,
@@ -554,6 +747,12 @@ def main(argv: list[str] | None = None) -> int:
                     "checkpoint": str(checkpoint_path),
                     "size": size,
                     "mode": args.mode,
+                    "metric_profile": args.metric_profile,
+                    "decoder": args.decoder,
+                    "post_opt": args.post_opt,
+                    "traffic_profile": args.traffic_profile,
+                    "traffic_strength": float(args.traffic_strength),
+                    "traffic_time_scale": args.traffic_time_scale,
                     "routes": routes,
                     "num_customers": instance.num_customers,
                     "source": instance.source,
@@ -571,6 +770,10 @@ def main(argv: list[str] | None = None) -> int:
                 size=size,
                 mode=args.mode,
             )
+            aggregate_row["traffic_profile"] = args.traffic_profile
+            aggregate_row["traffic_strength"] = float(args.traffic_strength)
+            aggregate_row["traffic_time_scale"] = args.traffic_time_scale
+            aggregate_row["metric_profile"] = args.metric_profile
             report_rows.append(aggregate_row)
             summary["aggregate"].setdefault(eval_set, {}).setdefault(model_name, {})[size] = aggregate_row
 

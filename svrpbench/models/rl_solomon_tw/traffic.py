@@ -29,13 +29,24 @@ def planning_matrix(
     mode: str,
     traffic_sigma: float = 0.20,
     traffic_buffer: float = 0.50,
+    traffic_profile: str = "additive",
+    traffic_strength: float = 1.0,
 ) -> np.ndarray:
     """Return the matrix used by the solver while constructing routes."""
     base = base_time_matrix(instance)
     if mode == "static":
         return base
     if mode == "traffic":
-        factor = 1.0 + max(0.0, traffic_sigma) * max(0.0, traffic_buffer)
+        sigma = max(0.0, float(traffic_sigma))
+        buffer = max(0.0, float(traffic_buffer))
+        strength = max(0.0, float(traffic_strength))
+        if traffic_profile == "additive":
+            factor = 1.0 + strength * sigma * buffer
+        elif traffic_profile == "proportional":
+            distance_factor = 1.0 - np.exp(-np.maximum(base, 0.0) / 50.0)
+            factor = 1.0 + strength * sigma * buffer * distance_factor
+        else:
+            raise ValueError("traffic_profile must be 'additive' or 'proportional'.")
         matrix = (base * factor).astype(np.float32)
         np.fill_diagonal(matrix, 0.0)
         return matrix
@@ -47,19 +58,30 @@ def sample_traffic_matrix(
     *,
     seed: int,
     traffic_sigma: float = 0.20,
+    traffic_profile: str = "additive",
+    traffic_strength: float = 1.0,
     min_factor: float = 0.65,
     max_factor: float = 1.80,
     asymmetric: bool = False,
 ) -> np.ndarray:
-    """Sample a reproducible traffic-perturbed matrix for evaluation."""
+    """Sample a reproducible traffic-perturbed matrix for traffic-aware training."""
     base = base_time_matrix(instance)
     rng = np.random.default_rng(seed)
     sigma = max(0.0, float(traffic_sigma))
+    strength = max(0.0, float(traffic_strength))
     if sigma == 0:
         return base.copy()
 
-    factors = rng.lognormal(mean=-0.5 * sigma * sigma, sigma=sigma, size=base.shape)
-    factors = np.clip(factors, min_factor, max_factor).astype(np.float32)
+    noise = rng.lognormal(mean=-0.5 * sigma * sigma, sigma=sigma, size=base.shape)
+    if traffic_profile == "additive":
+        factors = 1.0 + strength * (noise - 1.0)
+        factors = np.clip(factors, min_factor, max_factor).astype(np.float32)
+    elif traffic_profile == "proportional":
+        distance_factor = 1.0 - np.exp(-np.maximum(base, 0.0) / 50.0)
+        factors = 1.0 + strength * sigma * distance_factor * noise
+        factors = np.clip(factors, 1.0, max_factor).astype(np.float32)
+    else:
+        raise ValueError("traffic_profile must be 'additive' or 'proportional'.")
     if not asymmetric:
         factors = ((factors + factors.T) / 2.0).astype(np.float32)
     np.fill_diagonal(factors, 0.0)
@@ -76,4 +98,3 @@ def stable_seed(*parts: object, base_seed: int = 42) -> int:
 
 def traffic_cache_path(output_dir: str | Path, *, size: int | str, instance_name: str) -> Path:
     return Path(output_dir) / str(size) / f"{Path(instance_name).stem}_traffic.npz"
-

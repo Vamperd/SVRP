@@ -11,8 +11,8 @@ import numpy as np
 import torch
 
 from dataset import load_instances, sample_batch, split_instances, instances_to_tensors
-from decoder import score_order
-from evaluator import aggregate_metrics
+from decoder import annotate_objective_metrics, decode_order, score_order
+from evaluator import aggregate_metrics, evaluate_routes
 from heuristic import nearest_order
 from model import TWPointerPolicy, actions_to_order, order_log_probs, rollout
 from traffic import planning_matrix, sample_traffic_matrix, stable_seed
@@ -31,18 +31,31 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--size_sampling", default="balanced", choices=["balanced", "proportional"])
     parser.add_argument("--steps_per_epoch", type=int, default=None)
     parser.add_argument("--mode", default="static", choices=["static", "traffic"])
-    parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument("--objective", default="feasibility", choices=["feasibility", "robust_cvr"])
+    parser.add_argument(
+        "--decoder",
+        default="strict_insert",
+        choices=["strict_insert", "deadline_aware_insert", "greedy_split"],
+    )
     parser.add_argument("--insert_top_k", type=int, default=30)
+    parser.add_argument("--post_opt", default="none", choices=["none", "time_window_repair"])
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument("--batch_size", type=int, default=8)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--embed_dim", type=int, default=128)
     parser.add_argument("--checkpoint", default="checkpoints/tw_policy.pt")
     parser.add_argument("--best_checkpoint", default=None)
+    parser.add_argument(
+        "--init_checkpoint",
+        default=None,
+        help="Optional checkpoint used to initialize model weights before fine-tuning.",
+    )
     parser.add_argument("--seed", type=int, default=1234)
     parser.add_argument("--traffic_seed", type=int, default=42)
     parser.add_argument("--traffic_sigma", type=float, default=0.20)
     parser.add_argument("--traffic_buffer", type=float, default=0.50)
+    parser.add_argument("--traffic_profile", default="additive", choices=["additive", "proportional"])
+    parser.add_argument("--traffic_strength", type=float, default=1.0)
     parser.add_argument("--train_ratio", type=float, default=0.70)
     parser.add_argument("--val_ratio", type=float, default=0.15)
     parser.add_argument("--device", default="auto", choices=["auto", "cpu", "cuda"])
@@ -57,10 +70,30 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--duplicate_penalty", type=float, default=500.0)
     parser.add_argument("--vehicle_penalty", type=float, default=10000.0)
     parser.add_argument("--route_count_penalty", type=float, default=200.0)
+    parser.add_argument("--route_overuse_penalty", type=float, default=0.0)
+    parser.add_argument("--target_customers_per_route", type=float, default=9.0)
     parser.add_argument("--feasible_bonus", type=float, default=50000.0)
     parser.add_argument("--infeasible_penalty", type=float, default=50000.0)
     parser.add_argument("--imitation_epochs", type=int, default=0)
     parser.add_argument("--imitation_weight", type=float, default=1.0)
+    parser.add_argument(
+        "--baseline_momentum",
+        type=float,
+        default=0.90,
+        help="EMA momentum for the per-size reward baseline used when batch_size=1.",
+    )
+    parser.add_argument(
+        "--advantage_clip",
+        type=float,
+        default=10.0,
+        help="Clip normalized REINFORCE advantages to this absolute value; set <=0 to disable.",
+    )
+    parser.add_argument(
+        "--robust_val_samples",
+        type=int,
+        default=1,
+        help="Number of traffic samples per validation route for robust_cvr validation.",
+    )
     parser.add_argument("--smoke", action="store_true", help="Use at most 4 files unless --limit is set.")
     return parser
 
@@ -81,6 +114,7 @@ def set_seed(seed: int) -> None:
 
 def penalty_config(args: argparse.Namespace) -> dict[str, float]:
     return {
+        "objective": args.objective,
         "late": args.late_penalty,
         "time_window": args.time_window_penalty,
         "capacity": args.capacity_penalty,
@@ -88,6 +122,8 @@ def penalty_config(args: argparse.Namespace) -> dict[str, float]:
         "duplicate": args.duplicate_penalty,
         "vehicle": args.vehicle_penalty,
         "route_count": args.route_count_penalty,
+        "route_overuse": args.route_overuse_penalty,
+        "target_customers_per_route": args.target_customers_per_route,
         "feasible_bonus": args.feasible_bonus,
         "infeasible": args.infeasible_penalty,
     }
@@ -187,6 +223,8 @@ def matrix_for_training(instance, args: argparse.Namespace, *, epoch: int, row: 
         instance,
         seed=stable_seed(instance.name, epoch, row, base_seed=args.traffic_seed),
         traffic_sigma=args.traffic_sigma,
+        traffic_profile=args.traffic_profile,
+        traffic_strength=args.traffic_strength,
     )
 
 
@@ -218,6 +256,7 @@ def evaluate_policy(policy, instances, args: argparse.Namespace, device: torch.d
     if args.val_limit is not None and args.val_limit > 0:
         instances = instances[: args.val_limit]
     rows = []
+    penalties = penalty_config(args)
     policy.eval()
     with torch.no_grad():
         for instance in instances:
@@ -229,25 +268,95 @@ def evaluate_policy(policy, instances, args: argparse.Namespace, device: torch.d
                 mode=args.mode,
                 traffic_sigma=args.traffic_sigma,
                 traffic_buffer=args.traffic_buffer,
+                traffic_profile=args.traffic_profile,
+                traffic_strength=args.traffic_strength,
             )
-            _, metrics = score_order(
-                instance,
-                order,
-                matrix,
-                decoder=args.decoder,
-                insert_top_k=args.insert_top_k,
-                penalties=penalty_config(args),
-            )
-            rows.append(metrics)
+            if args.mode == "traffic" and args.robust_val_samples > 1:
+                routes = decode_order(
+                    instance,
+                    order,
+                    matrix,
+                    decoder=args.decoder,
+                    insert_top_k=args.insert_top_k,
+                    post_opt=args.post_opt,
+                )
+                for sample_idx in range(max(1, args.robust_val_samples)):
+                    sample_matrix = sample_traffic_matrix(
+                        instance,
+                        seed=stable_seed(
+                            instance.name,
+                            "val",
+                            sample_idx,
+                            base_seed=args.traffic_seed,
+                        ),
+                        traffic_sigma=args.traffic_sigma,
+                        traffic_profile=args.traffic_profile,
+                        traffic_strength=args.traffic_strength,
+                    )
+                    metrics = evaluate_routes(instance, routes, sample_matrix)
+                    annotate_objective_metrics(instance, metrics, penalties)
+                    rows.append(metrics)
+            else:
+                _, metrics = score_order(
+                    instance,
+                    order,
+                    matrix,
+                    decoder=args.decoder,
+                    insert_top_k=args.insert_top_k,
+                    post_opt=args.post_opt,
+                    penalties=penalties,
+                )
+                rows.append(metrics)
     return aggregate_metrics(rows)
 
 
-def best_key(row: dict) -> tuple[float, float, float]:
+def best_key(row: dict, args: argparse.Namespace) -> tuple[float, ...]:
+    if args.objective == "robust_cvr":
+        return (
+            -float(row.get("val_cvr", float("inf"))),
+            float(row.get("val_feasibility", 0.0)),
+            -float(row.get("val_route_overuse", float("inf"))),
+            -float(row.get("val_total_cost", float("inf"))),
+        )
     return (
         float(row.get("val_feasibility", 0.0)),
         -float(row.get("val_cvr", float("inf"))),
         -float(row.get("val_total_cost", float("inf"))),
     )
+
+
+def reinforce_advantage(
+    reward_tensor: torch.Tensor,
+    *,
+    size: str,
+    baseline_state: dict[str, dict[str, float | None]],
+    args: argparse.Namespace,
+) -> torch.Tensor:
+    """Return a normalized REINFORCE advantage, including batch_size=1 support."""
+    if reward_tensor.numel() > 1:
+        advantage = (reward_tensor - reward_tensor.mean()) / torch.clamp(
+            reward_tensor.std(unbiased=False),
+            min=1.0,
+        )
+    else:
+        state = baseline_state.setdefault(str(size), {"mean": None, "var": 1.0})
+        reward_value = float(reward_tensor.detach().cpu().item())
+        if state["mean"] is None:
+            state["mean"] = reward_value
+            state["var"] = 1.0
+            advantage = torch.zeros_like(reward_tensor)
+        else:
+            baseline = float(state["mean"])
+            variance = max(float(state["var"] or 1.0), 1.0)
+            advantage = (reward_tensor - baseline) / (variance**0.5)
+            delta = reward_value - baseline
+            momentum = min(max(float(args.baseline_momentum), 0.0), 0.999)
+            state["mean"] = momentum * baseline + (1.0 - momentum) * reward_value
+            state["var"] = momentum * variance + (1.0 - momentum) * (delta * delta)
+
+    if args.advantage_clip and args.advantage_clip > 0:
+        advantage = torch.clamp(advantage, -float(args.advantage_clip), float(args.advantage_clip))
+    return advantage
 
 
 def expert_orders_tensor(
@@ -259,7 +368,8 @@ def expert_orders_tensor(
     orders = []
     for instance in batch_instances:
         cache_key = (
-            f"{instance.source}|{args.mode}|{args.traffic_sigma}|{args.traffic_buffer}"
+            f"{instance.source}|{args.mode}|{args.traffic_sigma}|{args.traffic_buffer}|"
+            f"{args.traffic_profile}|{args.traffic_strength}"
         )
         if cache_key not in expert_cache:
             matrix = planning_matrix(
@@ -267,10 +377,47 @@ def expert_orders_tensor(
                 mode=args.mode,
                 traffic_sigma=args.traffic_sigma,
                 traffic_buffer=args.traffic_buffer,
+                traffic_profile=args.traffic_profile,
+                traffic_strength=args.traffic_strength,
             )
             expert_cache[cache_key] = nearest_order(instance, matrix)
         orders.append(expert_cache[cache_key])
     return torch.tensor(orders, dtype=torch.long, device=device)
+
+
+def build_model(args: argparse.Namespace, device: torch.device) -> tuple[TWPointerPolicy, dict | None]:
+    """Create a policy, optionally initialized from a trusted local checkpoint."""
+    if not args.init_checkpoint:
+        return TWPointerPolicy(embed_dim=args.embed_dim).to(device), None
+
+    checkpoint_path = Path(args.init_checkpoint)
+    if not checkpoint_path.exists():
+        raise FileNotFoundError(f"init_checkpoint does not exist: {checkpoint_path}")
+
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    state = checkpoint["model_state_dict"]
+    context_weight = state.get("context_encoder.0.weight")
+    if "context_dim" in checkpoint:
+        context_dim = int(checkpoint["context_dim"])
+    elif context_weight is not None:
+        context_dim = int(context_weight.shape[1])
+    else:
+        context_dim = 9
+    dynamic_weight = state.get("dynamic_encoder.0.weight")
+    if "dynamic_feature_dim" in checkpoint:
+        dynamic_feature_dim = int(checkpoint["dynamic_feature_dim"])
+    else:
+        dynamic_feature_dim = int(dynamic_weight.shape[1] if dynamic_weight is not None else 0)
+    model = TWPointerPolicy(
+        embed_dim=int(checkpoint.get("embed_dim", args.embed_dim)),
+        feature_dim=int(checkpoint.get("feature_dim", 6)),
+        context_dim=context_dim,
+        dynamic_feature_dim=dynamic_feature_dim,
+        model_version=checkpoint.get("model_version", "tw_pointer_legacy_v1"),
+    ).to(device)
+    model.load_state_dict(state)
+    print(f"[INIT] loaded checkpoint={checkpoint_path}")
+    return model, checkpoint
 
 
 def save_checkpoint(
@@ -300,6 +447,10 @@ def save_checkpoint(
         "mode": args.mode,
         "config": vars(args),
         "split": {key: [instance.name for instance in value] for key, value in split.items()},
+        "split_indices": {
+            key: [int(instance.index) for instance in value]
+            for key, value in split.items()
+        },
         "split_manifest": split_manifest or {},
         "history": history,
         "best": best,
@@ -325,10 +476,11 @@ def main(argv: list[str] | None = None) -> int:
     train_by_size = data["train_by_size"]
     val_instances = data["val_instances"]
     supported_sizes = data["supported_sizes"]
-    model = TWPointerPolicy(embed_dim=args.embed_dim).to(device)
+    model, _ = build_model(args, device)
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     rng = np.random.default_rng(args.seed)
     expert_cache: dict[str, list[int]] = {}
+    baseline_state: dict[str, dict[str, float | None]] = {}
     history: list[dict] = []
     best: dict | None = None
     best_checkpoint = args.best_checkpoint or str(Path(args.checkpoint).with_name(Path(args.checkpoint).stem + "_best.pt"))
@@ -374,6 +526,7 @@ def main(argv: list[str] | None = None) -> int:
                         matrix,
                         decoder=args.decoder,
                         insert_top_k=args.insert_top_k,
+                        post_opt=args.post_opt,
                         penalties=penalty_config(args),
                     )
                     rewards.append(reward)
@@ -396,19 +549,19 @@ def main(argv: list[str] | None = None) -> int:
                         matrix,
                         decoder=args.decoder,
                         insert_top_k=args.insert_top_k,
+                        post_opt=args.post_opt,
                         penalties=penalty_config(args),
                     )
                     rewards.append(reward)
                     train_metrics.append(metrics)
 
                 reward_tensor = torch.tensor(rewards, dtype=torch.float32, device=device)
-                if reward_tensor.numel() > 1:
-                    advantage = (reward_tensor - reward_tensor.mean()) / torch.clamp(
-                        reward_tensor.std(unbiased=False),
-                        min=1.0,
-                    )
-                else:
-                    advantage = reward_tensor - reward_tensor.mean()
+                advantage = reinforce_advantage(
+                    reward_tensor,
+                    size=str(size),
+                    baseline_state=baseline_state,
+                    args=args,
+                )
                 loss = -(advantage.detach() * out.log_probs.sum(dim=1)).mean()
 
             optimizer.zero_grad(set_to_none=True)
@@ -430,6 +583,10 @@ def main(argv: list[str] | None = None) -> int:
             "train_cvr": train_summary.get("cvr", 0.0),
             "train_feasibility": train_summary.get("feasibility", 0.0),
             "train_vehicles_excess": train_summary.get("vehicles_excess", 0.0),
+            "train_route_count": train_summary.get("route_count", 0.0),
+            "train_route_overuse": train_summary.get("route_overuse", 0.0),
+            "train_cost_per_customer": train_summary.get("cost_per_customer", 0.0),
+            "train_late_per_customer": train_summary.get("late_per_customer", 0.0),
             "train_time_window_violations": train_summary.get("time_window_violations", 0.0),
             "train_capacity_violations": train_summary.get("capacity_violations", 0.0),
             "phase": "imitation" if imitation_phase else "reinforce",
@@ -447,11 +604,15 @@ def main(argv: list[str] | None = None) -> int:
                     "val_cvr": val_summary.get("cvr", 0.0),
                     "val_feasibility": val_summary.get("feasibility", 0.0),
                     "val_vehicles_excess": val_summary.get("vehicles_excess", 0.0),
+                    "val_route_count": val_summary.get("route_count", 0.0),
+                    "val_route_overuse": val_summary.get("route_overuse", 0.0),
+                    "val_cost_per_customer": val_summary.get("cost_per_customer", 0.0),
+                    "val_late_per_customer": val_summary.get("late_per_customer", 0.0),
                     "val_time_window_violations": val_summary.get("time_window_violations", 0.0),
                     "val_capacity_violations": val_summary.get("capacity_violations", 0.0),
                 }
             )
-            if best is None or best_key(row) > best_key(best):
+            if best is None or best_key(row, args) > best_key(best, args):
                 best = dict(row)
                 save_checkpoint(
                     best_checkpoint,
@@ -471,14 +632,17 @@ def main(argv: list[str] | None = None) -> int:
                 f"epoch={epoch:04d} loss={row['loss']:.4f} reward={row['reward']:.2f} "
                 f"phase={row['phase']} train_cost={row['train_total_cost']:.2f} "
                 f"train_cvr={row['train_cvr']:.2f} train_feas={row['train_feasibility']:.2f} "
-                f"train_veh_excess={row['train_vehicles_excess']:.2f}"
+                f"train_veh_excess={row['train_vehicles_excess']:.2f} "
+                f"train_overuse={row['train_route_overuse']:.2f}"
             )
             if "val_total_cost" in row:
                 message += (
                     f" val_cost={row['val_total_cost']:.2f} "
                     f"val_feas={row['val_feasibility']:.2f} "
                     f"val_cvr={row['val_cvr']:.2f} "
-                    f"val_veh_excess={row['val_vehicles_excess']:.2f}"
+                    f"val_veh_excess={row['val_vehicles_excess']:.2f} "
+                    f"val_overuse={row['val_route_overuse']:.2f} "
+                    f"val_cost_pc={row['val_cost_per_customer']:.2f}"
                 )
             print(message)
 

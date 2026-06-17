@@ -25,10 +25,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--input", required=True, help="Solomon .txt/.TXT or TWCVRP .npz file.")
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--mode", default="static", choices=["static", "traffic"])
-    parser.add_argument("--decoder", default="strict_insert", choices=["strict_insert", "greedy_split"])
+    parser.add_argument(
+        "--decoder",
+        default="strict_insert",
+        choices=["strict_insert", "deadline_aware_insert", "greedy_split"],
+    )
     parser.add_argument("--insert_top_k", type=int, default=30)
+    parser.add_argument("--post_opt", default="none", choices=["none", "time_window_repair"])
     parser.add_argument("--traffic_sigma", type=float, default=0.20)
     parser.add_argument("--traffic_buffer", type=float, default=0.50)
+    parser.add_argument("--traffic_profile", default="additive", choices=["additive", "proportional"])
+    parser.add_argument("--traffic_strength", type=float, default=1.0)
     parser.add_argument("--output", default="results/solution.json")
     parser.add_argument("--plot_svg", default=None)
     parser.add_argument("--label_nodes", action="store_true")
@@ -86,6 +93,8 @@ def solve_instance(model, instance, args, device: torch.device) -> dict:
         mode=args.mode,
         traffic_sigma=args.traffic_sigma,
         traffic_buffer=args.traffic_buffer,
+        traffic_profile=args.traffic_profile,
+        traffic_strength=args.traffic_strength,
     )
     routes = decode_order(
         instance,
@@ -93,9 +102,14 @@ def solve_instance(model, instance, args, device: torch.device) -> dict:
         matrix,
         decoder=args.decoder,
         insert_top_k=args.insert_top_k,
+        post_opt=args.post_opt,
     )
     result = evaluate_routes(instance, routes, matrix)
     result["mode"] = args.mode
+    result["decoder"] = args.decoder
+    result["post_opt"] = args.post_opt
+    result["traffic_profile"] = args.traffic_profile
+    result["traffic_strength"] = float(args.traffic_strength)
     result["order"] = order
     return result
 
