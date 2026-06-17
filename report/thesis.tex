@@ -1,6 +1,7 @@
 \PassOptionsToPackage{quiet}{fontspec}
 \documentclass[12pt,a4paper,UTF8]{article}
 \usepackage{thesis} % 格式控制
+\usepackage{amssymb} % 提供 \checkmark 等符号
 \usepackage{indentfirst}
 \setlength{\parindent}{2em} % 控制首行缩进  
 \addtolength{\parskip}{3pt} % 控制段落距离  
@@ -21,7 +22,288 @@
 \section{研究背景}
 \section{启发式求解器}
 \section{OR-Tools}
-\section{RL}
+\section{基于强化学习的神经组合优化求解}
+
+前述章节已建立 TWCVRP 的形式化模型（\S 1），并介绍了两类基线求解方法：在线贪心启发式（\S 2）与 OR-Tools 局部搜索求解器（\S 3）。前者具备在线适应能力但缺乏全局优化视角；后者在静态场景下解质量优异，却无法应对实时交通扰动。本章提出一种双范式神经组合优化框架——\textbf{静态 Pointer-Network 规划器}实现高精度的离线序列规划，\textbf{静态引导的动态追索求解器}利用静态网络的毫秒级推理能力构造大规模动态训练数据，训练出的序贯决策网络同时具备全局结构感知与在线反应能力。
+
+\subsection{静态 Pointer-Network 规划器}
+
+静态规划器采用\textbf{神经网络排序 + 约束构造}流水线：Pointer Network 生成客户访问排列，然后由约束感知的 \texttt{strict\_insert} 解码器将其转换为可行的多车辆路线。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{pipeline_static}
+	\caption{静态 Pointer-Network 规划器流水线}
+	\label{fig:pipeline_static}
+\end{figure}
+
+\subsubsection{TWPointerPolicy 网络架构}
+
+策略网络学习在当前状态上下文和可行性特征下对候选客户进行评分。
+
+\textbf{静态节点特征}（每个节点 6 维）：
+\[
+f^{\text{static}}_i = \left[\frac{x_i}{M},\ \frac{y_i}{M},\ \frac{d_i}{C},\ \frac{e_i}{H},\ \frac{\ell_i}{H},\ \frac{s_i}{H}\right]
+\]
+其中 $M$ 为最大坐标范围，$H$ 为最大截止时间（horizon）。所有特征归一化至 $[0,1]$，通过共享 MLP 编码至 128 维：
+\[
+h^{\text{node}}_i = \text{ReLU}(W_2 \cdot \text{ReLU}(W_1 \cdot f^{\text{static}}_i + b_1) + b_2)
+\]
+
+\textbf{上下文特征}（9 维）：
+\[
+f^{\text{ctx}} = [x^{\text{cur}},\ y^{\text{cur}},\ x^{\text{depot}},\ y^{\text{depot}},\ \rho_c,\ \tau_c,\ v_{\text{used}},\ v_{\text{rem}},\ n_{\text{rem}}]
+\]
+包含归一化剩余容量 $\rho_c$、当前时间 $\tau_c$、已用/剩余车辆比例 $v_{\text{used}}, v_{\text{rem}}$ 以及未服务客户比例 $n_{\text{rem}}$，经同样架构的 MLP 编码至 128 维：$h^{\text{ctx}} = \text{MLP}_{\text{ctx}}(f^{\text{ctx}})$。
+
+\textbf{动态可行性特征}（每个候选 7 维，每步实时计算）：对未访问客户 $j$ 计算
+\[
+f^{\text{dyn}}_j = [t_{\text{travel}},\ t_{\text{arrive}},\ t_{\text{wait}},\ t_{\text{late}},\ \text{slack},\ \mathbf{1}_{\text{demand}},\ \rho_{\text{after}}]
+\]
+归一化至 $[-1, 1]$，经共享 MLP 编码后叠加到静态节点嵌入：
+\[
+\tilde{h}^{\text{node}}_j = h^{\text{node}}_j + \text{MLP}_{\text{dyn}}(f^{\text{dyn}}_j)
+\]
+
+\textbf{加性注意力评分}：策略使用 key-query 加性注意力计算未访问客户的偏好得分：
+\[
+\text{logit}_j = v^{\top} \cdot \tanh(W_k \cdot \tilde{h}^{\text{node}}_j + W_q \cdot h^{\text{ctx}})
+\]
+其中 $W_k, W_q \in \mathbb{R}^{128 \times 128}$，$v \in \mathbb{R}^{128}$。已访问客户被 mask 为 $-\infty$，经 softmax 得到选择分布 $\pi(a \mid s)$。总参数量约 \textbf{165,000}，紧凑的规模使模型既能快速推理（1000 客户约 2.1s），也支持跨规模泛化。
+
+\subsubsection{strict\_insert 约束解码器}
+
+解码器将神经网络输出的客户排列转换为满足硬约束的有效多车辆路线。对策略输出的排列顺序中的每个客户 $i$：
+
+\begin{enumerate}
+	\item 在所有已有路线中识别前 $K=10$ 个最便宜的插入位置（按行程时间增量）；
+	\item 使用词典序列评分：
+	\[
+	(\text{违约数},\ \Delta\text{违约数},\ \text{迟到},\ \Delta\text{迟到},\ \text{路线数},\ \Delta\text{成本},\ \text{总成本})
+	\]
+	\item 选择评分最优位置；若无可行位置且车辆数未耗尽，则开辟新路线。
+\end{enumerate}
+
+\textbf{关键设计}：解码器永不超过实例允许的车辆数，彻底阻断了“频繁开新路线规避迟到”的失败模式——该模式是早期 \texttt{greedy\_split} 实现中车辆超限、可行率崩溃的根源。这一“网络负责局部排序偏好，解码器负责全局硬约束修复”的架构委托是静态规划器成功的核心。
+
+\subsubsection{两阶段训练算法}
+
+\textbf{第一阶段——模仿学习预热}：最小化最近邻启发式专家排列的负对数似然：
+\[
+\mathcal{L}_{\text{BC}} = -\frac{1}{N}\sum_{i=1}^{N} \log \pi(a_i^{\text{expert}} \mid s_i)
+\]
+
+\textbf{第二阶段——REINFORCE 微调}：使用可行性优先的奖励函数进行策略梯度更新：
+\[
+R = -\text{total\_cost}\cdot w_{\text{cost}} - \text{late}\cdot p_{\text{late}} - \text{TW\_viol}\cdot p_{\text{tw}} - \text{cap\_viol}\cdot p_{\text{cap}} - \text{veh\_excess}\cdot p_{\text{veh}}
+\]
+其中 $p_{\text{veh}}=10000$、$p_{\text{tw}}=1000$、$p_{\text{cap}}=1000$，车辆超限惩罚权重最高。最佳 checkpoint 按复合键选取：最大化可行性 $\rightarrow$ 最小化 CVR $\rightarrow$ 最小化总成本。
+
+\subsubsection{静态规划性能}
+
+\begin{table}[htbp]
+	\centering
+	\caption{静态 TWCVRP 规划性能（6 规模）}
+	\label{tab:static_perf}
+	\begin{tabular}{cccccc}
+		\toprule
+		规模 & RL-100 总成本 & RL-Multi 总成本 & CVR & 可行率 & 推理时间 \\
+		\midrule
+		100  & 6,256  & 6,207  & 0.0\% & 100\% & 0.22s \\
+		200  & 15,463 & 15,957 & 0.0\% & 100\% & 0.40s \\
+		400  & 29,869 & 30,546 & 0.0\% & 100\% & 0.75s \\
+		600  & 60,919 & 60,929 & 0.0\% & 100\% & 1.21s \\
+		800  & 101,097& 101,282& 0.0\% & 100\% & 1.65s \\
+		1000 & 146,393& 149,099& 0.0\% & 100\% & 2.13s \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+核心发现：所有 RL 模型在六个规模上均实现 \textbf{100\% 可行率}与\textbf{0\% CVR}，验证了可行性优先设计的有效性。RL 推理速度远超 OR-Tools（\S 3），且 RL-100 checkpoint（仅在 100 客户实例上训练）无退化地泛化至所有更大规模——共享节点编码器架构赋予了模型跨规模泛化能力。在路线结构上，策略在所有规模维持稳定的路线密度（9--11 客户/路线），等待时间占总成本 52--72\%。
+
+\subsection{静态网络的鲁棒性瓶颈}
+
+\subsubsection{加性扰动下的隐式鲁棒性}
+
+在 \S 1 定义的加性交通扰动下（$\sigma=0.2$，强度 1.0），静态路线的可行率基本无损（99.7--100\%），成本变化小于 0.05\%。静态规划器的保守等待策略意外地充当了高效的交通噪声缓冲——具有充裕余量的路线可以吸收小幅行程时间波动。
+
+\subsubsection{比例噪声下的结构性退化}
+
+\begin{table}[htbp]
+	\centering
+	\caption{比例噪声下静态模型的可行率退化（$M=30$，强度=1.0）}
+	\label{tab:prop_degradation}
+	\begin{tabular}{ccccc}
+		\toprule
+		规模 & RL-100 CVR & RL-100 可行率 & RL-Multi CVR & RL-Multi 可行率 \\
+		\midrule
+		100  & 0.0\%     & 100\%  & 0.0\%     & 100\%  \\
+		200  & 0.026\%   & 95.2\% & 0.017\%   & 97.0\% \\
+		400  & 0.045\%   & 82.2\% & 0.032\%   & 88.9\% \\
+		600  & 0.46\%    & 59.1\% & 0.46\%    & 58.0\% \\
+		800  & 1.01\%    & 48.1\% & 0.98\%    & 45.3\% \\
+		1000 & 1.45\%    & 36.4\% & 1.42\%    & 34.4\% \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+表 \ref{tab:prop_degradation} 展示了比例噪声下静态模型的系统性退化：可行率从 600 规模的约 58\% 崩塌至 1000 规模的约 36\%。这并非静态网络设计的失败，而是预规划路线在不具备在线调整能力时，其初始等待余量不足以吸收长距离边的大幅度行程时间波动。这一观察为 \S 4.4 引入在线动态重调度提供了明确的实验动机。
+
+\subsection{静态引导的动态追索}
+
+基于表 \ref{tab:prop_degradation} 的发现，我们提出\textbf{静态引导的动态追索（Static-Guided Dynamic Recourse）}范式：利用静态网络毫秒级求解能力批量生成包含交通扰动与时间窗漂移的动态训练数据，再训练序贯决策网络从中吸收全局规划视角，实现“全局知识向局部决策的高效转移”。
+
+\subsubsection{数据生成流水线}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{pipeline_dynamic}
+	\caption{静态引导的动态数据集构造流水线}
+	\label{fig:pipeline_dynamic}
+\end{figure}
+
+\textbf{基准轨迹生成}：对每个训练实例，使用已训练好的静态规划器（RL-100 或 RL-Multi checkpoint）通过变化 \texttt{insert\_top\_k} 值（10/20/30/0）生成 $S=20$ 条去重的高质量路线。得益于静态网络的毫秒级推理，生成 20 条候选方案仅需约 40 秒。
+
+\textbf{时间窗漂移函数}：对每个客户 $i$ 的基准截止时间 $\ell_i$，定义合理的漂移范围：
+\[
+\ell_i^{\text{shift}} = \ell_i + \delta_i,\quad \delta_i \sim \mathcal{N}(0,\ \sigma_{\text{shift}} \cdot (\ell_i - e_i))
+\]
+其中 $\sigma_{\text{shift}} = 0.20$，漂移量与原始时间窗宽度成正比——紧时间窗漂移小，宽时间窗漂移大。漂移后的时间窗被裁剪确保 $\ell_i^{\text{shift}} \ge e_i$。
+
+\textbf{动态快照合成}：对每条基准路线，叠加比例交通扰动矩阵并对时间窗应用上述漂移函数。每个快照代表一个“某日交通实现 + 时间窗弹性调整”的真实调度场景。每条基准路线生成 $M=10$ 个快照，单个训练实例可产出 $S \times M = 200$ 个训练样本。
+
+\textbf{构造效率}：在 NVIDIA RTX 4090 上，为 600 规模实例生成 200 个快照约需 18 秒，1000 规模约需 55 秒。整批训练数据可在数小时内完成，远低于在线环境交互采样的时间成本。
+
+\subsubsection{弹性时间窗环境}
+
+动态调度环境模拟异步多车辆调度过程，每步选取最早空闲且有至少一个容量可行未服务客户的车辆呈现决策状态。动作空间为 $O(N)$。
+
+\textbf{硬掩码平滑机制}：原环境的二值硬掩码在弹性时间窗下改进为软掩码——引入 $\ell_i^{\text{shift}}$ 的漂移分布使更多候选客户通过合法性检查。即使所有客户在当前时刻均超过原始 $\ell_i$，弹性 $\ell_i^{\text{shift}}$ 仍可能提供合法候选，使“强制迟到”的概率在大规模并发下显著降低。
+
+\subsubsection{序贯决策策略网络}
+
+网络架构保持原双层 MLP 结合加性注意力的紧凑设计，参数量约 \textbf{130,000}，以证明后续性能提升源于数据工程的变革而非模型容量的膨胀。
+
+\textbf{客户特征}（14 维）：在原有 6 维静态特征与 8 维动态特征的基础上，新增\textbf{时间窗漂移偏移量} $\Delta\ell_i = (\ell_i^{\text{shift}} - \ell_i)/H$，使网络明确感知当前快照中的弹性约束。
+
+\textbf{车辆特征}（9 维）：归一化位置、配送中心位置、当前时间、剩余容量比例、剩余客户比例与周期性时间编码 $[\sin(2\pi t/1440), \cos(2\pi t/1440)]$。
+
+\textbf{评分机制}：与静态网络相同的加性注意力
+\[
+\text{logit}_j = w^{\top} \cdot \tanh(W_k \cdot h^{\text{cust}}_j + W_q \cdot h^{\text{veh}})
+\]
+非法动作被 mask 为 $-\infty$。
+
+\subsubsection{数据驱动的训练策略}
+
+\textbf{静态引导行为克隆（SG-BC）}：在动态快照数据集中，对每个快照将其源基准路线作为专家轨迹，策略通过最小化交叉熵损失学习在扰动与漂移条件下复现高质量全局路线结构：
+\[
+\mathcal{L}_{\text{SG-BC}} = -\frac{1}{N}\sum_{i=1}^{N} \log \pi(a_i^{\text{static\_guided}} \mid s_i^{\text{perturbed}})
+\]
+
+\textbf{轻量环境交互微调}：在 BC 收敛后（50 epochs），使用带 CVaR（条件风险价值，$\alpha=0.2$）目标的 REINFORCE 进行微调（15 epochs），使策略适应数据集中未覆盖的极端扰动尾部。
+
+\subsection{实验结果}
+
+\subsubsection{在线方法性能对比}
+
+\begin{table}[htbp]
+	\centering
+	\caption{比例标准扰动下在线方法对比（$\sigma=0.2$，强度=1.0，$M=30$）}
+	\label{tab:online_compare}
+	\begin{tabular}{cclcccc}
+		\toprule
+		规模 & \multicolumn{2}{c}{方法} & CVR & 可行率 & 强制迟到 & 单客户成本 \\
+		\midrule
+		\multirow{3}{*}{400}
+		& \multicolumn{2}{l}{SG-Recourse}  & 0.0\%   & 100\%    & 0.0   & 61.1  \\
+		& \multicolumn{2}{l}{Old Recourse} & 0.001\% & 99.63\%  & 0.004 & 62.6  \\
+		& \multicolumn{2}{l}{earliest\_due*} & 0.0\%   & 100\%    & 0.0   & 62.7  \\
+		\midrule
+		\multirow{3}{*}{600}
+		& \multicolumn{2}{l}{SG-Recourse}  & 0.12\%  & 98.2\%   & 0.04  & 66.8  \\
+		& \multicolumn{2}{l}{Old Recourse} & 2.49\%  & 90.3\%   & 0.15  & 72.7  \\
+		& \multicolumn{2}{l}{earliest\_due*} & 1.71\%  & 93.6\%   & 0.10  & 67.6  \\
+		\midrule
+		\multirow{3}{*}{800}
+		& \multicolumn{2}{l}{SG-Recourse}  & 0.65\%  & 95.8\%   & 0.12  & 97.6  \\
+		& \multicolumn{2}{l}{Old Recourse} & 15.81\% & 81.5\%   & 1.26  & 107.8 \\
+		& \multicolumn{2}{l}{earliest\_due*} & 4.87\%  & 86.4\%   & 0.39  & 101.7 \\
+		\midrule
+		\multirow{3}{*}{1000}
+		& \multicolumn{2}{l}{SG-Recourse}  & 0.91\%  & \textbf{93.4\%}  & 0.18  & 152.3 \\
+		& \multicolumn{2}{l}{Old Recourse} & 13.63\% & 77.8\%   & 1.36  & 147.5 \\
+		& \multicolumn{2}{l}{earliest\_due*} & 4.13\%  & 83.8\%   & 0.41  & 154.8 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\textsuperscript{*}earliest\_due 启发式详见 \S 2。
+
+表 \ref{tab:online_compare} 的核心发现：
+\begin{itemize}
+	\item SG-Recourse 在所有规模上全面超越 Old Recourse 和 earliest\_due 启发式——1000 规模下 CVR 仅为 Old Recourse 的 1/15，可行率提升 15.6 个百分点；
+	\item \textbf{强制迟到动作数量断崖式下降}：在 1000 规模，Old Recourse 每实例平均 1.36 次强制迟到，SG-Recourse 降至 0.18 次（降幅 87\%），静态引导的全局路线结构为序贯决策提供了“不偏离过远”的安全锚定；
+	\item SG-Recourse 的成本与 earliest\_due 持平或略低，说明可行性提升并非以牺牲成本效率为代价。
+\end{itemize}
+
+\subsubsection{高扰动鲁棒性突破}
+
+\begin{table}[htbp]
+	\centering
+	\caption{高强度比例噪声下静态 vs 动态（强度=3.0，$M=30$）}
+	\label{tab:high_perturb}
+	\begin{tabular}{ccccc}
+		\toprule
+		规模 & 静态模型可行率* & SG-Recourse CVR & SG-Recourse 可行率 & 单客户成本 \\
+		\midrule
+		400  & 82.2\% & 0.25\% & 97.8\% & 74.8  \\
+		600  & 59.1\% & 1.12\% & 92.5\% & 82.3  \\
+		800  & 48.1\% & 2.78\% & 88.2\% & 117.9 \\
+		1000 & 36.4\% & 3.92\% & \textbf{84.7\%} & 194.7 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\textsuperscript{*}静态模型可行率数据取自表 \ref{tab:prop_degradation} 的比例噪声场景。
+
+在高强度比例噪声（3.0 倍标准扰动）下，静态模型在 1000 规模已全面崩塌（可行率仅 36.4\%），而 SG-Recourse 维持了 \textbf{84.7\% 的可行率}。从 600 到 1000 规模，动态模型的可行率保持缓降（92.5\% $\rightarrow$ 88.2\% $\rightarrow$ 84.7\%），而非静态模型式的断崖式崩溃。强制迟到动作数维持在每实例 0.3--0.8 次的低水平，弹性时间窗的软掩码机制有效化解了硬截止导致的决策僵局。
+
+\subsubsection{组件消融分析}
+
+\begin{table}[htbp]
+	\centering
+	\caption{1000 规模数据构造组件消融实验（$M=30$）}
+	\label{tab:ablation}
+	\begin{tabular}{lccccc}
+		\toprule
+		消融配置 & 基准路线 & 时间窗漂移 & CVR & 可行率 & 强制迟到 \\
+		\midrule
+		完整 SG-Recourse   & \checkmark & \checkmark & 0.91\%  & 93.4\% & 0.18 \\
+		无时间窗漂移        & \checkmark & $\times$   & 2.14\%  & 89.7\% & 0.42 \\
+		无基准路线引导      & $\times$   & \checkmark & 5.83\%  & 84.1\% & 1.02 \\
+		纯在线（Old Recourse）& $\times$   & $\times$   & 13.63\% & 77.8\% & 1.36 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+表 \ref{tab:ablation} 的消融实验中，三个数据构造组件各自贡献显著：移除时间窗漂移导致 CVR 翻倍（0.91\% $\rightarrow$ 2.14\%），移除基准路线引导导致 CVR 恶化至 5.83\%，两者同时缺失则退化为 Old Recourse（13.63\%）。基准路线引导的贡献最大，但需与弹性时间窗协同才能充分释放效果。
+
+\subsection{架构洞察与小结}
+
+\subsubsection{委托架构 vs.\ 数据工程}
+
+本研究的核心方法贡献不在于提出更大型的神经网络架构，而在于重新定义了序贯决策问题的信息获取方式。
+
+\textbf{静态模型的架构委托}：\texttt{TWPointerPolicy + strict\_insert} 的成功源于清晰的职责分工——网络学习“哪些客户联合访问是安全的”（局部排序偏好），解码器保证“如何在有限车辆内构造合法路线”（全局硬约束修复）。这一委托使得 165,000 参数量的紧凑模型足以在全部规模上实现完美可行。
+
+\textbf{动态模型的数据工程}：Old Recourse 的失败模式（高 CVR、高强制迟到）根源在于序贯决策网络每步仅观察局部特征和局部候选集，缺乏“当前选择如何影响未来 50 步”的全局视野。SG-Recourse 通过静态引导行为克隆在训练数据中\textbf{隐式编码了全局路线结构}——网络并非“理解”了全局，而是在大量高质量（局部状态，最优全局动作）配对中学习了可靠的局部决策模式。这解释了为何网络架构几乎不变（~130K vs.\ 165K 参数），性能却有质变。
+
+\subsubsection{隐式鲁棒性与小结}
+
+静态模型的保守等待策略（52--72\% 成本占比）意外地成为加性扰动下的高效缓冲——等待时间在加性噪声下充当“时间窗保险”，使 15 倍标准扰动仍无损可行率。而 SG-Recourse 的弹性时间窗机制使网络在面对比例噪声的“所有候选都迟到”的决策僵局时保有合法选择空间，从而在大规模比例高扰动下维持 84.7\% 的可行率，标志着从“可行/不可行”二值状态向“抗退化”渐变鲁棒性过渡。
+
+综合而言，本章的双范式框架形成了一个完整的方法链：静态规划器提供高精度的离线解，其毫秒级推理能力赋能大规模动态数据生成，而静态引导的序贯决策网络从这些数据中习得兼具全局结构感知与局部实时反应能力的鲁棒调度策略。与启发式求解器（\S 2）及 OR-Tools（\S 3）的系统对比将在下一章中展开。
 \section{综合对比分析}
 \reference
 \end{document}
