@@ -1,0 +1,27 @@
+\PassOptionsToPackage{quiet}{fontspec}
+\documentclass[12pt,a4paper,UTF8]{article}
+\usepackage{thesis} % 格式控制
+\usepackage{indentfirst}
+\setlength{\parindent}{2em} % 控制首行缩进  
+\addtolength{\parskip}{3pt} % 控制段落距离  
+\onehalfspacing % 1.5倍行距  
+\graphicspath{{./figures/}} % 指定图片所在文件夹  
+
+
+\classname{智能制造与企业自动化}  % 设置课程名称
+\makepagestyle{}{\printclassname ~课程论文}
+
+
+
+
+\begin{document}
+\maketitlepage{待定}{教4 - 110}{董佳泽、白林颖、周茉}{\today}{赵均、徐祖华} %封面页 
+
+\maketoc    %目录页
+\section{研究背景}
+\section{启发式求解器}
+\section{OR-Tools}
+\section{RL}
+\section{综合对比分析}
+\reference
+\end{document}
