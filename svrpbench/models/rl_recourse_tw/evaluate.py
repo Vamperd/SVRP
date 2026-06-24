@@ -30,6 +30,7 @@ CSV_FIELDS = [
     "avg_cost",
     "single_customer_cost",
     "avg_cvr",
+    "p95_cvr",
     "feasibility_rate",
     "late_minutes",
     "time_window_violations",
@@ -198,6 +199,15 @@ def evaluate_method(method: str, instance, matrix, args, device, recourse_policy
 
 
 def aggregate(rows: list[dict]) -> list[dict]:
+    instance_cvr: dict[tuple[str, str, str], list[float]] = {}
+    for row in rows:
+        key = (row["method"], row.get("instance", ""), row["size"])
+        instance_cvr.setdefault(key, []).append(float(row.get("cvr", 0.0)))
+    method_p95: dict[tuple[str, str], list[float]] = {}
+    for (method, _, size), cvr_list in instance_cvr.items():
+        p95 = float(np.percentile(cvr_list, 95)) if cvr_list else 0.0
+        method_p95.setdefault((method, size), []).append(p95)
+
     grouped: dict[tuple[str, str], list[dict]] = {}
     for row in rows:
         grouped.setdefault((row["method"], row["size"]), []).append(row)
@@ -214,6 +224,7 @@ def aggregate(rows: list[dict]) -> list[dict]:
                 "avg_cost": avg_cost,
                 "single_customer_cost": avg_cost / max(1, size_int),
                 "avg_cvr": float(np.mean([float(row.get("cvr", 0.0)) for row in items])),
+                "p95_cvr": float(np.mean(method_p95.get((method, size), [0.0]))),
                 "feasibility_rate": float(np.mean([1.0 if row.get("feasible") else 0.0 for row in items])),
                 "late_minutes": float(np.mean([float(row.get("late_minutes", 0.0)) for row in items])),
                 "time_window_violations": float(
@@ -278,6 +289,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
                 row["mode"] = args.mode
                 row["sample_idx"] = sample_idx
+                row["instance"] = instance.name
                 rows.append(row)
 
     aggregate_rows = aggregate(rows)

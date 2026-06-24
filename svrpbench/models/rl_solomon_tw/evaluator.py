@@ -137,6 +137,7 @@ def aggregate_metrics(rows: list[dict]) -> dict:
         "time_window_violations_per_customer",
         "capacity_violations_per_customer",
         "cvr",
+        "p95_cvr",
         "runtime",
     ]
     result = {"instances": len(rows)}

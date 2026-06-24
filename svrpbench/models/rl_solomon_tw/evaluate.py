@@ -175,7 +175,10 @@ def evaluate_traffic_mc(instance, routes, *, method: str, size: str, args) -> di
             traffic_sigma=args.traffic_sigma,
         )
         rows.append(evaluate_routes(instance, routes, matrix))
+    cvr_values = [row["cvr"] for row in rows]
+    p95_cvr = float(np.percentile(cvr_values, 95)) if cvr_values else 0.0
     summary = aggregate_metrics(rows)
+    summary["p95_cvr"] = p95_cvr
     summary.update(
         {
             "method": method,
